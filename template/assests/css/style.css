@@ -21,6 +21,17 @@ a:hover {
   border-radius: 0;
   width: 200px;
 }
+.jumbotron {
+  background-color: #F59484;
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+  padding: 14px 24px;
+  font-size: 21px;
+  border-radius: 1px;
+}
+
 p{
   padding: 5px;
   font-size: 15px;
@@ -36,7 +47,7 @@ body {
   background-color: #F59484;
   color: #fff;
   text-align: center;
-  padding-top: 40px;
+  padding-top: 80px;
   padding-bottom: 40px;
   font: "sans-serif";
 }
@@ -120,7 +131,12 @@ body {
   padding: 10px 20px;
   font-weight: bold;
 }
-
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #4364d1;
+  border-top: 1px solid #e5e5e5;
+}
 
 /*
  * Footer
