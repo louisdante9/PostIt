@@ -15,14 +15,14 @@ app.use(logger('dev'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/template'));
 app.engine('html', require('ejs').renderFile);
-app.use(express.static('/template/assests'));
+app.use(express.static('public'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
-//app.get('/', (req, res) => res.status(200).render('index.html'));
- require('./routes/api')(app);
-//app.use('/', api);
+//
+require('./server/routes')(app);
+app.get('*', (req, res) => res.status(200).render('index.html'));
 
 module.exports = app;
