@@ -1,15 +1,17 @@
 'use strict';
 module.exports = (sequelize, DataTypes) =>{
-  var users = sequelize.define('users', {
-    title: DataTypes.STRING,
+  const User = sequelize.define('User', {
+  
     username: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      is: /^[a-z0-9\_\-]+$/i,
-    }
+      type: DataTypes.STRING,
+      required: true,
+      allowNull: false,
+      unique: true,
+      validate: {
+        is: /^[a-z0-9\_\-]+$/i,
+      }
   },
+  
   email: {
     type: Sequelize.STRING,
     validate: {
@@ -22,10 +24,17 @@ module.exports = (sequelize, DataTypes) =>{
   }, {
     classMethods: {
       associate: (models)=> {
-        // associations can be defined here
-        
+        User.belongsToMany(models.Group, {
+          foreignKey: 'userId',
+          onDelete: 'CASCADE',
+          through: "UserGroup",
+        });
+         User.hasMany(models.Message, {
+          foreignKey: 'userId',
+          onDelete: 'CASCADE',
+        });
       }
     }
   });
-  return users;
+  return User;
 };

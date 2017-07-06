@@ -1,0 +1,12 @@
+const Group = require('../models').group;
+
+module.exports = {
+  create(req, res) {
+    return Group
+      .create({
+        title: req.body.name,
+      })
+      .then(todo => res.status(201).send(group))
+      .catch(error => res.status(400).send(error));
+  },
+};
