@@ -1,7 +1,11 @@
-const express = require('express');
-const logger = require('morgan');
+// const express = require('express');
+import express from 'express';
+import logger from 'morgan';
+//const logger = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path');
+import sequelize from 'sequelize';
+
 
 
 
