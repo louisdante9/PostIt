@@ -15,7 +15,12 @@ module.exports = (sequelize, DataTypes)=> {
       values: ['normal', 'urgent', 'critical']
 
     },
-    message: DataTypes.TEXT
+    message:{
+      type: DataTypes.TEXT,
+       validate: {
+        is: /^[a-z0-9\_\-]+$/i,
+      }
+    },
   }, {
     classMethods: {
       associate: function(models) {

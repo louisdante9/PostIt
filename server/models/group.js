@@ -1,8 +1,16 @@
 'use strict';
 module.exports = (sequelize, DataTypes)=> {
   var Group = sequelize.define('Group', {
-  
-    name: DataTypes.STRING,
+    name: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      unique: true,
+      validate: {
+        notEmpty: {
+          msg: 'Name cannot be empty'
+        }
+      }
+    },
   },
    {
     classMethods: {
