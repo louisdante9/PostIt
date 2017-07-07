@@ -1,4 +1,6 @@
- let isLoggedIn = (req, res, next)=> {
+ 
+ const groupsController = require('../controller').groups;
+ const isLoggedIn = (req, res, next)=> {
     // if user is authenticated in the session, carry on 
     // if (req.isAuthenticated())
     //     return next();
@@ -8,6 +10,18 @@
  }
 
 module.exports = (app)=>{
+     app.get('/contact', (req, res)=>{
+            res.render('contact.html')
+    })
+    // //testing this route 
+    //  app.get('/messageboard', (req, res)=>{
+    //         res.render('messageboard.html')
+    // })
+    app.get('/api/group',(req, res)=>{
+        res.render('group.html')
+    });
+    app.post('/api/group', groupsController.create);
+
     app.get('/api/user/signin', (req, res)=>{
             res.render('signin.html')
     })
@@ -24,7 +38,7 @@ module.exports = (app)=>{
         res.render('signup.html',{
             title: "sign up",
             page: "signup",
-            message: req.flash('signupMessage')
+            //message: req.flash('signupMessage')
         });
     });
     // process the signup form
@@ -38,12 +52,7 @@ module.exports = (app)=>{
         // we will want this protected so you have to be logged in to visit
         // we will use route middleware to verify this (the isLoggedIn function)
    
-    app.get('/api/group',isLoggedIn, (req, res)=> {
-        res.render('group.html',{
-            title: "profile",
-            user : req.user // get the user out of session and pass to template
-        });
-    });
+    
     // app.post('/api/group',isLoggedIn, function(req, res) {
     //     res.render('creategroup.html',{
     //         title: "profile",

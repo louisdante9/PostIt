@@ -3,10 +3,15 @@
  */
 
 /* Links */
+.logo{
+  color: #fff;
+  font: serif;
+  font-size: 20px;
+}
 a,
 a:focus,
 a:hover {
-  color: #4364d1;
+  color: gray;
   font:  serif
 }
 
@@ -14,7 +19,7 @@ a:hover {
 .btn-default,
 .btn-default:hover,
 .btn-default:focus {
-  color: #333;
+  color: #fff;
   text-shadow: none; /* Prevent inheritance from `body` */
   background-color: #F59484;
   border: 2px solid #fff;
@@ -220,3 +225,6 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+.messages{
+    	margin: 20px;
+    }
