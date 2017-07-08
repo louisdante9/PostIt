@@ -78,7 +78,51 @@
         </div>
       </div>
 
-
+<div class="inner cover">
+            <div class="jumbotron">
+              <h1>Hi, there</h1>
+              <p class="lead">Welcome to PostIt group. To start simplely click on the button below, its that simple. 'Monsibayo'...Naruto!</p>
+              
+            </div>
+             <div class="messages">
+                  <!-- Button HTML (to Trigger Modal) -->
+                  <a href="#myModal" class="btn btn-lg btn-default" data-toggle="modal">Post-IT</a>
+                  
+                  <!-- Modal HTML -->
+                  <div id="myModal" class="modal fade">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                  <h4 class="modal-title">Post your messages to this group</h4>
+                              </div>
+                              <div class="modal-body">
+                                  <form>
+                                      <div class="form-group">
+                                          <label for="priority">priority</label>
+                                          <select class="form-control" id="priority">
+                                            <option value="">Normal</option>
+                                            <option value="">High</option>
+                                            <option value="">Critical</option>
+                                          </select>
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="inputComment">Messages</label>
+                                          <textarea class="form-control" id="inputComment" rows="4"></textarea>
+                                      </div>
+                                  </form>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-success">Send</button>
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                  
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>     
+             <!--this is where the message would be type and showed for each group-->
+         </div>
           <footer class="footer">
                 <p>&copy; 2016 Company, Inc.</p>
         </footer>

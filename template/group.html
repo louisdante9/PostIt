@@ -11,6 +11,7 @@
 
     <title>Post-IT</title>
     <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
 
    
@@ -28,7 +29,15 @@
 
 <!--start of body-->
   <body>
+     
     <div class="site-wrapper">
+      <div class="icon-bar">
+            <a class="active" href="#"><i class="fa fa-home"></i></a> 
+            <a href="#" onclick="openNav()"><i class="fa fa-group"></i></a> 
+            <a href="#" onclick="openSlideNav()"><i class="fa fa-envelope"></i></a> 
+            <a href="#"><i class="fa fa-user"></i></a>
+            <a href="#"><i class="fa fa-trash"></i></a> 
+        </div>
       <div class="site-wrapper-inner">
         <div class="cover-container">
           <div class="masthead clearfix">
@@ -44,58 +53,50 @@
               </nav>
             </div>
           </div>
-
-         <div class="inner cover">
-            <div class="jumbotron">
-              <h1>Hi, there</h1>
-              <p class="lead">Welcome to PostIt group. To start simplely click on the button below, its that simple. 'Monsibayo'...Naruto!</p>
+         <div id="myNav" class="overlay">
+            <!-- Button to close the overlay navigation -->
+            <a href="javascript:void(0)" class="closebtn" onclick="closeSlideNav()">&times;</a>
+            <!-- Overlay content -->
+            <div class="overlay-content">
               
             </div>
-             <div class="messages">
-                  <!-- Button HTML (to Trigger Modal) -->
-                  <a href="#myModal" class="btn btn-lg btn-default" data-toggle="modal">Post-IT</a>
-                  
-                  <!-- Modal HTML -->
-                  <div id="myModal" class="modal fade">
-                      <div class="modal-dialog">
-                          <div class="modal-content">
-                              <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                  <h4 class="modal-title">Post your messages to this group</h4>
-                              </div>
-                              <div class="modal-body">
-                                  <form>
-                                      <div class="form-group">
-                                          <label for="priority">priority</label>
-                                          <select class="form-control" id="priority">
-                                            <option value="">Normal</option>
-                                            <option value="">High</option>
-                                            <option value="">Critical</option>
-                                          </select>
-                                      </div>
-                                      <div class="form-group">
-                                          <label for="inputComment">Messages</label>
-                                          <textarea class="form-control" id="inputComment" rows="4"></textarea>
-                                      </div>
-                                  </form>
-                              </div>
-                              <div class="modal-footer">
-                                  <button type="button" class="btn btn-success">Send</button>
-                                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                                  
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>     
-             <!--this is where the message would be type and showed for each group-->
-         </div>
+        </div>
 
-          <div class="mastfoot">
+          <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="#">Groups</a>
+            <a href="#">create group</a>
+            <a href="#">Add users</a>
+         </div>
+         <!-- The overlay -->
+         
+         <div class="inner cover">
+           <!--messages area-->
+          <div class="row">
+
+          </div>
+          <!--messages/-->
+          <!--chat box-->
+          <div class="row">
+            <div class="mastfoot">
+              <div >
+               <div class="row">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <!--<input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">-->
+                  </div>
+                  <button type="submit" class="btn btn-primary">Send invitation</button>
+                </form>
+              </div>
+            </div>
             <div class="inner">
-              <p>postit</a>, by <a href="https://github.com/louisdante9/PostIt">@louisdante9</a>.</p>
             </div>
           </div>
+          </div>
+          <!--chat box/-->
+         </div>
+
+          
         </div>
       </div>
     </div>
@@ -104,14 +105,31 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
     <script src="/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-      $(document).ready(function(){
-          $("#myModal").on('shown.bs.modal', function(){
-              $(this).find('input[type="text"]').focus();
-          });
-      });
+      // $(document).ready(function(){
+      //     $("#myModal").on('shown.bs.modal', function(){
+      //         $(this).find('input[type="text"]').focus();
+      //     });
+      // });
+      /* Set the width of the side navigation to 250px */
+      function openNav() {
+          document.getElementById("mySidenav").style.width = "250px";
+      }
+
+      /* Set the width of the side navigation to 0 */
+      function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+      }
+      function openSlideNav() {
+          document.getElementById("myNav").style.width = "100%";
+      }
+      /* Set the width of the side navigation to 0 */
+      function closeSlideNav() {
+          document.getElementById("myNav").style.width = "0";
+      }
+      
     </script>
     <!--<script src="/js/script.js"></script>-->
   </body>
