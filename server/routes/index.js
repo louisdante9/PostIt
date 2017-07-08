@@ -17,10 +17,17 @@ module.exports = (app)=>{
     //  app.get('/messageboard', (req, res)=>{
     //         res.render('messageboard.html')
     // })
-    app.get('/api/group',(req, res)=>{
-        res.render('group.html')
+    // app.get('/api/group',(req, res)=>{
+    //     res.render('group.html')
+    // });
+    app.get('/api/messageboard',(req, res)=>{
+        res.render('messageboard.html')
+    });
+     app.get('/api/creategroup',(req, res)=>{
+        res.render('creategroup.html')
     });
     app.post('/api/group', groupsController.create);
+    app.get('/api/group', groupsController.list);
 
     app.get('/api/user/signin', (req, res)=>{
             res.render('signin.html')
