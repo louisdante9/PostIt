@@ -5,6 +5,7 @@ module.exports = {
     return Group
       .create({
         name: req.body.name,
+        description: req.body.description
       })
       .then(group => res.status(201).json(group))
       .catch(error => res.status(400).send(error));
