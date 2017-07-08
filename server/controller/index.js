@@ -1,4 +1,4 @@
-const todos = require('./groups');
+const groups = require('./groups');
 
 module.exports = {
   groups,
