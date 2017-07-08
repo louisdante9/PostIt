@@ -4,9 +4,9 @@ module.exports = {
   create(req, res) {
     return Group
       .create({
-        title: req.body.name,
+        name: req.body.name,
       })
-      .then(todo => res.status(201).render(group))
+      .then(group => res.status(201).json(group))
       .catch(error => res.status(400).send(error));
   },
 };
