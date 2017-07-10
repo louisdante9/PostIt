@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) =>{
   },
   
   email: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     validate: {
       isEmail: {
         msg: "Email address must be valid"
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) =>{
     }
   },
   password: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     validate: {
       len: {
         args: [4, 100],
@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) =>{
           through: "UserGroup",
         });
          User.hasMany(models.Message, {
-          foreignKey: 'userId',
+          foreignKey: 'groupId',
           onDelete: 'CASCADE',
         });
       }

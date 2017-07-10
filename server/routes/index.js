@@ -1,5 +1,8 @@
  
- const groupsController = require('../controller').groups;
+//  const groupsController = require('../controller').groups;
+//  const usersController = require('../controller').users
+import { Users, Groups } from '../controller';
+
  const isLoggedIn = (req, res, next)=> {
     // if user is authenticated in the session, carry on 
     // if (req.isAuthenticated())
@@ -13,21 +16,17 @@ module.exports = (app)=>{
      app.get('/contact', (req, res)=>{
             res.render('contact.html')
     })
-    // //testing this route 
-    //  app.get('/messageboard', (req, res)=>{
-    //         res.render('messageboard.html')
-    // })
-    // app.get('/api/group',(req, res)=>{
-    //     res.render('group.html')
-    // });
-    app.get('/api/messageboard',(req, res)=>{
-        res.render('messageboard.html')
-    });
+    app.post('/api/user/signup',Users.signup);
+    app.post('/api/user/signin',Users.login);
+    app.get('/api/group/:groupId',Groups.list);
      app.get('/api/creategroup',(req, res)=>{
         res.render('creategroup.html')
     });
-    app.post('/api/group', groupsController.create);
-    app.get('/api/group', groupsController.list);
+     app.get('/api/messageboard',(req, res)=>{
+        res.render('messageboard.html')
+    });
+    app.post('/api/group', Groups.create);
+    //app.get('/api/group', Groups.list);
 
     app.get('/api/user/signin', (req, res)=>{
             res.render('signin.html')

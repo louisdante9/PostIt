@@ -7,17 +7,26 @@ module.exports = (sequelize, DataTypes)=> {
       unique: true,
       validate: {
         notEmpty: {
-          msg: 'Name cannot be empty'
+          msg: 'Name can not be empty'
+        }
+      }
+    },
+    description: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'description can not be empty'
         }
       }
     },
   },
+  
    {
     classMethods: {
       associate: function(models) {
-        Group.belongsToMany(models.User, {
-          foreignKey: 'groupId',
-          through: "UserGroup"
+        Group.belongsTo(models.User, {
+          foreignKey: 'userId'
         });
         Group.hasMany(models.Message, {
           foreignKey: 'groupId',
