@@ -18,14 +18,14 @@ module.exports = (app)=>{
     })
     app.post('/api/user/signup',Users.signup);
     app.post('/api/user/signin',Users.login);
-    app.get('/api/group/:groupId',Groups.list);
+    app.get('/api/group',Groups.list);
      app.get('/api/creategroup',(req, res)=>{
         res.render('creategroup.html')
     });
      app.get('/api/messageboard',(req, res)=>{
         res.render('messageboard.html')
     });
-    app.post('/api/group', Groups.create);
+    app.post('/api/group/:userId', Groups.create);
     //app.get('/api/group', Groups.list);
 
     app.get('/api/user/signin', (req, res)=>{

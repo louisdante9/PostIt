@@ -5,19 +5,15 @@ module.exports = {
     return Groups
       .create({
         name: req.body.name,
-        description: req.body.description
+        description: req.body.description,
+        userId: req.params.userId
       })
       .then(group => res.status(201).json(group))
       .catch(error => res.status(400).send(error));
   },
   list(req, res) {
   return Groups
-    .findAll({
-      include: [{
-      model: User,
-      as: 'users',
-      }],
-    })
+    .all()
     .then(groups => res.status(200).send(groups))
     .catch(error => res.status(400).send(error));
   },
