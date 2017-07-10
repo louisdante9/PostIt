@@ -21,6 +21,7 @@
     "jquery": true,
     "mocha": true
   },
+  "max-len": [1, 80, 2],
   "rules": {
     "quotes": 0,
     "no-console": 1,

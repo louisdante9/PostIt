@@ -13,7 +13,12 @@ module.exports = {
   },
   list(req, res) {
   return Groups
-    .all()
+    .findAll({
+      include: [{
+      model: User,
+      as: 'users',
+      }],
+    })
     .then(groups => res.status(200).send(groups))
     .catch(error => res.status(400).send(error));
   },

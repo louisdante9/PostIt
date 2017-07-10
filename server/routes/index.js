@@ -25,7 +25,7 @@ module.exports = (app)=>{
      app.get('/api/messageboard',(req, res)=>{
         res.render('messageboard.html')
     });
-    app.post('/api/group/:userId', Groups.create);
+    app.post('/api/user/:userId/group', Groups.create);
     //app.get('/api/group', Groups.list);
 
     app.get('/api/user/signin', (req, res)=>{
