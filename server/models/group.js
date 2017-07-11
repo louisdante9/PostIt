@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes)=> {
-  var Group = sequelize.define('Group', {
+  const Group = sequelize.define('Group', {
     name: {
       allowNull: false,
       type: DataTypes.STRING,
@@ -23,14 +23,13 @@ module.exports = (sequelize, DataTypes)=> {
   },
   
    {
-    classMethods: {
-      associate: function(models) {
-        Group.belongsTo(models.User, {
-          foreignKey: 'userId'
-        });
-        Group.hasMany(models.Message, {
-          foreignKey: 'groupId',
-          
+     classMethods: {
+      associate: (models) => {
+        Group.hasMany(models.Message);
+        Group.belongsToMany(models.User, {
+          through: 'UserGroup',
+          foreignKey: 'GroupId',
+          onDelete: 'CASCADE'
         });
       }
     }

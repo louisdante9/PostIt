@@ -37,16 +37,17 @@ module.exports = (sequelize, DataTypes) =>{
     }
   },
   }, {
-    classMethods: {
-      associate: (models)=> {
-        // User.belongsToMany(models.Group, {
-        //   foreignKey: 'userId',
-        //   onDelete: 'CASCADE',
-        //   through: "UserGroup",
-        // });
-         User.hasMany(models.Message, {
-          foreignKey: 'userId',
-          onDelete: 'CASCADE',
+      classMethods: {
+      associate: (models) => {
+        User.hasMany(models.Message);
+        User.hasMany(models.Group, {
+          foreignKey: 'UserId',
+          onDelete: 'CASCADE'
+        });
+        User.belongsToMany(models.Group, {
+          through: 'UserGroup',
+          foreignKey: 'UserId',
+          onDelete: 'CASCADE'
         });
       }
     },
