@@ -1,15 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes)=> {
   const Message = sequelize.define('Message', {
-  
-    groupId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     flag: {
       type: DataTypes.ENUM,
       values: ['normal', 'urgent', 'critical']
@@ -17,6 +8,7 @@ module.exports = (sequelize, DataTypes)=> {
     },
     message:{
       type: DataTypes.TEXT,
+      allowNull: false,
        validate: {
         is: /^[a-z0-9\_\-]+$/i,
       }
