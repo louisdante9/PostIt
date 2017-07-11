@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes)=> {
       associate: (models) => {
         Group.hasMany(models.Message);
         Group.belongsToMany(models.User, {
-          through: 'UserGroup',
+          through: 'Members',
           foreignKey: 'GroupId',
           onDelete: 'CASCADE'
         });
