@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import db from '../models';
-import UserHelper from './helpers/UserHelper';
+import UserHelper from './helpers/userHelper';
 
 require('dotenv').config({ silent: true});
 

@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "louis",
-    "password": "biology",
+    "password": "biology1",
     "database": "postit-dev",
     "host": "127.0.0.1",
     "port": 5432,
@@ -9,7 +9,7 @@
   },
   "test": {
     "username": "louis",
-    "password": "biology",
+    "password": "biology1",
     "database": "postit-dev",
     "host": "127.0.0.1",
     "port": 5432,

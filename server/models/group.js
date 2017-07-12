@@ -19,17 +19,17 @@ module.exports = (sequelize, DataTypes)=> {
           msg: 'description can not be empty'
         }
       }
-    },
+    }
   },
+  
   
    {
      classMethods: {
       associate: (models) => {
         Group.hasMany(models.Message);
         Group.belongsToMany(models.User, {
-          through: 'Members',
-          foreignKey: 'GroupId',
-          onDelete: 'CASCADE'
+          through: 'GroupUser',
+          foreignKey: 'groupId',
         });
       }
     }
