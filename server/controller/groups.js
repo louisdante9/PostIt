@@ -43,12 +43,11 @@ module.exports = {
       .then(groups => res.status(200).send(groups))
       .catch(error => res.status(400).send(error));
   },
-  retrieveOne(req, res) {
+  retrieveOneGroup(req, res) {
   return Groups
     .findById(req.params.groupId, {
       include: [{
-        model: User,
-        as: 'users',
+        model: User
       }],
     })
     .then(group => {
@@ -62,16 +61,64 @@ module.exports = {
     .catch(error => res.status(400).send(error));
 },
 
-  // list(req, res) {
-  // return Group
-  //   .all()
-  //   .then(groups => res.status(200).send(groups))
-  //   .catch(error => res.status(400).send(error));
-  // },
-  // list(req, res) {
-  // return Group
-  //   .all()
-  //   .then(groups => res.status(200).send(groups))
-  //   .catch(error => res.status(400).send(error));
-  // },
+updateOneGroup(req, res) {
+    if (!req.body.name) {
+      res.status(400).json({
+        error: 'A group needs to given a name'
+      });
+    } else {
+      models.Group.findOne({
+        where: { id: req.params.id }
+      }).then((group) => {
+        if (group.UserId === req.user.id) {
+          group.update(req.body).then(() => {
+            res.status(200).json({
+              success: 'Group details updated successfully.'
+            });
+          }).catch((err) => {
+            res.status(500).json({
+              message: err
+            });
+          });
+        } else {
+          res.status(401).json({
+            error: 'You do not have permission to edit this group\'s details'
+          });
+        }
+      }).catch((err) => {
+        res.status(500).json(error => res.status(500).json(error));
+      });
+    }
+  },
+  /**
+ * This method handles deleting a group
+ * @param {object} req
+ * @param {object} res
+ * @returns {void}
+ */
+  deleteOneGroup(req, res) {
+    models.Group.findOne({
+      where: {
+        id: req.params.id
+      }
+    }).then((group) => {
+      if (group.UserId === req.user.id) {
+        group.destroy().then(() => {
+          res.status(200).json({
+            success: 'Group deleted successfully.'
+          });
+        }).catch((err) => {
+          res.status(500).json({
+            message: err
+          });
+        });
+      } else {
+        res.status(401).json({
+          error: 'You do not have permission to delete this group'
+        });
+      }
+    }).catch((err) => {
+      res.status(500).json(error => res.status(500).json(error));
+    });
+  }
 };
