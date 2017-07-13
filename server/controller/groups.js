@@ -33,16 +33,22 @@ module.exports = {
       })
       .catch(error => res.status(500).json(error));
   },
+
+
   list(req, res) {
     Groups
       .findAll({
         include: [{
-          model: User
+          model: User,
+          attributes: {exclude: ['password', 'createdAt', 'updatedAt', [GroupUser]]},
+          order: [['createdAt', 'DESC']]
         }],
       })
       .then(groups => res.status(200).send(groups))
       .catch(error => res.status(400).send(error));
   },
+
+
   retrieveOneGroup(req, res) {
   return Groups
     .findById(req.params.groupId, {
