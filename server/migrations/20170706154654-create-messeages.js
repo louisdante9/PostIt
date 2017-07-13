@@ -7,17 +7,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      groupId: {
-      type: Sequelize.INTEGER,
-      allowNull: false
-      },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      name: {
-        type: Sequelize.STRING
-      },
       flag: {
       type: Sequelize.ENUM,
       values: ['normal', 'urgent', 'critical']
