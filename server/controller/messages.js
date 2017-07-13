@@ -16,7 +16,7 @@ const Message = {
     where: { id: req.params.id },
           include: [
             { model: models.Message,
-              attributes: ['id', 'message', 'GroupId', 'createdAt', ['UserId', isadmin]],
+              attributes: ['id', 'message', 'GroupId', 'createdAt', ['UserId', isAdmin]],
               order: [['createdAt', 'DESC']]
             }]
     }).then((found) => {
