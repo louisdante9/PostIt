@@ -7,8 +7,10 @@
 
 import Groups from './groups';
 import Users from './users';
+import Messages from './Messages';
 
 module.exports = {
   Groups,
-  Users
+  Users,
+  Messages
 };
