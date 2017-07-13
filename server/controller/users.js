@@ -24,7 +24,6 @@ const Users = {
       return res.status(409).json({ message: `User with ${req.body.email} already exists` });
       }
       db.User.create(req.body).then((user) => {
-        console.log(user);
         const jwtData = {
           username: user.username,
           email: user.email,
@@ -34,11 +33,10 @@ const Users = {
         const token = jwt.sign(jwtData, secretKey, { expiresIn: 86400 });
         user = UserHelper.transformUser(user);
         return res.status(201).json({ token, expiresIn: 86400, user });
-      });
+      }).catch((error)=>{return res.status(409).json(error)});
     })
     .catch((error )=>{
-      console.log(error);
-      return res.status(500).json({error})
+      return res.status(500).json(error)
     });
   },
 
@@ -88,7 +86,7 @@ const Users = {
   * @param {Object} res Response object
   * @returns {Object} - Returns response object
   */
-  findAll(req, res) {
+  list(req, res) {
     const query = {};
     query.attributes = ['id', 'username', 'email',
       'createdAt', 'updatedAt'];
@@ -106,7 +104,7 @@ const Users = {
   * @param {Object} res Response object
   * @returns {Object} - Returns response object
   */
-  findOne(req, res) {
+  retriveOne(req, res) {
     const userId = req.params.id;
     db.User.findById(userId).then((user) => {
       if (!user) {
@@ -146,7 +144,7 @@ const Users = {
   * @param {Object} res Response object
   * @returns {Object} - Returns response object
   */
-  remove(req, res) {
+  destroy(req, res) {
     const userId = req.params.id;
     db.User.destroy({ where: { id: userId } })
       .then((result) => {

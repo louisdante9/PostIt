@@ -1,6 +1,6 @@
 'use strict';
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Messeages', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Messages', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -24,5 +24,5 @@ module.exports = {
      
   }),
   
-  down:(queryInterface, Sequelize) => queryInterface.dropTable('Messeages')
+  down:(queryInterface, Sequelize) => queryInterface.dropTable('Messages')
 };

@@ -89,7 +89,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 require('./server/routes')(app,authenticate);
-app.get('*', (req, res) => res.status(200).render('index.html'));
+app.get('*', (req, res) => res.status(200).send('Welcome to Postit. Collaboration just got better'));
 
 // This will be our application entry. We'll setup our server here.
 const port = parseInt(process.env.PORT, 10);
@@ -97,3 +97,4 @@ app.set('port', port);
 
 const server = http.createServer(app);
 server.listen(port);
+export default app;

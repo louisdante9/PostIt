@@ -2,10 +2,8 @@
 import jwt from 'jsonwebtoken';
 import db from '../models';
 import * as dotenv from 'dotenv';
-//const secretKey = process.env.JWT_SECRET_KEY;
-const secretKey = 'louisdante9';
 dotenv.config();
-
+const secretKey = process.env.JWT_SECRET_KEY;
 const Authenticate = {
   /**
    * Verify auth middleware

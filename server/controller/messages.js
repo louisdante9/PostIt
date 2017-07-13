@@ -12,18 +12,16 @@ const Messages = {
  */
 
  getGroupMessage(req, res) {
-    db.Group.findOne({
+    db.Message.findOne({
       where: { id: req.params.groupId },
-      include: [
-        { model: db.Message,
-          include:[db.User],
-        }
-      ],
+      // include: [
+      //   { model: db.Message
+      //   }
+      // ],
       order: [['createdAt', 'DESC']]
-    }).then((found) => {
+    }).then((messages) => {
         res.status(200).json({
-          success: 'Successful.', 
-          found
+         messages
       });
     })
     .catch((error )=>{

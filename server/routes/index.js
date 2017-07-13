@@ -11,10 +11,10 @@ module.exports = (app, isAuth) => {
      app.get ('/api/users/signup', (req, res)=>{
         res.render('signup')
     })
-    app.post('/api/user/signup',Users.signup);
+    app.post('/api/user/signup', Users.signup);
    
     //Login routes
-    app.get ('/api/users/signin', (req, res)=>{
+    app.get ('/api/user/signin', (req, res)=>{
         res.render('signin')
     })
     app.post('/api/user/signin',Users.login);
