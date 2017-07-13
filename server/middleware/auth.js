@@ -1,8 +1,10 @@
 /* eslint import/no-unresolved: 0 */
 import jwt from 'jsonwebtoken';
 import db from '../models';
-
-const secretKey = process.env.JWT_SECRET_KEY;
+import * as dotenv from 'dotenv';
+//const secretKey = process.env.JWT_SECRET_KEY;
+const secretKey = 'louisdante9';
+dotenv.config();
 
 const Authenticate = {
   /**
@@ -20,6 +22,8 @@ const Authenticate = {
     }
 
     jwt.verify(token, secretKey, (err, result) => {
+      console.log('------------------', token);
+      console.log('-----------', secretKey);
       if (err) {
         return res.status(401).send({ message: 'Invalid Token' });
       }
