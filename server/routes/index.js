@@ -1,34 +1,46 @@
 
-import { Users, Groups } from '../controller';
+import { Users, Groups, Messages } from '../controller';
 import Authenticate from '../middleware/auth';
 
 module.exports = (app, isAuth) => {
      app.get('/contact', (req, res)=>{
             res.render('contact.html')
     })
+
+    //Signp route
+     app.get ('/api/users/signup', (req, res)=>{
+        res.render('signup')
+    })
     app.post('/api/user/signup',Users.signup);
+   
+    //Login routes
+    app.get ('/api/users/signin', (req, res)=>{
+        res.render('signin')
+    })
     app.post('/api/user/signin',Users.login);
 
     
-     app.get('/api/creategroup',(req, res)=>{
+    app.get('/api/creategroup',(req, res)=>{
         res.render('creategroup.html')
     });
      app.get('/api/messageboard',(req, res)=>{
         res.render('messageboard.html')
     });
     
-    app.get('/api/group',Groups.list);
-    //using the below route to create broadcast groups
-    app.post('/api/group',Authenticate.verifyToken,Groups.create);
-    //app.post('/api/user/:userId/group');
-    app.get('/api/user/signin', (req, res)=>{
-            res.render('signin.html')
-    })
+    app.get('/api/group/:groupId/messages', Authenticate.verifyToken, Messages.getGroupMessage);
+    app.post('/api/group/:groupId/messages', Authenticate.verifyToken, Messages.createNewMessage);
+    //Routes Creates a group
+    app.post('/api/group', Authenticate.verifyToken, Groups.create);
+
+    //Routes List All Groups 
+    app.get('/api/group', Authenticate.verifyToken, Groups.list);
 
     //process the login form
     //app.post('/api/user/signin', //take you to message board
     //);
 
+    
+ 
     // =====================================
     // SIGNUP ==============================
     // =====================================
