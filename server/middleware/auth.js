@@ -20,8 +20,6 @@ const Authenticate = {
     }
 
     jwt.verify(token, secretKey, (err, result) => {
-      console.log('------------------', token);
-      console.log('-----------', secretKey);
       if (err) {
         return res.status(401).send({ message: 'Invalid Token' });
       }

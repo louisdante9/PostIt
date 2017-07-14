@@ -7,8 +7,8 @@
     "node": "6.9.4"
   },
   "scripts": {
-    "start:dev": "nodemon --watch server --exec babel-node -- ./app.js",
-    "test": "cross-env NODE_ENV=test babel-node ./node_modules/mocha/bin/_mocha ./server/tests/auth.test.js"
+    "start:dev": "nodemon --watch server --exec babel-node -- ./server/app.js",
+    "test": "sequlize db:migrate && cross-env NODE_ENV=test babel-node ./node_modules/mocha/bin/_mocha ./server/tests/auth.test.js"
   },
   "author": "louis",
   "license": "MIT",
@@ -31,8 +31,8 @@
     "nodemon": "^1.11.0",
     "pg": "^6.4.0",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.30.0",
-    "sequelize-cli": "^2.5.1",
+    "sequelize": "^3.30.4",
+    "sequelize-cli": "^2.7.0",
     "should": "^11.2.1"
   },
   "devDependencies": {

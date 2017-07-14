@@ -1,18 +1,17 @@
 import express from 'express';
-import logger from 'morgan';
 import http from 'http';
 import bodyParser from 'body-parser';
 import path from 'path';
 import Logger from 'js-logger';
-import authenticate from './server/middleware/auth';
+import authenticate from './middleware/auth';
+import dotenv from 'dotenv';
+import debug from 'debug';
+import db from './models/';
 
 // Set up the express app
 const app = express();
 
-import dotenv from 'dotenv';
-import debug from 'debug';
-import db from './server/models/';
-
+//config setup
 dotenv.config();
 debug('dms:server');
 Logger.useDefaults();
@@ -75,20 +74,17 @@ db.sequelize.sync()
   .then(() => Logger
     .warn(`🚧 Application is Listening on ${port}`))
   .catch(error => Logger.error(error));
-// Log requests to the console.
-app.use(logger('dev'));
 
-//setting up the app templating engine
-app.set('view engine', 'ejs');
+
+//rendering static files
 app.set('views', path.join(__dirname, '/template'));
-app.engine('html', require('ejs').renderFile);
 app.use(express.static('public'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
-require('./server/routes')(app,authenticate);
+require('./routes')(app);
 app.get('*', (req, res) => res.status(200).send('Welcome to Postit. Collaboration just got better'));
 
 // This will be our application entry. We'll setup our server here.

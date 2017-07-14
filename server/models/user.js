@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt-nodejs';
 
 module.exports = (sequelize, DataTypes) =>{
   const User = sequelize.define('User', {
-  
+
     username: {
       type: DataTypes.STRING,
       required: true,
@@ -14,9 +14,10 @@ module.exports = (sequelize, DataTypes) =>{
         is: /^[a-z0-9\_\-]+$/i,
       }
   },
-  
+
   email: {
     type: DataTypes.STRING,
+    allowNull: false,
     validate: {
       isEmail: {
         msg: "Email address must be valid"
@@ -29,6 +30,7 @@ module.exports = (sequelize, DataTypes) =>{
   },
   password: {
     type: DataTypes.STRING,
+    allowNull: false,
     validate: {
       len: {
         args: [4, 100],

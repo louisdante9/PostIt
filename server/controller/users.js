@@ -17,23 +17,32 @@ const Users = {
   signup(req, res) {
     db.User.findOne({
       where: {
-         email: req.body.email 
+         email: req.body.email
       }
     }).then((returnedUsers) => {
       if (returnedUsers) {
-      return res.status(409).json({ message: `User with ${req.body.email} already exists` });
-      }
-      db.User.create(req.body).then((user) => {
-        const jwtData = {
-          username: user.username,
-          email: user.email,
-          userId: user.id
-        };
+        return res.status(409).json({ message: `User with ${req.body.email} already exists` });
+      } else {
+        db.User.create(req.body).then((user) => {
+          if (user) {
+            const jwtData = {
+              username: user.username,
+              email: user.email,
+              userId: user.id
+            };
 
-        const token = jwt.sign(jwtData, secretKey, { expiresIn: 86400 });
-        user = UserHelper.transformUser(user);
-        return res.status(201).json({ token, expiresIn: 86400, user });
-      }).catch((error)=>{return res.status(409).json(error)});
+            const token = jwt.sign(jwtData, secretKey, { expiresIn: 86400 });
+            user = UserHelper.transformUser(user);
+            return res.status(201).json({ token, expiresIn: 86400, user });
+          }
+        })
+        .catch((error) => {
+          return res.status(400).json({
+            message: 'Bad request sent to the server',
+            error
+          });
+        });
+      }
     })
     .catch((error )=>{
       return res.status(500).json(error)
@@ -92,7 +101,7 @@ const Users = {
       'createdAt', 'updatedAt'];
     query.order = [['createdAt', 'DESC']];
 
-    db.User.findAll(query).then((result) => {  
+    db.User.findAll(query).then((result) => {
       return res.status(200)
         .json({ users: result });
     });
@@ -123,7 +132,7 @@ const Users = {
   */
   updateOne(req, res) {
     const userId = req.params.id;
-    
+
 
     db.User.findById(userId).then((user) => {
       if (!user) {

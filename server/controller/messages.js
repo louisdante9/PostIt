@@ -30,7 +30,7 @@ const Messages = {
     });
   },
 
-  
+
 /**
  * This method handles posting messages to member groups
  * @param {object} req
@@ -38,25 +38,30 @@ const Messages = {
  * @returns {void}
  */
 
-  createNewMessage(req, res) {  
-    db.Group.findOne({
-      where: { id: req.params.id }
-      }).then(() => {
+  createNewMessage(req, res) {
+    db.Group.findById(req.params.groupId).then((group) => {
+      if (group) {
         const newMessage = {
           message: req.body.message,
           userId: req.decoded.userId,
-          groupId: req.params.groupId
+          groupId: group.id
         };
         db.Message.create(newMessage).then((addedMessage) => {
           res.status(201).json({
             success: 'New message has been added successfully.',
             addedMessage
           });
-        }).catch((err) => {
-          res.status(500).json(error);
-        });
+        })
+      } else {
+        return res.status(404).json({
+          message: 'No such group found'
+        })
+      }
+    })
+    .catch((error) => {
+      res.status(500).json(error);
     });
   }
-} 
+}
 
 export default Messages;
