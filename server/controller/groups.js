@@ -1,6 +1,6 @@
-const Groups = require('../models').Group;
-const User = require('../models').User;
-const GroupUser = require('../models').GroupUser;
+import Groups from '../models/group';
+import User from '../models/user';
+import GroupUser from '../models/groupuser';
 module.exports = {
   create(req, res) {
     return Groups
@@ -51,11 +51,7 @@ module.exports = {
 
   retrieveOneGroup(req, res) {
   return Groups
-    .findById(req.params.groupId, {
-      include: [{
-        model: User
-      }],
-    })
+    .findById(req.params.groupId)
     .then(group => {
       if (!group) {
         return res.status(404).send({
