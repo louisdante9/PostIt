@@ -2,8 +2,10 @@
 import jwt from 'jsonwebtoken';
 import db from '../models';
 import * as dotenv from 'dotenv';
+
 dotenv.config();
 const secretKey = process.env.JWT_SECRET_KEY;
+//const secretKey = 'louisdante9'
 const Authenticate = {
   /**
    * Verify auth middleware
@@ -13,6 +15,7 @@ const Authenticate = {
    * @param {Function} next callback function
    */
   verifyToken(req, res, next) {
+    console.log(secretKey);
     const token = req.headers.authorization || req.headers['x-access-token'];
 
     if (!token) {
