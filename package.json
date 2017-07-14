@@ -7,7 +7,7 @@
     "node": "6.9.4"
   },
   "scripts": {
-    "start:dev": "nodemon --watch server --exec babel-node -- ./server/app.js",
+    "start": "nodemon --watch server --exec babel-node -- ./server/app.js",
     "test": "sequlize db:migrate && cross-env NODE_ENV=test babel-node ./node_modules/mocha/bin/_mocha ./server/tests/auth.test.js"
   },
   "author": "louis",
