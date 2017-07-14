@@ -1,22 +1,11 @@
 'use strict';
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('Messeages', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Messages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      groupId: {
-      type: Sequelize.INTEGER,
-      allowNull: false
-      },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      name: {
-        type: Sequelize.STRING
       },
       flag: {
       type: Sequelize.ENUM,
@@ -35,5 +24,5 @@ module.exports = {
      
   }),
   
-  down:(queryInterface, Sequelize) => queryInterface.dropTable('Messeages')
+  down:(queryInterface, Sequelize) => queryInterface.dropTable('Messages')
 };

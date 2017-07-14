@@ -9,15 +9,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Cover Template for Bootstrap</title>
-
+    <title>Post-IT</title>
     <!-- Bootstrap core CSS -->
-    <link href="./assests/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
 
    
 
     <!-- Custom styles for this template -->
-    <link href="./assests/css/style.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -29,32 +29,74 @@
 
 <!--start of body-->
   <body>
+     
     <div class="site-wrapper">
+      <div class="icon-bar">
+            <a class="active" href="#"><i class="fa fa-home"></i></a> 
+            <a href="#" onclick="openNav()"><i class="fa fa-group"></i></a> 
+            <a href="#" onclick="openSlideNav()"><i class="fa fa-envelope"></i></a> 
+            <a href="#"><i class="fa fa-user"></i></a>
+            <a href="#"><i class="fa fa-trash"></i></a> 
+        </div>
       <div class="site-wrapper-inner">
         <div class="cover-container">
           <div class="masthead clearfix">
             <div class="inner">            
               <h3 class="masthead-brand">
-                  <img src="./assests/img/logo.fw.png" alt="">
+                <a class="logo" href="/">Post-IT</a>
+                  <img src="/img/logo.fw.png" alt="">
               </h3>
               <nav>
                 <ul class="nav masthead-nav">
-                  <li><a href="#">Contact</a></li>
+                  <li><a href="/contact">Contact</a></li>
                 </ul>
               </nav>
             </div>
           </div>
+         <div id="myNav" class="overlay">
+            <!-- Button to close the overlay navigation -->
+            <a href="javascript:void(0)" class="closebtn" onclick="closeSlideNav()">&times;</a>
+            <!-- Overlay content -->
+            <div class="overlay-content">
+              
+            </div>
+        </div>
 
-         <div class="inner cover">
-
-             <!--this is where the message would be type and showed for each group-->
+          <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="#">Groups</a>
+            <a href="#">create group</a>
+            <a href="#">Add users</a>
          </div>
+         <!-- The overlay -->
+         
+         <div class="inner cover">
+           <!--messages area-->
+          <div class="row">
 
-          <div class="mastfoot">
+          </div>
+          <!--messages/-->
+          <!--chat box-->
+          <div class="row">
+            <div class="mastfoot">
+              <div >
+               <div class="row">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <!--<input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">-->
+                  </div>
+                  <button type="submit" class="btn btn-primary">Post It</button>
+                </form>
+              </div>
+            </div>
             <div class="inner">
-              <p>postit</a>, by <a href="https://github.com/louisdante9/PostIt">@louisdante9</a>.</p>
             </div>
           </div>
+          </div>
+          <!--chat box/-->
+         </div>
+
+          
         </div>
       </div>
     </div>
@@ -63,8 +105,32 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="./assests/js/bootstrap.min.js"></script>
+    <!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      // $(document).ready(function(){
+      //     $("#myModal").on('shown.bs.modal', function(){
+      //         $(this).find('input[type="text"]').focus();
+      //     });
+      // });
+      /* Set the width of the side navigation to 250px */
+      function openNav() {
+          document.getElementById("mySidenav").style.width = "250px";
+      }
 
+      /* Set the width of the side navigation to 0 */
+      function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+      }
+      function openSlideNav() {
+          document.getElementById("myNav").style.width = "100%";
+      }
+      /* Set the width of the side navigation to 0 */
+      function closeSlideNav() {
+          document.getElementById("myNav").style.width = "0";
+      }
+      
+    </script>
+    <!--<script src="/js/script.js"></script>-->
   </body>
 </html>

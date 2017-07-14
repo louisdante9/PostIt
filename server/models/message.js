@@ -1,24 +1,26 @@
 'use strict';
 module.exports = (sequelize, DataTypes)=> {
   const Message = sequelize.define('Message', {
-  
-    groupId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     flag: {
       type: DataTypes.ENUM,
-      values: ['normal', 'urgent', 'critical']
+      values: ['normal', 'urgent', 'critical'],
+      defaultValue: 'normal',
+      validate: {
+        isIn: {
+          args: [['normal', 'urgent', 'critical']],
+          msg: 'Flag value must be one of: normal, urgent or critical'
+        }
+      }
 
     },
     message:{
       type: DataTypes.TEXT,
+      allowNull: false,
        validate: {
-        is: /^[a-z0-9\_\-]+$/i,
+        notEmpty: {
+          args: true,
+          msg: 'Message field cannot be empty'
+        }
       }
     },
   }, {
@@ -26,11 +28,9 @@ module.exports = (sequelize, DataTypes)=> {
       associate: function(models) {
         Message.belongsTo(models.Group, {
           foreignKey: 'groupId',
-          onDelete: 'CASCADE',
         });
         Message.belongsTo(models.User, {
-          foreignKey: 'userId',
-          onDelete: 'CASCADE',
+          foreignKey: 'userId' 
         });
       }
     }

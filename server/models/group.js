@@ -1,27 +1,37 @@
 'use strict';
 module.exports = (sequelize, DataTypes)=> {
-  var Group = sequelize.define('Group', {
+  const Group = sequelize.define('Group', {
     name: {
       allowNull: false,
       type: DataTypes.STRING,
       unique: true,
       validate: {
         notEmpty: {
-          msg: 'Name cannot be empty'
+          msg: 'Name can not be empty'
         }
       }
     },
+    description: {
+      allowNull: false,
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'description can not be empty'
+        }
+      }
+    }
   },
+  
+  
    {
-    classMethods: {
-      associate: function(models) {
-        Group.belongsToMany(models.User, {
-          foreignKey: 'groupId',
-          through: "UserGroup"
+     classMethods: {
+      associate: (models) => {
+        Group.hasMany(models.Message,{
+          foreignKey: 'groupId'
         });
-        Group.hasMany(models.Message, {
+        Group.belongsToMany(models.User, {
+          through: 'GroupUser',
           foreignKey: 'groupId',
-          
         });
       }
     }

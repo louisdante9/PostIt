@@ -1,8 +1,10 @@
 'use strict';
-const bcrypt = require('bcrypt-nodejs');
+
+import bcrypt from 'bcrypt-nodejs';
+
 module.exports = (sequelize, DataTypes) =>{
   const User = sequelize.define('User', {
-  
+
     username: {
       type: DataTypes.STRING,
       required: true,
@@ -12,9 +14,10 @@ module.exports = (sequelize, DataTypes) =>{
         is: /^[a-z0-9\_\-]+$/i,
       }
   },
-  
+
   email: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
+    allowNull: false,
     validate: {
       isEmail: {
         msg: "Email address must be valid"
@@ -26,7 +29,8 @@ module.exports = (sequelize, DataTypes) =>{
     }
   },
   password: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
+    allowNull: false,
     validate: {
       len: {
         args: [4, 100],
@@ -35,16 +39,14 @@ module.exports = (sequelize, DataTypes) =>{
     }
   },
   }, {
-    classMethods: {
-      associate: (models)=> {
-        User.belongsToMany(models.Group, {
+      classMethods: {
+      associate: (models) => {
+        User.hasMany(models.Message, {
           foreignKey: 'userId',
-          onDelete: 'CASCADE',
-          through: "UserGroup",
         });
-         User.hasMany(models.Message, {
+        User.belongsToMany(models.Group, {
+          through: 'GroupUser',
           foreignKey: 'userId',
-          onDelete: 'CASCADE',
         });
       }
     },
