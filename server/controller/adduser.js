@@ -54,34 +54,14 @@ module.exports = {
  * @param {object} res
  * @returns {void}
  */
-   addUsersToGroup(req, res) {
-    const idToAdd = Number(req.body.idToAdd);
-    models.Group.findOne({
-      where: {
-        id: req.params.id
-      }
-    }).then((group) => {
-      if (group.UserId === req.user.dataValues.id) {
-        models.UserGroup.findOrCreate({
-          where: { $and: {
-            GroupId: req.params.id,
-            UserId: idToAdd
-          } },
-          defaults: {
-            GroupId: req.params.id,
-            UserId: idToAdd
-          }
-        });
-        res.status(201).json({
-          success: 'Successful.',
-        });
-      } else {
-        res.status(400).json({
-          error: 'You are not allowed to add new users to this group, please contact admin!'
-        });
-      }
-    }).catch((err) => {
-      res.status(500).json(err);
-    });
-  }
+    addUsersToGroup(req, res) {
+    return Members
+    .create({
+      userId: req.body.userId,
+      groupId: req.params.groupId
+    })
+    .then(groupUser => res.status(201).send(member))
+    .catch(error => res.status(400).send(error));
+  },
+   
 }
