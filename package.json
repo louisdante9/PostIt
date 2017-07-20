@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "nodemon --watch server --exec babel-node -- ./server/app.js",
-    "test": "cross-env NODE_ENV=test sequelize db:migrate && mocha  --compilers js:babel-core/register ./server/tests/auth.test.js"
+    "test": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register ./server/tests/auth.test.js"
   },
   "author": "louis",
   "license": "MIT",
