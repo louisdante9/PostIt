@@ -1,8 +1,8 @@
+sudo: required
+dist: trusty
 language: node_js
 node_js:
-  - "7"
-services:
-  - postgresql
+ - 6
 before_script:
   - npm install -g sequelize-cli
 # script: 
