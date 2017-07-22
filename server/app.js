@@ -7,6 +7,9 @@ import authenticate from './middleware/auth';
 import dotenv from 'dotenv';
 import debug from 'debug';
 import db from './models/';
+import open from 'open';
+import config from '../webpack.config.dev';
+import webpack from 'webpack';
 
 // Set up the express app
 const app = express();
@@ -15,6 +18,7 @@ const app = express();
 dotenv.config();
 debug('dms:server');
 Logger.useDefaults();
+const compiler = webpack(config);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -82,15 +86,29 @@ app.use(express.static('public'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(require('webpack-dev-middleware')(compiler, {
+  noInfo: true,
+  publicPath: config.output.publicPath
+}));
 
+app.use(require('webpack-hot-middleware')(compiler));
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 require('./routes')(app);
-app.get('*', (req, res) => res.status(200).send('Welcome to Postit. Collaboration just got better'));
+app.get('*', (req, res) => {
+  res.status(200)
+  .sendFile(path.join( __dirname, '../client/index.html'));
+});
 
 // This will be our application entry. We'll setup our server here.
 const port = parseInt(process.env.PORT, 10);
 app.set('port', port);
 
 const server = http.createServer(app);
-server.listen(port);
+server.listen(port, function(err) {
+  if (err) {
+    console.log(err);
+  } else {
+    open(`http://localhost:${port}`);
+  }
+});
 export default app;

@@ -1,9 +1,8 @@
-import Groups from '../models/group';
-import User from '../models/user';
-import GroupUser from '../models/groupuser';
-module.exports = {
+import models from '../models';
+
+export default {
   create(req, res) {
-    return Groups
+    return models.Group
       .create({
         name: req.body.name,
         description: req.body.description
@@ -15,7 +14,7 @@ module.exports = {
             userId: req.decoded.userId,
             isAdmin: true
           }
-          GroupUser.create(groupUser).then((createdGroup) => {
+          models.GroupUser.create(groupUser).then((createdGroup) => {
             if (createdGroup) {
               return res.status(201).json({
                 data: group
@@ -33,14 +32,13 @@ module.exports = {
       })
       .catch(error => res.status(500).json(error));
   },
-
-
+    
   list(req, res) {
-    Groups
+    models.Group
       .findAll({
         include: [{
-          model: User,
-          attributes: {exclude: ['password', 'createdAt', 'updatedAt', [GroupUser]]},
+          model: models.User,
+          attributes: {exclude: ['password', 'createdAt', 'updatedAt']},
           order: [['createdAt', 'DESC']]
         }],
       })
@@ -50,7 +48,7 @@ module.exports = {
 
 
   retrieveOneGroup(req, res) {
-  return Groups
+  return Group
     .findById(req.params.groupId)
     .then(group => {
       if (!group) {

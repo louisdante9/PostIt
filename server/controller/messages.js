@@ -1,6 +1,4 @@
 import db from '../models';
-// import Group from '../models';
-// import User from '../models';
 
 const Messages = {
 
@@ -12,7 +10,7 @@ const Messages = {
  */
 
  getGroupMessage(req, res) {
-    db.Message.findOne({
+    db.Message.findAll({
       where: { id: req.params.groupId },
       // include: [
       //   { model: db.Message
@@ -25,7 +23,7 @@ const Messages = {
       });
     })
     .catch((error )=>{
-      console.log(error);
+      //console.log(error);
       return res.status(500).json({error})
     });
   },
@@ -51,17 +49,17 @@ const Messages = {
             success: 'New message has been added successfully.',
             addedMessage
           });
-        })
+        });
       } else {
         return res.status(404).json({
           message: 'No such group found'
-        })
+        });
       }
     })
     .catch((error) => {
       res.status(500).json(error);
     });
   }
-}
+};
 
 export default Messages;
