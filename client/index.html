@@ -7,6 +7,23 @@
         <!-- <link href="css/style.css" rel="stylesheet"> -->
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div id="app"></div>
+        <script src="/bundle.js"></script>
     </body>
+    <script>
+        function openSlideNav() {
+          document.getElementById("myNav").style.width = "100%";
+        }
+        /* Set the width of the side navigation to 0 */
+        function closeSlideNav() {
+            document.getElementById("myNav").style.width = "0";
+        }
+        /* Set  side navigation for signin */
+        function openSignInNav() {
+          document.getElementById("signInNav").style.width = "100%";
+        }
+        function closeSignInNav() {
+            document.getElementById("signInNav").style.width = "0";
+        }
+      </script>
 </html>

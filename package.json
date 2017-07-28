@@ -8,7 +8,7 @@
   },
   "scripts": {
     "prestart": "babel-node server/startMessage.js",
-     "start": "npm-run-all --parallel test:watch open:server lint:watch",
+     "start": "npm-run-all --parallel test:watch open:server ",
      "lint": "node_modules/.bin/esw webpack.config.* client server",
      "lint:watch": "npm run lint -- --watch",
      "test": "mocha --reporter progress server/testSetup.js \"client/**/*.test.js\"",
