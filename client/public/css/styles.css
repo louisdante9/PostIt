@@ -1,12 +1,3 @@
-/*
- * Globals
- */
-
-/* Links */
-.logo{
-  color: #fff;
-  font-size: 20px;
-}
 
 
 /* Custom default button */
@@ -18,7 +9,9 @@
   border-radius: 170px;
 } 
 
-
+/* .logo{
+  padding-left: 30px; 
+} */
 p{
   padding: 5px;
   font-size: 25px;

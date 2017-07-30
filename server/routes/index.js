@@ -17,4 +17,4 @@ module.exports = (app) => {
     app.post('/api/group/:groupId/messages', Authenticate.verifyToken, Messages.createNewMessage);
    
     
-}
+};
