@@ -13,7 +13,7 @@ class SignupPage extends React.Component{
                     <div className="inner cover">
                       <h2>Join Our Community!</h2>
                       <SignupForm userSignupRequest={userSignupRequest} />
-                      <p className="authlink">Already have an account <a>Sign In</a> </p>
+                      <p className="authlink">Already have an account <a href="#">Sign In</a> </p>
                     </div>
                 </div>
             </div>

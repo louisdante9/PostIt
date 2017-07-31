@@ -1,5 +1,5 @@
 import React from 'react';
-
+import validateInput from '../../../server/shared/validations/signup';
 
 class SignupForm extends React.Component{
    constructor(props){
@@ -7,8 +7,9 @@ class SignupForm extends React.Component{
     this.state = {
       username: '',
       email: '',
-      password: '',
-      confirmPassword:''
+      password: '', 
+      errors: {},
+      isLoading: false
     };
     
     this.onChange = this.onChange.bind(this);
@@ -20,38 +21,49 @@ class SignupForm extends React.Component{
       [e.target.name]: e.target.value,
     });
   }
+  isValid(){
+    const { errors, isValid } = validateInput(this.state);
+    if (!isValid) {
+      this.setState({ errors });
+    }
+    return isValid;
+  }
   onSubmit(e){
     e.preventDefault();
-    this.props.userSignupRequest(this.state);
+    if (this.isValid()) {
+      this.setState({ errors: {}, isLoading: true });
+      this.props.userSignupRequest(this.state).then(
+        () =>{},
+        ({ data }) => this.setState({ errors: data, isLoading: false })
+      );
+    }
   }
     render(){
+      const { errors } = this.state;
       return(
             <form className="col s12" onSubmit={this.onSubmit}>
               <div className="row">
                 <div className="input-field col s12">
                   <input value={this.state.username} onChange={this.onChange} type="text" 
-                  name="username" className="validate" placeholder="Enter Username"/>
+                  name="username"  placeholder="Enter Username"/>
+                  {errors.username && <span className="badge">{errors.username}</span>}
                 </div>
               </div>
               <div className="row">
                 <div className="input-field col s12">
                   <input type="email" onChange={this.onChange} name="email" 
-                  className="validate" placeholder="Enter Email"/>
+                   placeholder="Enter Email"/>
+                   {errors.email && <span className="badge">{errors.email}</span>}
                 </div>
               </div>
               <div className="row">
                 <div className="input-field col s12">
                   <input id="password" onChange={this.onChange} name="password" 
-                  type="password" className="validate" placeholder="Enter Password"/>
+                  type="password"  placeholder="Enter Password"/>
+                  {errors.password && <span className="badge">{errors.password}</span>}
                 </div>
               </div>
-              <div className="row">
-                <div className="input-field col s12">
-                  <input id="password" onChange={this.onChange} name="confirmPassword" 
-                  type="password" className="validate" placeholder="Confirm Password"/>
-                </div>
-              </div>
-              <button className="btn waves-effect waves-light">Sign Up</button>  
+              <button  className="btn waves-effect waves-light">Sign Up</button>  
           </form>
        );
    }  

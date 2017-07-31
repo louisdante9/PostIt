@@ -4,10 +4,13 @@ import UserHelper from './helpers/userHelper';
 
 require('dotenv').config({ silent: true});
 
-
 const secretKey = process.env.JWT_SECRET_KEY;
 
+
+
+
 const Users = {
+  
   /**
   * Creates a new user
   * @param {Object} req Request object
@@ -15,6 +18,15 @@ const Users = {
   * @returns {Object} - Returns response object
   */
   signup(req, res) {
+    
+
+    // const { errors, isvalid} = validateInput(req.body);
+    // if (isvalid) {
+    //res.json({ success: true })  
+    // else{
+    //   res.status(400).json(errors);
+    // }
+
     db.User.findOne({
       where: {
          email: req.body.email
@@ -45,7 +57,7 @@ const Users = {
       }
     })
     .catch((error )=>{
-      return res.status(500).json(error)
+      return res.status(500).json(error);
     });
   },
 

@@ -15,7 +15,7 @@ class Home extends React.Component{
                             everyone in your group by sending a message once. Awesome isn't it
                         </p>
                         <p className="lead">
-                        <a onClick="openSignInNav()" className="waves-effect waves-light btn purple">Get Started</a>
+                        <a href="/signup" className="waves-effect waves-light btn purple">Get Started</a>
                         </p>
                     </div>
 
