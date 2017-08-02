@@ -10,7 +10,6 @@ import './public/css/styles.css';
 import 'materialize-css/dist/css/materialize.min.css';
 
 
-
 const store = createStore(
     (state ={})=>state,
     applyMiddleware(thunk)

@@ -1,5 +1,7 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import validateInput from '../../../server/shared/validations/signup';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 class SignupForm extends React.Component{
    constructor(props){
@@ -33,7 +35,9 @@ class SignupForm extends React.Component{
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
       this.props.userSignupRequest(this.state).then(
-        () =>{},
+        () =>{
+          browserHistory.push('/');
+        },
         ({ data }) => this.setState({ errors: data, isLoading: false })
       );
     }
@@ -43,25 +47,32 @@ class SignupForm extends React.Component{
       return(
             <form className="col s12" onSubmit={this.onSubmit}>
               <div className="row">
-                <div className="input-field col s12">
-                  <input value={this.state.username} onChange={this.onChange} type="text" 
-                  name="username"  placeholder="Enter Username"/>
-                  {errors.username && <span className="badge">{errors.username}</span>}
-                </div>
+                <TextFieldGroup
+                  error={errors.username}
+                  onChange={this.onChange}
+                  value={this.state.username}
+                  field ="username"
+                  placeholder="Enter Username"
+                 />
               </div>
               <div className="row">
-                <div className="input-field col s12">
-                  <input type="email" onChange={this.onChange} name="email" 
-                   placeholder="Enter Email"/>
-                   {errors.email && <span className="badge">{errors.email}</span>}
-                </div>
+                <TextFieldGroup
+                  error={errors.email}
+                  onChange={this.onChange}
+                  value={this.state.email}
+                  field ="email"
+                  placeholder="Enter Email"
+                 />
               </div>
               <div className="row">
-                <div className="input-field col s12">
-                  <input id="password" onChange={this.onChange} name="password" 
-                  type="password"  placeholder="Enter Password"/>
-                  {errors.password && <span className="badge">{errors.password}</span>}
-                </div>
+                <TextFieldGroup
+                  error={errors.password}
+                  onChange={this.onChange}
+                  value={this.state.password}
+                  type="password"
+                  field ="password"
+                  placeholder="Enter Password"
+                 />
               </div>
               <button  className="btn waves-effect waves-light">Sign Up</button>  
           </form>
