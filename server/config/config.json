@@ -1,0 +1,18 @@
+{
+  "development": {
+    "username": "louis",
+    "password": "biology",
+    "database": "postit-dev",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "louis",
+    "password": "biology",
+    "database": "postit-dev",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres"
+  }
+}
