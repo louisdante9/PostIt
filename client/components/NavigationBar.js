@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 
-export default () =>{
+class NavigationBar extends React.Component{
+  render(){
     return(
       <div className="navbar-fixed">
         <nav>
@@ -17,4 +19,15 @@ export default () =>{
         </nav>
        </div>
     );
-};
+  }
+}
+// NavigationBar.propTypes = {
+  // auth: React.PropTypes.object.isRequired
+// };
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth
+  };
+}
+export default connect(mapStateToProps)(NavigationBar);

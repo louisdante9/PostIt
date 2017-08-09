@@ -17,7 +17,8 @@ export default {
     filename: 'bundle.js'
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'client')
+    contentBase: path.resolve(__dirname, 'client'),
+    open: false
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

@@ -18,28 +18,21 @@ const Users = {
   * @returns {Object} - Returns response object
   */
   signup(req, res) {
-    
+    const { username, email, password } = req.body;
 
-    // const { errors, isvalid} = validateInput(req.body);
-    // if (isvalid) {
-    //res.json({ success: true })  
-    // else{
-    //   res.status(400).json(errors);
-    // }
-
-    db.User.findOne({
+    db.User.find({
       where: {
-         email: req.body.email
+         email: email
       }
     }).then((returnedUsers) => {
       if (returnedUsers) {
-        return res.status(409).json({ message: `User with ${req.body.email} already exists` });
+        return res.status(409).json({ message: `User with ${email} already exists` });
       } else {
         db.User.create(req.body).then((user) => {
           if (user) {
             const jwtData = {
-              username: user.username,
-              email: user.email,
+              username: user.username.trim(),
+              email: user.email.trim(),
               userId: user.id
             };
 
@@ -48,10 +41,10 @@ const Users = {
             return res.status(201).json({ token, expiresIn: 86400, user });
           }
         })
-        .catch((error) => {
+        .catch(error => {
           return res.status(400).json({
             message: 'Bad request sent to the server',
-            error
+            errors: handleError(error.errors)
           });
         });
       }
@@ -80,7 +73,7 @@ const Users = {
         return res.status(200).json({ token, expiresIn: 86400, user });
       }
 
-      return res.status(401).json({ message: 'Failed to authenticate user' });
+      return res.status(401).json({errors: { message: 'Failed to authenticate user' }});
     })
     .catch(error => res.status(500).json({error}));
   },
@@ -179,3 +172,12 @@ const Users = {
 };
 
 export default Users;
+
+export function handleError(errors) {
+  const result = {}; 
+  errors.forEach(error => {
+    result[error.path] = error.message;
+  });
+
+  return result;
+}

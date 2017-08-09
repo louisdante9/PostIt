@@ -7,7 +7,7 @@ module.exports = (app) => {
     app.post('/api/user/signup', Users.signup);
 
     //Signin routes
-    app.post('/api/user/signin',Users.login);
+    app.post('/api/user/signin', Users.login);
      //Routes Creates a group
     app.post('/api/group', Authenticate.verifyToken, Groups.create);
     //Routes List All Groups

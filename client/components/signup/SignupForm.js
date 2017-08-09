@@ -24,7 +24,7 @@ class SignupForm extends React.Component{
     });
   }
   isValid(){
-    const { errors, isValid } = validateInput(this.state);
+    const { errors ={}, isValid } = validateInput(this.state);
     if (!isValid) {
       this.setState({ errors });
     }
@@ -35,24 +35,28 @@ class SignupForm extends React.Component{
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
       this.props.userSignupRequest(this.state).then(
-        () =>{
+        (result) =>{
+          // console.log(result, 'top');
           this.props.addFlashMessage({
             type: 'success',
             text: 'You signed up successfull. Welcome!'
-          })
+          });
           browserHistory.push('/');
         },
-        ({ data }) => this.setState({ errors: data, isLoading: false })
+        (error, resp) => {
+          this.setState({ errors: error.response.data, isLoading: false });
+        }
       );
     }
   }
     render(){
-      const { errors } = this.state;
+      
+      // const { errors } = this.state;
       return(
             <form className="col s12" onSubmit={this.onSubmit}>
               <div className="row">
                 <TextFieldGroup
-                  error={errors.username}
+                  error={this.state.errors.username}
                   onChange={this.onChange}
                   value={this.state.username}
                   field ="username"
@@ -61,7 +65,7 @@ class SignupForm extends React.Component{
               </div>
               <div className="row">
                 <TextFieldGroup
-                  error={errors.email}
+                  error={this.state.errors.email}
                   onChange={this.onChange}
                   value={this.state.email}
                   field ="email"
@@ -70,7 +74,7 @@ class SignupForm extends React.Component{
               </div>
               <div className="row">
                 <TextFieldGroup
-                  error={errors.password}
+                  error={this.state.errors.password}
                   onChange={this.onChange}
                   value={this.state.password}
                   type="password"
