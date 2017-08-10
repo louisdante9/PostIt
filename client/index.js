@@ -8,9 +8,9 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './rootReducer';
 import routes  from './routes';
 import './public/css/styles.css';
-// import 'materialize-css/dist/css/materialize.min.css';
-// import 'jquery';
-// import 'materialize-css/dist/js/materialize.min.js';
+import setAuthToken from './utils/setAuthToken';
+import jwt from 'jsonwebtoken';
+import {setCurrentUser} from './actions/authActions';
 
 
 const store = createStore(
@@ -19,9 +19,11 @@ const store = createStore(
       applyMiddleware(thunk),
       window.devToolsExtension ? window.devToolsExtension() : f => f
     )
-    
 );
-
+if (localStorage.jwtToken) {
+    setAuthToken(localStorage.jwtToken);
+    store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken )));
+}
 
 render(
     <Provider store={store}>

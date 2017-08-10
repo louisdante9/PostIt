@@ -3,6 +3,8 @@ import SignupForm from './SignupForm';
 import { connect } from 'react-redux';
 import { userSignupRequest } from '../../actions/signupActions';
 import { addFlashMessage } from '../../actions/flashMessages';
+import Hoc from '../dashboard';
+
 
 class SignupPage extends React.Component{
     render(){
@@ -27,5 +29,5 @@ SignupPage.propTypes ={
   userSignupRequest: React.PropTypes.func.isRequired,
   addFlashMessage: React.PropTypes.func.isRequired
 };
-export default connect(null, 
-{ userSignupRequest, addFlashMessage })(SignupPage);
+const mapDispatchToProps = { userSignupRequest, addFlashMessage };
+export default connect(null, mapDispatchToProps)(SignupPage);

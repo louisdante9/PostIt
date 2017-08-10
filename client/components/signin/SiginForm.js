@@ -3,34 +3,27 @@ import validateInput from '../../../server/shared/validations/signin';
 import TextFieldGroup from '../common/TextFieldGroup';
 import { connect } from 'react-redux';
 import { login } from '../../actions/authActions';
-
+import Hoc from '../dashboard';
 class SigninForm extends React.Component {
-      constructor(props){
-          super(props);
-          this.state ={
-              email: '',
-              password: '',
-              errors: {}, 
-              isLoading: false
-          };
-            this.onSubmit = this.onSubmit.bind(this);
-            this.onChange = this.onChange.bind(this);
-      }
-    //   isValid(){
-    //        const { errors, isValid} = validateInput(this.state);
-    //        if(!isValid){
-    //         //   this.setState({ errors: false });
-    //        }
-    //        return isValid;
-    //   }
+    constructor(props){
+        super(props);
+        this.state ={
+            email: '',
+            password: '',
+            errors: {}, 
+            isLoading: false
+        };
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
+    }
+
       onSubmit(e){
         e.preventDefault();
         const { errors, isValid } = validateInput(this.state);
         if (isValid) {
-        //    this.setState({ errors: false, isLoading: true});
             this.setState({ isLoading: true});
             this.props.login(this.state)
-            .then((res) => this.context.router.push('/'))
+            .then((res) => this.context.router.push('/dashboard'))
             .catch((err) => {
                 const error =  err.response.data.errors;
                 this.handleErrors(error);
@@ -42,8 +35,7 @@ class SigninForm extends React.Component {
       }
       handleErrors(errors) {
         Object.keys(errors).forEach((error) => {
-            console.log(error)
-            Materialize.toast(errors[error]);
+            Materialize.toast(errors[error], 3000);
         });
       }
 
@@ -85,4 +77,5 @@ SigninForm.propTypes = {
 SigninForm.contextTypes = {
     router: React.PropTypes.object.isRequired
 };
+
 export default connect(null, { login })(SigninForm);

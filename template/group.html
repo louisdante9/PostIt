@@ -1,136 +1,106 @@
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Slack clone</title>
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <title>Post-IT</title>
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+      <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+      <style>
+        .sidediv{
+          width:20px;
+          background-color:black;
+          height: 100%; 
+        }
+      </style>
+</head>
 
-   
+<body>
+   <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#!" class="brand-logo">Logo</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="sass.html">Sass</a></li>
+          <li><a href="badges.html">Components</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <!-- Page Layout here -->
+    <div class="row">
 
-    <!-- Custom styles for this template -->
-    <link href="/css/style.css" rel="stylesheet">
+      <div class="col s12 m1 l1 sidebar"> <!-- Note that "m4 l3" was added -->
+        <!-- Grey navigation panel
 
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-
-<!--start of body-->
-  <body>
-     
-    <div class="site-wrapper">
-      <div class="icon-bar">
-            <a class="active" href="#"><i class="fa fa-home"></i></a> 
-            <a href="#" onclick="openNav()"><i class="fa fa-group"></i></a> 
-            <a href="#" onclick="openSlideNav()"><i class="fa fa-envelope"></i></a> 
-            <a href="#"><i class="fa fa-user"></i></a>
-            <a href="#"><i class="fa fa-trash"></i></a> 
-        </div>
-      <div class="site-wrapper-inner">
-        <div class="cover-container">
-          <div class="masthead clearfix">
-            <div class="inner">            
-              <h3 class="masthead-brand">
-                <a class="logo" href="/">Post-IT</a>
-                  <img src="/img/logo.fw.png" alt="">
-              </h3>
-              <nav>
-                <ul class="nav masthead-nav">
-                  <li><a href="/contact">Contact</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-         <div id="myNav" class="overlay">
-            <!-- Button to close the overlay navigation -->
-            <a href="javascript:void(0)" class="closebtn" onclick="closeSlideNav()">&times;</a>
-            <!-- Overlay content -->
-            <div class="overlay-content">
-              
-            </div>
-        </div>
-
-          <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="#">Groups</a>
-            <a href="#">create group</a>
-            <a href="#">Add users</a>
-         </div>
-         <!-- The overlay -->
-         
-         <div class="inner cover">
-           <!--messages area-->
-          <div class="row">
-
-          </div>
-          <!--messages/-->
-          <!--chat box-->
-          <div class="row">
-            <div class="mastfoot">
-              <div >
-               <div class="row">
-                <form class="form-inline">
-                  <div class="form-group">
-                    <!--<input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">-->
-                  </div>
-                  <button type="submit" class="btn btn-primary">Post It</button>
-                </form>
-              </div>
-            </div>
-            <div class="inner">
-            </div>
-          </div>
-          </div>
-          <!--chat box/-->
-         </div>
-
+              This content will be:
+          3-columns-wide on large screens,
+          4-columns-wide on medium screens,
+          12-columns-wide on small screens  -->
           
-        </div>
+          <p>this</p>
+      </div>
+
+      <div class="col s12 m3 l2 pink lighten-3"> <!-- Note that "m8 l9" was added -->
+        <!-- Teal page content
+
+              This content will be:
+          9-columns-wide on large screens,
+          8-columns-wide on medium screens,
+          12-columns-wide on small screens  -->
+          <p>this is a test</p>
+
+      </div>
+      <div class="col s12 m3 l2"> <!-- Note that "m8 l9" was added -->
+        <!-- Teal page content
+
+              This content will be:
+          9-columns-wide on large screens,
+          8-columns-wide on medium screens,
+          12-columns-wide on small screens  -->
+          <p>this is another test</p>
+
+      </div>
+        <div class="col s6 l2 offset-l2 pink lighten-3"> <!-- Note that "m8 l9" was added -->
+        <!-- Teal page content
+
+              This content will be:
+          9-columns-wide on large screens,
+          8-columns-wide on medium screens,
+          12-columns-wide on small screens  -->
+
       </div>
     </div>
-<!--end -->
+</body>
+  <!--end -->
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
     <script type="text/javascript">
-      // $(document).ready(function(){
-      //     $("#myModal").on('shown.bs.modal', function(){
-      //         $(this).find('input[type="text"]').focus();
-      //     });
-      // });
-      /* Set the width of the side navigation to 250px */
-      function openNav() {
-          document.getElementById("mySidenav").style.width = "250px";
-      }
-
-      /* Set the width of the side navigation to 0 */
-      function closeNav() {
-          document.getElementById("mySidenav").style.width = "0";
-      }
-      function openSlideNav() {
-          document.getElementById("myNav").style.width = "100%";
-      }
-      /* Set the width of the side navigation to 0 */
-      function closeSlideNav() {
-          document.getElementById("myNav").style.width = "0";
-      }
-      
-    </script>
-    <!--<script src="/js/script.js"></script>-->
-  </body>
+        $(document).ready(function(){
+              $("#myModal").on('shown.bs.modal', function(){
+                  $(this).find('input[type="text"]').focus();
+              });
+          });
+          function openSlideNav() {
+              document.getElementById("myNav").style.width = "100%";
+          }
+          /* Set the width of the side navigation to 0 */
+          function closeSlideNav() {
+              document.getElementById("myNav").style.width = "0";
+          }
+          function openSlideUser() {
+              document.getElementById("userNav").style.width = "100%";
+          }
+          /* Set the width of the side navigation to 0 */
+          function closeSlideUser() {
+              document.getElementById("userNav").style.width = "0";
+          }
+  </script>
 </html>
+  
