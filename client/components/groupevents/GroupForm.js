@@ -2,14 +2,13 @@ import React from 'react';
 import validateInput from '../../../server/shared/validations/signin';
 import TextFieldGroup from '../common/TextFieldGroup';
 import { connect } from 'react-redux';
-import { login } from '../../actions/authActions';
 
 class SigninForm extends React.Component {
     constructor(props){
         super(props);
         this.state ={
-            email: '',
-            password: '',
+            name: '',
+            description: '',
             errors: {}, 
             isLoading: false
         };
@@ -19,19 +18,7 @@ class SigninForm extends React.Component {
 
       onSubmit(e){
         e.preventDefault();
-        const { errors, isValid } = validateInput(this.state);
-        if (isValid) {
-            this.setState({ isLoading: true});
-            this.props.login(this.state)
-            .then((res) => this.context.router.push('/dashboard'))
-            .catch((err) => {
-                const error =  err.response.data.errors;
-                this.handleErrors(error);
-                this.setState({ isLoading: false });
-            });
-        } else {
-            this.handleErrors(errors);
-        }
+        
       }
       handleErrors(errors) {
         Object.keys(errors).forEach((error) => {
@@ -43,29 +30,28 @@ class SigninForm extends React.Component {
           this.setState({ [e.target.name]: e.target.value});
       }
     render(){
-        const { email, password , errors, isLoading } = this.state;
+        const { title, description , errors, isLoading } = this.state;
         return(
                 <form className="col s12" onSubmit={this.onSubmit}>
                     <div className="row">
                         <TextFieldGroup
-                        error={this.state.errors.email}
+                        error={errors.name}
                         onChange={this.onChange}
-                        value={this.state.email}
-                        field ="email"
-                        placeholder="Enter Email"
+                        value={name}
+                        field ="name"
+                        placeholder="Enter name of group"
                         />
                     </div>
                     <div className="row">
                         <TextFieldGroup
-                        error={this.state.errors.password}
+                        error={errors.description}
                         onChange={this.onChange}
-                        value={this.state.password}
-                        type="password"
-                        field ="password"
-                        placeholder="Enter Password"
+                        value={description}
+                        field ="description"
+                        placeholder="Enter a brief description here"
                         />
                     </div>
-                    <button className="btn waves-effect waves-light" type="submit" name="action">Sign In</button>  
+                    <button className="btn waves-effect waves-light" type="submit" name="action">Create group</button>  
                 </form>
         );
     }
@@ -78,4 +64,4 @@ SigninForm.contextTypes = {
     router: React.PropTypes.object.isRequired
 };
 
-export default connect(null, { login })(SigninForm);
+export default connect(null)(SigninForm);

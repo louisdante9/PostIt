@@ -3,7 +3,7 @@ import SignupForm from './SignupForm';
 import { connect } from 'react-redux';
 import { userSignupRequest } from '../../actions/signupActions';
 import { addFlashMessage } from '../../actions/flashMessages';
-import Hoc from '../dashboard';
+
 
 
 class SignupPage extends React.Component{

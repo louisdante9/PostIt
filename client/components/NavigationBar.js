@@ -8,13 +8,13 @@ class NavigationBar extends React.Component{
       super(props);
       this.logout = this.logout.bind(this);
     }
-    // componentWillMount(nextProps) {
+   
+     // componentWillMount(nextProps) {
     //   console.log('props was received');
     //   if(localStorage.getItem('jwtToken')) {
     //       this.props.authenticate();
     //   }
     // }
-    
     logout(e) {
      e.preventDefault();
      this.props.logout();

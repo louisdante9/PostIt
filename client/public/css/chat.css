@@ -83,15 +83,7 @@ main {
   background-color: #424242;
   opacity: 300px;
 }
-#footer {
-    position: fixed;
-    left: 0px;
-    bottom: 0px;
-    height: 64px;
-    width: 100%;
-    background: #999;
-    opacity: 0.9
-  }
+
 .team-menu {
   position: relative;
   width: 220px;
@@ -334,23 +326,6 @@ main {
   margin-top: 0.2rem;
   max-width: 120px;
 }
-.chat-footer {
-  float: left;
-  width: 220px;
-  height: 100%;
-  background: #424242;
-  padding: 7px 0 9px 8px;
-  height: 4rem;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  color: #fff;
-}
-.inputBox{
-  position: relative;
-  left:51px;
-  top: 5px;
-}
 .users-footer {
   float: right;
   width: 220px;
@@ -379,7 +354,23 @@ main {
   margin-right: 220px;
 } */
 
-
+/* .input-box_text {
+   margin-top: 10px;
+  font-size: 0.95rem;
+  width: 90%;
+  margin-left: 2%;
+  margin-bottom: auto;
+  line-height: 1.2rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 0.2rem;
+  background-clip: padding-box;
+  color: #3d3c40;
+  box-shadow: none;
+  outline: 0;
+  bottom: 0;
+  min-height: 41px !important;
+  padding: 9px 5px 9px 8px;
+} */
 /* The Overlay (background) */
 .overlay {
     /* Height & width depends on how you want to reveal the overlay (see JS below) */    

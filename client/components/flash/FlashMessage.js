@@ -16,7 +16,7 @@ class FlashMessage extends React.Component {
 }
 
 FlashMessage.propTypes = {
-    message: React.PropTypes.array.isRequired
+    message: React.PropTypes.object.isRequired
 };
 
 function mapStateToProps(state){

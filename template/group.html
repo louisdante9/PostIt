@@ -1,25 +1,35 @@
 <!DOCTYPE html>
-<html >
+<html>
+
 <head>
   <meta charset="UTF-8">
   <title>Slack clone</title>
-      <!-- Latest compiled and minified CSS -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-      <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-      <style>
-        .sidediv{
-          width:20px;
-          background-color:black;
-          height: 100%; 
-        }
-      </style>
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+  <style>
+    .sidediv {
+      width: 20px;
+      background-color: black;
+      height: 100%;
+    }
+
+    #footer {
+      position: fixed;
+      left: 0px;
+      bottom: 0px;
+      height: 30px;
+      width: 100%;
+      background: #999;
+    }
+  </style>
 </head>
 
 <body>
-   <div class="navbar-fixed">
+  <div class="navbar-fixed">
     <nav>
       <div class="nav-wrapper">
         <a href="#!" class="brand-logo">Logo</a>
@@ -31,76 +41,56 @@
     </nav>
   </div>
   <!-- Page Layout here -->
+  <div class="row">
+    <div class="col s12 m4 l2">logo</div>
+    <div class="col s12 m8 l10">other stuff</div>
+  </div>
+  <div class="row">
+    <div class="col s1">side menu</div>
+    <div class="col s3">groups area</div>
+    <div class="col s5">chat area</div>
+    <div class="col s3">users area</div>
+  </div>
+  <div class="row">
+    <div class="col s3">left footer</div>
+    <div class="col s6">chat bar</div>
+    <div class="col s3">right footer</div>
+  </div>
+  <footer  id="footer">
     <div class="row">
-
-      <div class="col s12 m1 l1 sidebar"> <!-- Note that "m4 l3" was added -->
-        <!-- Grey navigation panel
-
-              This content will be:
-          3-columns-wide on large screens,
-          4-columns-wide on medium screens,
-          12-columns-wide on small screens  -->
-          
-          <p>this</p>
-      </div>
-
-      <div class="col s12 m3 l2 pink lighten-3"> <!-- Note that "m8 l9" was added -->
-        <!-- Teal page content
-
-              This content will be:
-          9-columns-wide on large screens,
-          8-columns-wide on medium screens,
-          12-columns-wide on small screens  -->
-          <p>this is a test</p>
-
-      </div>
-      <div class="col s12 m3 l2"> <!-- Note that "m8 l9" was added -->
-        <!-- Teal page content
-
-              This content will be:
-          9-columns-wide on large screens,
-          8-columns-wide on medium screens,
-          12-columns-wide on small screens  -->
-          <p>this is another test</p>
-
-      </div>
-        <div class="col s6 l2 offset-l2 pink lighten-3"> <!-- Note that "m8 l9" was added -->
-        <!-- Teal page content
-
-              This content will be:
-          9-columns-wide on large screens,
-          8-columns-wide on medium screens,
-          12-columns-wide on small screens  -->
-
-      </div>
+      <div class="col s3">left footer</div>
+      <div class="col s6">chat bar</div>
+      <div class="col s3">right footer</div>
     </div>
+    
+  </footer>
 </body>
-  <!--end -->
-    <!-- Bootstrap core JavaScript
+<!--end -->
+<!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-              $("#myModal").on('shown.bs.modal', function(){
-                  $(this).find('input[type="text"]').focus();
-              });
-          });
-          function openSlideNav() {
-              document.getElementById("myNav").style.width = "100%";
-          }
-          /* Set the width of the side navigation to 0 */
-          function closeSlideNav() {
-              document.getElementById("myNav").style.width = "0";
-          }
-          function openSlideUser() {
-              document.getElementById("userNav").style.width = "100%";
-          }
-          /* Set the width of the side navigation to 0 */
-          function closeSlideUser() {
-              document.getElementById("userNav").style.width = "0";
-          }
-  </script>
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#myModal").on('shown.bs.modal', function () {
+      $(this).find('input[type="text"]').focus();
+    });
+  });
+  function openSlideNav() {
+    document.getElementById("myNav").style.width = "100%";
+  }
+  /* Set the width of the side navigation to 0 */
+  function closeSlideNav() {
+    document.getElementById("myNav").style.width = "0";
+  }
+  function openSlideUser() {
+    document.getElementById("userNav").style.width = "100%";
+  }
+  /* Set the width of the side navigation to 0 */
+  function closeSlideUser() {
+    document.getElementById("userNav").style.width = "0";
+  }
+</script>
+
 </html>
-  
