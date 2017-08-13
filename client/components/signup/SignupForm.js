@@ -41,7 +41,7 @@ class SignupForm extends React.Component{
             type: 'success',
             text: 'You signed up successfull. Welcome!'
           });
-          browserHistory.push('/');
+          browserHistory.push('/dashboard');
         },
         (error, resp) => {
           this.setState({ errors: error.response.data, isLoading: false });

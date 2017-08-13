@@ -1,17 +1,14 @@
  import axios from 'axios';
 
-//  export function setAuthToken(token){
-//       if(token){
-//           axios.defaults.headers.common[ 'Authorization' ]=  `Bearer ${ token }`;
-//       }else{
-//          delete axios.defaults.headers.common[ 'Authorization' ];
-//       }
-//  }
 
+ const { host, protocol } = window.location;
+ const BASE_URL = `${protocol}//${host}/api`;
+  
  const setAuthToken = (token) => {
     token = token || localStorage.getItem('jwtToken');
     if(token) {
         axios.defaults.headers.common[ 'Authorization' ] = `${ token }`;
+        axios.defaults.baseURL = BASE_URL;
     } else {
         delete axios.defaults.headers.common[ 'Authorization' ];
     }

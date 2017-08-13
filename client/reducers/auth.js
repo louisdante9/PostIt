@@ -1,5 +1,7 @@
 import {USER_AUTHENTICATED} from '../actions/types';
 import isEmpty from 'lodash/isEmpty';
+
+
 const initialState =  { 
     active: false, 
     user: {}

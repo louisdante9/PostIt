@@ -2,18 +2,22 @@ import models from '../models';
 
 export default {
   create(req, res) {
+    // console.log('sjvhfashfd=====', req.decoded)
     return models.Group
       .create({
         name: req.body.name,
+        userId: req.decoded.userId,
         description: req.body.description
       })
       .then((group) => {
         if (group) {
+          // console.log(group);
           const groupUser = {
             groupId: group.id,
             userId: req.decoded.userId,
             isAdmin: true
-          }
+          };
+          
           models.GroupUser.create(groupUser).then((createdGroup) => {
             if (createdGroup) {
               return res.status(201).json({
@@ -33,12 +37,25 @@ export default {
       .catch(error => res.status(500).json(error));
   },
     
+  // list(req, res) {
+  //   models.Group
+  //     .findAll({
+  //       include: [{
+  //         model: models.User,
+  //         attributes: {exclude: ['password', 'createdAt', 'updatedAt']},
+  //         order: [['createdAt', 'DESC']]
+  //       }],
+  //     })
+  //     .then(groups => res.status(200).send(groups))
+  //     .catch(error => res.status(400).send(error));
+  // },
   list(req, res) {
-    models.Group
+    models.GroupUser
       .findAll({
+        where: { userId: req.decoded.userId },
         include: [{
-          model: models.User,
-          attributes: {exclude: ['password', 'createdAt', 'updatedAt']},
+          model: models.Group,
+          attributes: {exclude: ['createdAt', 'updatedAt']},
           order: [['createdAt', 'DESC']]
         }],
       })
@@ -48,7 +65,7 @@ export default {
 
 
   retrieveOneGroup(req, res) {
-  return Group
+  return models.Group
     .findById(req.params.groupId)
     .then(group => {
       if (!group) {

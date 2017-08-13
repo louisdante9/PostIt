@@ -1,5 +1,4 @@
 
-
 /* Custom default button */
 .btn,
 .btn:hover,
@@ -25,10 +24,12 @@ p{
 
 html,
 body {
-  height: 100%;
-  background-color: #4d394b;
-  color: #fff;
-  padding-bottom: 40px;
+  background-color: #fff;
+  color: #4d394b;
+  max-height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
@@ -116,12 +117,6 @@ body {
     width: 700px;
   }
 }
-
-
-
-
-
-
 .messages{
     	margin: 20px;
     }
@@ -257,4 +252,127 @@ body {
         top: 15px;
         right: 35px;
     }
+}
+
+
+
+
+
+
+
+.body-container {
+  background-color: rgba(0, 0, 0, 0.51);
+}
+.authentication {
+  margin-right: 50%
+}
+.container {
+    max-width: 100% !important;
+    width: 98% !important;
+}
+#email-details {
+    margin-left: 10px;
+}
+.collection .collection-item.avatar {
+    min-height: 0px !important;
+}
+.group-collection {
+    padding-left: 10px !important;
+    /*font-style: italic;*/
+    font-weight: 600;
+}
+.group-channel {
+    padding-left: 10px !important;
+    font-weight: 400;
+}
+span.bad.new {
+    font-weight: 300;
+    font-size: 1.1rem;
+    color: #fff;
+    background-color: #c24141;
+    border-radius: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.email-tag {
+    font-size: 18px !important;
+}
+.time-text {
+    font-size: 12px;
+}
+span.bad {
+    margin-left: 14px;
+    text-align: center;
+    font-size: 1.3rem;
+    line-height: 24px;
+    height: 25px;
+    color: #757575;
+    float: right;
+    box-sizing: border-box;
+}
+ span.send {
+    margin-left: 5px;
+    font-weight: 300;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 35px;
+    height: 35px;
+    margin-top: 11px;
+    color: #fff;
+    float: right;
+    box-sizing: border-box;
+    background-color: #59983b;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.secondary-content {
+    top: 9px !important;
+}
+#email-list {
+    height: calc(100vh - 99px);
+}
+.model-email-content {
+padding: 24px;
+}
+#email-details {
+    height: calc(100vh - 99px);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+#message-board {
+    overflow: auto;
+    margin-top: 10px;
+}
+#message-board > .row {
+    margin-bottom: 0px !important;
+}
+#text-input {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+#text-area {
+    border: 1px solid #ccc;
+    outline: none;
+    line-height: 40px;
+    text-indent: 10px;
+    resize: none;
+    top: -4px;
+    right: 5px;
+    width: 70%;
+    display: inline-block;
+}
+.message-text {
+    font-size: 14px;
+    font-weight: 300;
+}
+.send-icon {
+    float: right;
+    margin-top: 20px;
+}
+select {
+  display: inline-block;
+  top: 2px;
+  width: 15px;
 }

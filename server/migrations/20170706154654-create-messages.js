@@ -13,6 +13,22 @@ module.exports = {
 
       },
       message: Sequelize.TEXT,
+      groupId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Groups',
+          foreignKey: 'id'
+        }
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          foreignKey: 'id'
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

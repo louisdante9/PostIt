@@ -15,7 +15,7 @@ const Authenticate = {
    * @param {Function} next callback function
    */
   verifyToken(req, res, next) {
-    console.log(secretKey);
+    // console.log(secretKey);
     const token = req.headers.authorization || req.headers['x-access-token'];
 
     if (!token) {

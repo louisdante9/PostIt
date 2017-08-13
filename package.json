@@ -14,7 +14,9 @@
     "test": "mocha --reporter progress server/testSetup.js \"client/**/*.test.js\"",
     "test:watch": "npm run test -- --watch",
     "open:server": "nodemon --watch server --exec babel-node -- ./server/app.js",
-    "servertest": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register ./server/tests/auth.test.js"
+    "servertest": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register ./server/tests/auth.test.js",
+    "migrate:undo": "node_modules/.bin/sequelize db:migrate:undo:all",
+    "migrate": "node_modules/.bin/sequelize db:migrate"
   },
   "author": "louis",
   "license": "MIT",

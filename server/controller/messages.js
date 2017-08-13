@@ -1,4 +1,5 @@
 import db from '../models';
+import {handleError} from './helpers/handleErrors';
 
 const Messages = {
 
@@ -11,11 +12,7 @@ const Messages = {
 
  getGroupMessage(req, res) {
     db.Message.findAll({
-      where: { id: req.params.groupId },
-      // include: [
-      //   { model: db.Message
-      //   }
-      // ],
+      where: { groupId: req.params.groupId },
       order: [['createdAt', 'DESC']]
     }).then((messages) => {
         res.status(200).json({
@@ -23,8 +20,7 @@ const Messages = {
       });
     })
     .catch((error )=>{
-      //console.log(error);
-      return res.status(500).json({error})
+      return res.status(500).json({error});
     });
   },
 
@@ -49,6 +45,11 @@ const Messages = {
             success: 'New message has been added successfully.',
             addedMessage
           });
+        }).catch((err)=>{
+          return res.status(400).json({
+            message: 'Bad Request',
+            err: handleError(err.errors)
+          })
         });
       } else {
         return res.status(404).json({

@@ -10,6 +10,8 @@ import db from './models/';
 import open from 'open';
 import config from '../webpack.config.dev';
 import webpack from 'webpack';
+import morgan from 'morgan';
+
 
 // Set up the express app
 const app = express();
@@ -19,7 +21,7 @@ dotenv.config();
 debug('dms:server');
 Logger.useDefaults();
 const compiler = webpack(config);
-
+app.use(morgan());
 /**
  * Normalize a port into a number, string, or false.
  * @param {number} val port number to be used

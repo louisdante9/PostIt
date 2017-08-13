@@ -9,10 +9,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       groupId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          foreignKey: 'id',
+          model: 'Groups'
+        }
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          foreignKey: 'id',
+          model: 'Users'
+        }
       },
       isAdmin: {
         type: Sequelize.BOOLEAN

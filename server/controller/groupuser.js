@@ -1,6 +1,6 @@
 import models from '../models';
 
-module.exports = {
+const GroupUsers = {
     getAllUsers(req, res) {
         models.User.findAll({
         attributes: { exclude: ['password', 'updatedAt'] }
@@ -52,8 +52,10 @@ module.exports = {
  * @param {object} res
  * @returns {void}
  */
+
     addUsersToGroup(req, res) {
-    return models.groupUser
+    // console.log(models.GroupUser);
+    models.GroupUser
     .create({
       userId: req.body.userId,
       groupId: req.params.groupId
@@ -63,3 +65,5 @@ module.exports = {
   },
    
 };
+
+export default GroupUsers;
