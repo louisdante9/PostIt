@@ -1,28 +1,32 @@
 import React from 'react';
+import moment from 'moment';
 
-export const Component = (groups) => {
-    // const renderMessages = () => {
-        
-    //             return groups.map(group => (
-    //                 <li key={group.groupId} className="collection-item avatar email-unread group-channel">
-    //                     <a href=""><span className="group-title">#{group.Group.name}</span></a>
-    //                     <a href="#!" className="secondary-content"><span className="new badge reddish">6</span></a>
-    //                 </li>
-    //             ));
-    //         };
+export const Component = ({ messages, groups }) => {
+ 
     const emptyMessage = (
         <p>There are no meessages yet in this group</p>
     );
+
+    const renderMessage = message => {
+        return (
+            <li key={message.id}className="collection-item avatar">
+                <img src="images/avatar.jpg" alt="" className="circle" />
+                <span className="email-title"><a href="">{message.User.username}</a> <span className="ultra-small grey-text time-text">{moment().from(message.createdAt)}</span> </span>
+                <p className="truncate black-text message-text">{message.message}</p>
+            </li>
+        );
+    };
  
     return(
         <div>
-            <li className="collection-item avatar">
-                <img src="images/avatar.jpg" alt="" className="circle" />
-                <span className="email-title"><a href="">Alienyi David</a> <span className="ultra-small grey-text time-text">09:23 am</span> </span>
-                <p className="truncate black-text message-text">Good Morning</p>
-            </li>
+            { 
+                messages.length > 0? messages.map ( message =>  renderMessage(message)): emptyMessage
+            }
         </div>
     );
 };
-
+Component.propTypes={
+    messages : React.PropTypes.array.isRequired,
+    groups: React.PropTypes.array.isRequired
+};
 export default Component;

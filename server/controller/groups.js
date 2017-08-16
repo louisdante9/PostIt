@@ -50,18 +50,31 @@ export default {
   //     .catch(error => res.status(400).send(error));
   // },
   list(req, res) {
-    models.GroupUser
+    models.Group
       .findAll({
-        where: { userId: req.decoded.userId },
         include: [{
-          model: models.Group,
-          attributes: {exclude: ['createdAt', 'updatedAt']},
+          model: models.User,
+          where: { id: req.decoded.userId },
+          attributes: { exclude: ['password']},
           order: [['createdAt', 'DESC']]
         }],
       })
       .then(groups => res.status(200).send(groups))
       .catch(error => res.status(400).send(error));
   },
+  // list(req, res) {
+  //   models.GroupUser
+  //     .findAll({
+  //       where: { userId: req.decoded.userId },
+  //       include: [{
+  //         model: models.Group,
+  //         attributes: {exclude: ['createdAt', 'updatedAt']},
+  //         order: [['createdAt', 'DESC']]
+  //       }],
+  //     })
+  //     .then(groups => res.status(200).send(groups))
+  //     .catch(error => res.status(400).send(error));
+  // },
 
 
   retrieveOneGroup(req, res) {

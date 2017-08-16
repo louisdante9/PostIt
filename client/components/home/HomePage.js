@@ -15,13 +15,13 @@ class Home extends React.Component{
                             everyone in your group by sending a message once. Awesome isn't it
                         </p>
                         <p className="lead">
-                        <a href="/signup" className="waves-effect waves-light btn purple">Get Started</a>
+                        <a href="" className="waves-effect waves-light btn grey">Get Started</a>
                         </p>
                     </div>
 
             <div className="mastfoot">
-                <div className="inner">
                 <p>Post-IT, by <a href="https://github.com/louisdante9/PostIt">@louisdante9</a>.</p>
+                <div className="inner">
                 </div>
             </div>
             </div>

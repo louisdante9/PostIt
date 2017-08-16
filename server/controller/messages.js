@@ -13,7 +13,12 @@ const Messages = {
  getGroupMessage(req, res) {
     db.Message.findAll({
       where: { groupId: req.params.groupId },
-      order: [['createdAt', 'DESC']]
+      include: [{
+        model: db.User,
+        attributes: { exclude: ['password']},
+        order: [['createdAt', 'DESC']]
+      }],
+      order: [['createdAt', 'ASC']]
     }).then((messages) => {
         res.status(200).json({
          messages
@@ -38,13 +43,11 @@ const Messages = {
         const newMessage = {
           message: req.body.message,
           userId: req.decoded.userId,
+          flag: req.body.flag,
           groupId: group.id
         };
         db.Message.create(newMessage).then((addedMessage) => {
-          res.status(201).json({
-            success: 'New message has been added successfully.',
-            addedMessage
-          });
+          res.status(201).json(addedMessage);
         }).catch((err)=>{
           return res.status(400).json({
             message: 'Bad Request',

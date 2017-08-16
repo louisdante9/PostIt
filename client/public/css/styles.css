@@ -5,7 +5,7 @@
 .btn:focus {
   color: #fff;
   text-shadow: none; /* Prevent inheritance from `body` */
-  border-radius: 170px;
+  /* border-radius: 170px; */
 } 
 
 /* .logo{
@@ -13,7 +13,7 @@
 } */
 p{
   padding: 5px;
-  font-size: 25px;
+  font-size: 20px;
 }
 .authlink{
   font-size: 15px;
@@ -29,7 +29,7 @@ body {
   max-height: 100%;
   padding: 0;
   margin: 0;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
@@ -72,17 +72,26 @@ body {
   padding-top: 19px;
   color: #4364d1;
   border-top: 1px solid #e5e5e5;
+ 
 }
-
 /*
  * Footer
  */
 
 .mastfoot {
   color: #999; /* IE8 proofing */
-  color: rgba(255,255,255,.5);
+  position:fixed;
+  left:0px;
+  bottom:0px;
+  height:40px;
+  width:100%;
+  background:#e0e0e0;
 }
-
+.mastfoot p{
+    font-size: 15px;
+    color: black;
+    padding-bottom: 20px
+}
 
 /*
  * Affix and center
@@ -110,7 +119,7 @@ body {
   }
 }
 
-@media (min-width: 992px) {
+@media (max-width: 992px) {
   .masthead,
   .mastfoot,
   .cover-container {
@@ -175,7 +184,10 @@ body {
     width: 50px; /* Set a specific width */
     background-color: #F59484; /* Dark-grey background */
 }
-
+.material-icons{
+    color: grey;
+    padding-top: 5px; 
+}
 .icon-bar a {
     display: block; /* Make the links appear below each other instead of side-by-side */
     text-align: center; /* Center-align text */
@@ -244,7 +256,11 @@ body {
     margin-left: 50px;
 }
 
-/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+/* 
+* When the height of the screen is less than 450 pixels, 
+*  change the font-size of the links and position the close 
+* button again, so they don't overlap 
+*/
 @media screen and (max-height: 450px) {
     .overlay a {font-size: 20px}
     .overlay .closebtn {
@@ -253,13 +269,41 @@ body {
         right: 35px;
     }
 }
+/*
+* style for the materialize css nav bar
+*/
+nav {
+    height: 40px;
+    line-height: 40px;
+}
 
+nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
+    height: 40px;
+    line-height: 40px;
+}
 
+nav .button-collapse i {
+    height: 40px;
+    line-height: 40px;
+}
 
+nav .brand-logo { 
+    font-size: 1rem; 
+    display: inline-block;
+    height: 100%;
+    padding-left: 40px;
+}
 
+@media only screen and (min-width: 601px){
+    nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+        height: 40px;
+        line-height: 40px;
+    }
+}
 
-
-
+/*
+*style for the dashboard page
+*/
 .body-container {
   background-color: rgba(0, 0, 0, 0.51);
 }
@@ -297,6 +341,7 @@ span.bad.new {
 .email-tag {
     font-size: 18px !important;
 }
+
 .time-text {
     font-size: 12px;
 }
@@ -317,19 +362,21 @@ span.bad {
     font-size: 1rem;
     line-height: 35px;
     height: 35px;
-    margin-top: 11px;
+    margin-top: 4px;
     color: #fff;
     float: right;
     box-sizing: border-box;
-    background-color: #59983b;
+    background-color: grey;
     padding-left: 10px;
     padding-right: 10px;
+
 }
 .secondary-content {
     top: 9px !important;
 }
 #email-list {
     height: calc(100vh - 99px);
+    overflow: scroll;
 }
 .model-email-content {
 padding: 24px;
@@ -352,6 +399,9 @@ padding: 24px;
     padding-right: 10px;
     padding-left: 10px;
 }
+#priority{
+    display: inline-block;
+}
 #text-area {
     border: 1px solid #ccc;
     outline: none;
@@ -360,7 +410,7 @@ padding: 24px;
     resize: none;
     top: -4px;
     right: 5px;
-    width: 70%;
+    width: 80%;
     display: inline-block;
 }
 .message-text {
@@ -368,11 +418,11 @@ padding: 24px;
     font-weight: 300;
 }
 .send-icon {
-    float: right;
+    float: left;
     margin-top: 20px;
 }
 select {
   display: inline-block;
   top: 2px;
-  width: 15px;
+  width: 25px;
 }

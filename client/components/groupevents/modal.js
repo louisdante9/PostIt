@@ -23,7 +23,9 @@ export default class Modal extends React.Component {
     
     handleSubmit(event) {
         event.preventDefault();
-        this.props.createGroup(this.state);        
+        this.props.createGroup(this.state).then(() => {
+            $('.modal').modal('close');
+        });        
     }
 
     render() {

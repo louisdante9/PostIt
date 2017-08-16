@@ -1,4 +1,4 @@
-import { CREATE_USER_GROUP, GET_USER_GROUP, GET_GROUP_MESSAGES, CREATE_GROUP_MESSAGE } from '../actions/types';
+import { CREATE_USER_GROUP, GET_USER_GROUP } from '../actions/types';
 
 const initialState = [];
 
@@ -8,12 +8,9 @@ export default (state = initialState, action) => {
         case GET_USER_GROUP:
             return action.payload;
         case CREATE_USER_GROUP:
+            console.log(action.payload);
            return [ action.payload, ...state];
-        case GET_GROUP_MESSAGES:
-            return action.payload;
-        case CREATE_GROUP_MESSAGE:
-            return [action.payload, ...state];
         default:
-            return initialState;
+            return state;
     }
 };

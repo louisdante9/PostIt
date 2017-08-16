@@ -37,9 +37,9 @@ class NavigationBar extends React.Component{
     );
     return(
       <div className="navbar-fixed">
-        <nav>
+        <nav className="grey darken-2">
           <div className="nav-wrapper">
-            <Link to="/" class="brand-logo logo">POST-IT</Link>
+            <Link to="/" className="brand-logo">POST-IT</Link>
             <img alt=""/>
               {active ? userLinks : guestLink}
           </div>

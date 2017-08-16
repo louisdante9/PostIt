@@ -4,16 +4,16 @@
  import { USER_AUTHENTICATED } from './types';
 
 
-export function setCurrentUser(user){
+export function setCurrentUser(user) {
     return {
         type: USER_AUTHENTICATED,
         user
-
     };
 }
-export function login(data){
+export function login(data) {
     return dispatch => {
-        return axios.post('/user/signin', data).then(res => {
+        console.log(axios.default);
+        return axios.post('/api/user/signin', data).then(res => {
             const token = res.data.token;
             localStorage.setItem('jwtToken', token);
             setAuthToken(token);
@@ -22,9 +22,9 @@ export function login(data){
     };
 }
 
-export function userSignupRequest(userData){
+export function userSignupRequest(userData) {
     return dispatch => {
-        return axios.post('/user/signup', userData).then(res => {
+        return axios.post('/api/user/signup', userData).then(res => {
             const token = res.data.token;
             localStorage.setItem('jwtToken', token);
             setAuthToken(token);
@@ -37,7 +37,7 @@ export function userSignupRequest(userData){
 export function logout() {
     return dispatch => {
         localStorage.removeItem('jwtToken');
-        setAuthToken(false );
+        setAuthToken(false);
         dispatch(setCurrentUser({}));
     };
 }

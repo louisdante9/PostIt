@@ -18,7 +18,7 @@ const app = express();
 
 //config setup
 dotenv.config();
-debug('dms:server');
+// debug('dms:server');
 Logger.useDefaults();
 const compiler = webpack(config);
 app.use(morgan());

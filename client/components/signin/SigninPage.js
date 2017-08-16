@@ -1,5 +1,10 @@
 import React from 'react';
 import SigninForm from './SiginForm';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import requireauth from '../../utils/requireAuth';
+import { addFlashMessage } from '../../actions/flashMessages';
+
 
 class SigninPage extends React.Component{
     render(){

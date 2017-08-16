@@ -1,46 +1,78 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { addFlashMessage} from '../../actions/flashMessages';
 import Aside from './Aside';
 import Message from './Message';
 import MessageBox from './MessageBox';
 import Modal from './modal';
+import UserModal from './userModal';
 import { bindActionCreators } from 'redux';
 
-import { getGroups, createGroup, getMessages } from '../../actions/groupAction';
+import { getGroups, createGroup, getMessages, createMessage } from '../../actions/groupAction';
 
 class Dashboard extends Component {
-  // constructor(props){
-  //   super(props);
-  //   this.state ={
-  //     setSelectedGroup: []
-  //   }
-  // }
-  //setSelectedGroup(groupId){
-  //   this.setState({
-  //     setSelectedGroup = this.state.
-  //   })
-  // }
+  constructor(props){
+    super(props);
+    this.state = {
+        groupId: '',
+        message: '',
+        flag: 'normal'
+    };
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.setGroupMessages =  this.setGroupMessages.bind(this);
+    this.openSlideaAdduser = this.openSlideaAdduser.bind(this);
+  }
+
   componentDidMount() {
-    console.log(this.props);
-    console.log(this.props.groups.map(group=>group.groupId));
     this.props.getGroups();
-    //  if (this.props.params.groupId) {
-    //    this.props.getMessages(this.props.params.groupId);  
-    //  }
-    
+    // this.props.createMessage();
   }
-  componentWillUpdate(){
-    this.props.getGroups();
+
+  setGroupMessages(id){
+    return (evt) => {
+      evt.preventDefault();
+      console.log(id);
+      this.props.getMessages(id);
+       this.setState({ groupId: id });
+    };
   }
+
+  onSubmit(event){
+    event.preventDefault();
+    const { userId, username } = this.props.user;
+    const data = Object.assign({}, this.state, { userId, username});
+    console.log(data);
+    this.props.createMessage(this.state.groupId, data);
+    this.setState({message:''});
+  }
+
+  openSlideaAdduser(){
+    $('select').material_select();
+    $('.modal').modal();
+  }
+
+  onChange(event){
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+
   showModal(){
     $('select').material_select();
     $('.modal').modal();
   }
 
+  getGroupName(evn){
+    return (evt) => {
+      console.log(evn, 'i was called');
+      return evn;
+    };
+  }
     render() {
-      const { groups  } = this.props;
-      //console.log(groups.map(group=>group.groupId));
+      console.log('HERE: ', this.state.id);
+      const { groups, messages } = this.props;
+      const GroupName = groups.find(group => group.id === this.state.groupId);
         return (
           <div>
             <section id="content">
@@ -52,13 +84,20 @@ class Dashboard extends Component {
                     <Aside 
                       showModal={this.showModal} 
                       groups={groups}
+                      setGroupMessages={this.setGroupMessages}
                       />
                     <div id="email-details" className="col s12 m8 l8 card-panel">
                       <hr className="grey-text text-lighten-2" />
                       <div className="collection-item avatar">
-                        <p className="email-subject truncate"><span className="email-tag grey lighten-3">#lagos-all</span> 
-                          <span className="email-tag  light-blue lighten-4"></span> 
-                          <i className="mdi-action-star-rate yellow-text text-darken-3 right"></i>
+                        <p className="email-subject truncate"><span className="email-tag grey lighten-3">{GroupName && GroupName.name}</span> 
+                        <a href="#modal2" className="secondary-content modal-trigger" onClick={(event) => {
+                          event.preventDefault();
+                          this.openSlideaAdduser();
+                      }}>
+                        click to add user
+                        <span className="send">
+                            Add User
+                        </span></a>
                         </p>
                       <hr />
                       </div>
@@ -67,8 +106,7 @@ class Dashboard extends Component {
                           <div className="col s10 m10 l10">
                             <ul className="collection">
                              {/** single message **/}
-                             < Message groups={groups}/>
-                            {/**[1,2,3,4,5,6,7,8,9,,1,1,1,1].map(num =>  <Message />)**/}
+                             < Message messages = {messages} groups={groups}/>
                             </ul>
                           </div>
                           <div className="col s2 m2 l2 email-actions">
@@ -79,14 +117,14 @@ class Dashboard extends Component {
                       </div>
                       <hr />
                       {/**  message box */}
-                      <MessageBox />
+                      <MessageBox message={this.state.message} flag={this.state.flag} onChange={this.onChange} onSubmit={this.onSubmit} groups={groups} />
                     </div>
                   </div>
 
                 </div>
                 <Modal createGroup={this.props.createGroup}/>
             </div>
-            
+            <UserModal href="#modal2"/>
         </div>
         </section>      
             </div>
@@ -97,12 +135,23 @@ Dashboard.propTypes = {
   createGroup: React.PropTypes.func.isRequired,
   getGroups : React.PropTypes.func.isRequired,
   getMessages: React.PropTypes.func.isRequired,
+  createMessage: React.PropTypes.func.isRequired,
   groups: React.PropTypes.array.isRequired,
+  messages: React.PropTypes.array.isRequired,
+  user: React.PropTypes.object.isRequired,
+  active : React.PropTypes.bool.isRequired,
 };
+
 const mapStateToProps = (state, ownProps) => {
   return {
-    groups: state.groups
+    groups: state.groups,
+    messages: state.messages,
+    user: state.auth.user,
   };
 };
 
-export default connect(mapStateToProps, { getGroups, createGroup, getMessages })(Dashboard);
+
+
+
+
+export default connect(mapStateToProps, { getGroups, createGroup, getMessages, createMessage })(Dashboard);

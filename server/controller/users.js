@@ -18,7 +18,7 @@ const Users = {
   * @returns {Object} - Returns response object
   */
   signup(req, res) {
-    const { username, email, password } = req.body;
+    const { username, email, password, phone } = req.body;
 
     db.User.find({
       where: {
@@ -29,11 +29,13 @@ const Users = {
         return res.status(409).json({ message: `User with ${email} already exists` });
       } else {
         db.User.create(req.body).then((user) => {
+          console.log(user);
           if (user) {
             const jwtData = {
               username: user.username.trim(),
               email: user.email.trim(),
-              userId: user.id
+              userId: user.id,
+              phone: user.phone
             };
 
             const token = jwt.sign(jwtData, secretKey, { expiresIn: 86400 });
@@ -42,9 +44,10 @@ const Users = {
           }
         })
         .catch(error => {
+          console.log(error);
           return res.status(400).json({
             message: 'Bad request sent to the server',
-            errors: handleError(error.errors)
+            errors: handleError(error)
           });
         });
       }
@@ -166,7 +169,7 @@ const Users = {
           return res.status(404)
             .json({ message: 'No user found to delete' });
         }
-        return res.status(200).json({ message: 'User successfully deleted' });
+        return res.status(200).json({ message: 'User successfully deleted'});
       });
   },
 };

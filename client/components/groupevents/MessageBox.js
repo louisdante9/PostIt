@@ -1,6 +1,7 @@
 import React from 'react';
 
-export const Component = (props) => {
+export const Component = ({ message, flag, onChange, onSubmit }) => {
+    // groups.filter(group => )
     return(
         <div>
       `      <div className="email-content-wrap">
@@ -9,14 +10,13 @@ export const Component = (props) => {
                         <hr />
                         <ul>
                         <li className="collection-item avatar" id="text-input">
-                            <textarea id="text-area" className="col s10" placeholder="write message..."></textarea>
-                            <select className="col s1">
-                                <option value="">Priority</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
+                            <textarea id="text-area" className="col s10" placeholder="write message..." value={message} name="message" onChange={onChange}></textarea>
+                            <select className="col s1" id="select" name="flag" value={flag} onChange={onChange}>
+                                <option value="normal">Normal</option>
+                                <option value="urgent">Urgent</option>
+                                <option value="critical">Critical</option>
                             </select>
-                            <a href="#!" className="secondary-content">
+                            <a href="" className="secondary-content" onClick={onSubmit}>
                             <span className="send">
                                 SEND
                             </span></a>
@@ -24,13 +24,15 @@ export const Component = (props) => {
                         </ul>
                     </div>
                 </div>
-                <div className="col s2 m2 l2 email-actions">
-                    <a href="#!"><span><i className="mdi-content-reply"></i></span></a>
-                    <a href="#!"><span><i className="mdi-navigation-more-vert"></i></span></a>
-                </div>
             </div>
         </div>
     );
 };
 
+Component.propTypes={
+    value : React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func.isRequired,
+    onSubmit: React.PropTypes.func.isRequired,
+    groups: React.PropTypes.array.isRequired
+};
 export default Component;

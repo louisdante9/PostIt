@@ -10,9 +10,10 @@ import requireAuth from './utils/requireAuth';
 export default(
     <Route path="/" component={App}>
         <IndexRoute component={HomePage}/>
-        <Route path="signup" component={SignupPage}/>
-        <Route path="signin" component={SigninPage}/>
+        <Route path="signup" component={requireAuth(SignupPage)}/>
+        <Route path="signin" component={requireAuth(SigninPage)}/>
         <Route path="dashboard" component={requireAuth(Dashboard)}/>
+        
     </Route>
     
 );

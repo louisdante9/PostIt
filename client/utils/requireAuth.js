@@ -6,21 +6,24 @@ import { addFlashMessage } from '../actions/flashMessages';
 export default function (ComposedComponent) {
     class Autheticate extends Component {
         componentWillMount(){
-            if (!this.props.active) {
+            console.log(this.props);
+            const { location: { pathname }, active } = this.props;
+            if (!active && pathname.includes('dashbaord')) {
                 this.props.addFlashMessage({
                     type: 'error',
                     text: 'You need to be logged in to access this page'
                 });
-
                 // not in function scope 
                 this.context.router.push('/signin');
+            }
+            else if (active) {
+                this.context.router.push('/dashboard')
             }
         }
         
         componentWillUpdate(nextProps){
            if(!nextProps.active){
               this.context.router.push('/');
-
            }
         }
         render(){
@@ -30,7 +33,6 @@ export default function (ComposedComponent) {
         }
         
     }
-
     Autheticate.contextTypes = {
         router: React.PropTypes.object.isRequired
     };
@@ -44,5 +46,6 @@ export default function (ComposedComponent) {
             active: state.auth.active
         };
     }
+
     return connect(mapStateToProps, { addFlashMessage })(Autheticate);
 }

@@ -25,6 +25,7 @@ class SigninForm extends React.Component {
             this.props.login(this.state)
             .then((res) => this.context.router.push('/dashboard'))
             .catch((err) => {
+                console.log(err);
                 const error =  err.response.data.errors;
                 this.handleErrors(error);
                 this.setState({ isLoading: false });

@@ -38,6 +38,16 @@ module.exports = (sequelize, DataTypes) =>{
       }
     }
   },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    validate: {
+      len: {
+        args: [11, 15],
+        msg: 'Your phone number is too short'
+      }
+    }
+  },
   }, {
       classMethods: {
       associate: (models) => {
