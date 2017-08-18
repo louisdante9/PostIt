@@ -10,9 +10,6 @@ export default class UserModal extends React.Component {
             this.state = {
                 matchingUsers: [],
             };
-
-        //     console.log(this.props);
-
         this.handleChange = this.handleChange.bind(this);
         //     this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -20,7 +17,6 @@ export default class UserModal extends React.Component {
 
     handleChange(event, groupId) {
         event.preventDefault();
-        // this.setState({ [ event.target.name] : event.target.value });
         const query = event.target.value;
         // axios().get(`/api/user/search?name=${query}`).then(res => {
         //     console.log(res);
@@ -29,7 +25,7 @@ export default class UserModal extends React.Component {
         axios().get(`/api/user/search?name=${query}&groupId=${this.props.group}`).then(res => {
             console.log(res);
             this.setState({ matchingUsers: res.data.users });
-        })
+        });
     }
 
     handleSelect(event, username){

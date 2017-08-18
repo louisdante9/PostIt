@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './rootReducer';
 import routes  from './routes';
-import './public/css/styles.css';
+import './public/css/styles.scss';
 import setAuthToken from './utils/setAuthToken';
 import jwt from 'jsonwebtoken';
 import {setCurrentUser} from './actions/authActions';

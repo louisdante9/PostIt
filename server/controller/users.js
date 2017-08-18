@@ -140,7 +140,7 @@ const Users = {
         through: { attributes: [] }
       }]
     }).then((group) => {
-      const omitUsers = _.map(group.toJSON().Users, 'id');
+      const omitUsers = _.map(group.toJSON().Users, 'id');//flags an error if the group is null...also return password....
       query.where.id = { $notIn: omitUsers };
       db.User.findAll(query).then((result) => {
         return res.status(200)
