@@ -18,7 +18,7 @@ export const Component = ({ messages, groups }) => {
     };
  
     return(
-        <div>
+        <div className="messages">
             { 
                 messages.length > 0? messages.map ( message =>  renderMessage(message)): emptyMessage
             }

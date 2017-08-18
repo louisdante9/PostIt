@@ -37,18 +37,6 @@ export default {
       .catch(error => res.status(500).json(error));
   },
     
-  // list(req, res) {
-  //   models.Group
-  //     .findAll({
-  //       include: [{
-  //         model: models.User,
-  //         attributes: {exclude: ['password', 'createdAt', 'updatedAt']},
-  //         order: [['createdAt', 'DESC']]
-  //       }],
-  //     })
-  //     .then(groups => res.status(200).send(groups))
-  //     .catch(error => res.status(400).send(error));
-  // },
   list(req, res) {
     models.Group
       .findAll({
@@ -62,20 +50,7 @@ export default {
       .then(groups => res.status(200).send(groups))
       .catch(error => res.status(400).send(error));
   },
-  // list(req, res) {
-  //   models.GroupUser
-  //     .findAll({
-  //       where: { userId: req.decoded.userId },
-  //       include: [{
-  //         model: models.Group,
-  //         attributes: {exclude: ['createdAt', 'updatedAt']},
-  //         order: [['createdAt', 'DESC']]
-  //       }],
-  //     })
-  //     .then(groups => res.status(200).send(groups))
-  //     .catch(error => res.status(400).send(error));
-  // },
-
+ 
 
   retrieveOneGroup(req, res) {
   return models.Group

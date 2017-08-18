@@ -22,10 +22,11 @@ class NavigationBar extends React.Component{
 
 
   render() {
-    const{ active } = this.props.auth;
+    const{ active, user } = this.props.auth;
     const userLinks = (
       <ul id="nav-mobile" className="right hide-on-med-and-down">
-          <li><a href="" onClick={this.logout}>Log out</a></li>
+          <li><span>Welcome </span>{user.username} <span className="material-icons white">perm_identity </span></li>
+          <li><a href="" onClick={this.logout}> Log out</a></li>
       </ul>
     );
     const guestLink = (

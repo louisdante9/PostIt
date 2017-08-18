@@ -8,16 +8,16 @@ export default function (ComposedComponent) {
         componentWillMount(){
             console.log(this.props);
             const { location: { pathname }, active } = this.props;
-            if (!active && pathname.includes('dashbaord')) {
+            if (!active && pathname.includes('dashboard')) {
                 this.props.addFlashMessage({
                     type: 'error',
                     text: 'You need to be logged in to access this page'
                 });
-                // not in function scope 
+                
                 this.context.router.push('/signin');
             }
             else if (active) {
-                this.context.router.push('/dashboard')
+                this.context.router.push('/dashboard');
             }
         }
         

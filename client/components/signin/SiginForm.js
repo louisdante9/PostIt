@@ -22,6 +22,7 @@ class SigninForm extends React.Component {
         const { errors, isValid } = validateInput(this.state);
         if (isValid) {
             this.setState({ isLoading: true});
+            console.log('===', this.state);
             this.props.login(this.state)
             .then((res) => this.context.router.push('/dashboard'))
             .catch((err) => {

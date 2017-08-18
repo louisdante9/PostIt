@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
 import db from '../models';
 import UserHelper from './helpers/userHelper';
+import _ from 'lodash';
 
-require('dotenv').config({ silent: true});
+require('dotenv').config({ silent: true });
 
 const secretKey = process.env.JWT_SECRET_KEY;
 
@@ -10,7 +11,7 @@ const secretKey = process.env.JWT_SECRET_KEY;
 
 
 const Users = {
-  
+
   /**
   * Creates a new user
   * @param {Object} req Request object
@@ -22,7 +23,7 @@ const Users = {
 
     db.User.find({
       where: {
-         email: email
+        email: email
       }
     }).then((returnedUsers) => {
       if (returnedUsers) {
@@ -43,18 +44,18 @@ const Users = {
             return res.status(201).json({ token, expiresIn: 86400, user });
           }
         })
-        .catch(error => {
-          console.log(error);
-          return res.status(400).json({
-            message: 'Bad request sent to the server',
-            errors: handleError(error)
+          .catch(error => {
+            console.log(error);
+            return res.status(400).json({
+              message: 'Bad request sent to the server',
+              errors: handleError(error)
+            });
           });
-        });
       }
     })
-    .catch((error )=>{
-      return res.status(500).json(error);
-    });
+      .catch((error) => {
+        return res.status(500).json(error);
+      });
   },
 
   /**
@@ -76,9 +77,9 @@ const Users = {
         return res.status(200).json({ token, expiresIn: 86400, user });
       }
 
-      return res.status(401).json({errors: { message: 'Failed to authenticate user' }});
+      return res.status(401).json({ errors: { message: 'Failed to authenticate user' } });
     })
-    .catch(error => res.status(500).json({error}));
+      .catch(error => res.status(500).json({ error }));
   },
 
   /**
@@ -113,6 +114,40 @@ const Users = {
       return res.status(200)
         .json({ users: result });
     });
+  },
+  /**
+ * serach for all users in a group
+ * @param {Object} req Request object
+ * @param {Object} res Response object
+ * @returns {Object} - Returns response object
+ */
+  search(req, res) {
+    const match = req.query.name;
+    const groupId = Number(req.query.groupId);
+    const query = {
+      where: {
+        username: { $iLike: `%${match}%` },
+        email: { $iLike: `%${match}%` },
+      }
+    };
+
+    db.Group.find({
+      where: { id: groupId },
+      include: [{
+        model: db.User,
+        attributes: ['id'],
+        raw: true,
+        through: { attributes: [] }
+      }]
+    }).then((group) => {
+      const omitUsers = _.map(group.toJSON().Users, 'id');
+      query.where.id = { $notIn: omitUsers };
+      db.User.findAll(query).then((result) => {
+        return res.status(200)
+          .json({ users: result });
+      });
+    });
+
   },
 
   /**
@@ -169,7 +204,7 @@ const Users = {
           return res.status(404)
             .json({ message: 'No user found to delete' });
         }
-        return res.status(200).json({ message: 'User successfully deleted'});
+        return res.status(200).json({ message: 'User successfully deleted' });
       });
   },
 };
@@ -177,7 +212,7 @@ const Users = {
 export default Users;
 
 export function handleError(errors) {
-  const result = {}; 
+  const result = {};
   errors.forEach(error => {
     result[error.path] = error.message;
   });

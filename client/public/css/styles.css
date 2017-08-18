@@ -127,7 +127,9 @@ body {
   }
 }
 .messages{
-    	margin: 20px;
+        height: 300px;
+        overflow: scroll
+        
     }
 
 /* The side navigation menu */
