@@ -56,12 +56,13 @@ This app's functionality depends on multiple NPM packages including;
 name   |     url       |      verb      |     description
 ------ | ------------- | -------------- | -------------------
 **AUTH**    |               |                 |
-REGISTER     |  /api/user/register     |     POST     |     Allows users to register an account on PostIt
-LOGIN     |    /api/user/login   |    POST      |    Allows a registered user to login
-LOGOUT     |  /api/user/logout     |     GET     |     Allows a logged in user to logout
+REGISTER     |  /api/user/signup     |     POST     |     Allows users to register an account on PostIt
+LOGIN     |    /api/user/signin   |    POST      |    Allows a registered user to login
 **GROUP** |
 GET ALL     |    /api/groups   |    GET      |    Allows a registered user to retrieve all groups he belongs to
 CREATE     |  /api/group     |     POST     |     Allows a registered user to create a new group
+**ADD USERS TO A GROUP**|
+CREATE     |    /api/group/:id/user   |    POST      |    Adds one member to a group
 **MESSAGES** |
 GET     |    /api/group/:id/messages   |    GET      |    Retrieves one member-group and all it's messages
 CREATE     |  /api/group/:id/message     |     POST     |     Allows group members to post messages in memeber groups
