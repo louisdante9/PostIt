@@ -21,8 +21,7 @@ This app's functionality depends on multiple NPM packages including;
   *  **[Sequelize-cli](https://github.com/sequelize/cli)** - The Sequelize Command Line Interface (CLI)
   *  **[Postgres](https://www.postgresql.org/)** - A a promise-based ORM for Node.js and io.js. Used in this project as ORM for postgres
   *  **[Body-Parser](https://www.npmjs.com/package/body-parser)** - This package parse incoming request bodies in a middleware and makes it available under *req.body* property
-  *  **[Passport](http://passportjs.org/)** - The module is a middleware for authenticating node.js applications
-  *  **[Passport-local-sequelize](https://www.npmjs.com/package/passport-local-sequelize)** - A sequelize plugin for setting up username and password. Used in this project to hash password and compare password during login
+  *  **[JsonWebToken](https://jwt.io/)** - The module is a middleware for authenticating node.js applications
   *  **[dotenv](https://github.com/kennethreitz/autoenv)** - Enables loading environment variables from a .env file into process.env.
 
 ## Installation and Setup
@@ -34,7 +33,7 @@ This app's functionality depends on multiple NPM packages including;
 
   *  Using HTTPS;
 
-    > git clone https://github.com/ayodelevm/PostIt.git
+    > git clone https://github.com/louisdante9/PostIt.git
 
 *  Navigate to the repo's folder on your computer
   *  `cd PostIt/`
@@ -76,7 +75,7 @@ To register a new user, send the following parameters `(example below)`:
   "username": "louis",
   "password": "louis1223",
   "email": "louisdante9@gmail.com"
-  "fullname": "Louis Nwamadi"
+  "phone": "234000000000"
 }
 ```
 
