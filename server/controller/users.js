@@ -128,7 +128,9 @@ const Users = {
       where: {
         username: { $iLike: `%${match}%` },
         email: { $iLike: `%${match}%` },
-      }
+      },
+      attributes :['id', 'username', 'email',
+      'createdAt', 'updatedAt']
     };
 
     db.Group.find({
@@ -140,6 +142,11 @@ const Users = {
         through: { attributes: [] }
       }]
     }).then((group) => {
+      if(!group){
+        return res.status(400).json({
+          message: "group doesn't exist"
+        });
+      }
       const omitUsers = _.map(group.toJSON().Users, 'id');//flags an error if the group is null...also return password....
       query.where.id = { $notIn: omitUsers };
       db.User.findAll(query).then((result) => {
