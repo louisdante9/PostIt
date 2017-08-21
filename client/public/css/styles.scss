@@ -13,9 +13,17 @@
   }
 }
 
+/* .logo{
+  padding-left: 30px; 
+} */
+
 p {
   padding: 5px;
   font-size: 20px;
+}
+
+.authlink {
+  font-size: 15px;
 }
 
 /*
@@ -131,7 +139,8 @@ html, body {
 }
 
 .messages {
-  margin: 20px;
+  height: 300px;
+  overflow: scroll;
 }
 
 /* The side navigation menu */
@@ -334,7 +343,7 @@ nav {
   line-height: 40px;
   i, [class^="mdi-"], [class*="mdi-"], i.material-icons, .button-collapse i {
     height: 40px;
-    line-height: 30px;
+    line-height: 40px;
   }
   .brand-logo {
     font-size: 1rem;
@@ -347,17 +356,17 @@ nav {
 @media only screen and (min-width: 601px) {
   nav {
     height: 40px;
-    line-height: 30px;
+    line-height: 40px;
     .nav-wrapper i {
       height: 40px;
-      line-height: 30px;
+      line-height: 40px;
     }
     a.button-collapse {
       height: 40px;
-      line-height: 30px;
+      line-height: 40px;
       i {
         height: 40px;
-        line-height: 30px;
+        line-height: 40px;
       }
     }
   }
@@ -435,11 +444,11 @@ span {
     font-size: 1rem;
     line-height: 35px;
     height: 35px;
-    margin-top: 11px;
+    margin-top: 4px;
     color: #fff;
     float: right;
     box-sizing: border-box;
-    background-color: #59983b;
+    background-color: grey;
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -479,6 +488,10 @@ span {
   padding-left: 10px;
 }
 
+#priority {
+  display: inline-block;
+}
+
 #text-area {
   border: 1px solid #ccc;
   outline: none;
@@ -487,7 +500,7 @@ span {
   resize: none;
   top: -4px;
   right: 5px;
-  width: 70%;
+  width: 80%;
   display: inline-block;
 }
 
@@ -504,5 +517,5 @@ span {
 select {
   display: inline-block;
   top: 2px;
-  width: 15px;
+  width: 25px;
 }

@@ -1,17 +1,22 @@
 import React from 'react';
 // import axios from 'axios';
+import { connect } from 'react-redux';
 import axios from '../../utils/setAuthToken';
 import UserSearchResult from './UserSearchResult';
+import {addUsers} from '../../actions/groupAction';
 
-export default class UserModal extends React.Component {
+
+ class UserModal extends React.Component {
 
     constructor(props) {
         super(props);
             this.state = {
                 matchingUsers: [],
+                userId: ''
             };
         this.handleChange = this.handleChange.bind(this);
-        //     this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
 
@@ -28,16 +33,19 @@ export default class UserModal extends React.Component {
         });
     }
 
-    handleSelect(event, username){
-        console.log(event.target, username);
+    handleSelect(event, userId){
+       this.setState({ userId });   
     }
 
-    // handleSubmit(event) {
-    //     event.preventDefault();
-    //     this.props.createGroup(this.state).then(() => {
-    //         $('.modal').modal('close');
-    //     });        
-    // }
+    handleSubmit(event) {
+        event.preventDefault();
+        // this.props.createGroup(this.state).then(() => {
+        //     $('.modal').modal('close');
+        // });        
+        this.props.addUsers(this.props.group, this.state.userId).then(()=>{
+            $('.modal').modal('close');
+        });
+    }
 
     render() {
         return (
@@ -98,3 +106,4 @@ export default class UserModal extends React.Component {
     }
 }
 
+export default connect(null, {addUsers})(UserModal);

@@ -54,7 +54,7 @@ const GroupUsers = {
  */
 
     addUsersToGroup(req, res) {
-    // console.log(models.GroupUser);
+    console.log(req.body);
     models.GroupUser
     .create({
       userId: req.body.userId,

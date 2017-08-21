@@ -54,22 +54,12 @@ export function createGroup(groupData) {
      };
  }
 //actions for adding users....
-  export function searchUser(groupId, data) {
-    return dispatch => {
-         return axios().post(`/api/group/${groupId}/messages`, data)
-             .then(res => {
-                 dispatch({
-                     type: GET_ALL_USERS,
-                     payload: res.data
-                 });
-             })
-             .catch(err => console.log(err.response));
-     };
- }
 
- export function addUsers(groupId, data) {
+
+ export function addUsers(groupId, userId) {
+     console.log(userId);
     return dispatch => {
-         return axios().post(`/api/group/${groupId}/user`, data)
+         return axios().post(`/api/group/${groupId}/user`, {userId})
              .then(res => {
                  dispatch({
                      type: ADD_USER_TO_GROUP,

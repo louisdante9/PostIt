@@ -9,6 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       groupId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           foreignKey: 'id',
@@ -16,6 +17,7 @@ module.exports = {
         }
       },
       userId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           foreignKey: 'id',

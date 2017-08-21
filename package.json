@@ -12,10 +12,10 @@
     "lint": "node_modules/.bin/esw webpack.config.* client server",
     "lint:watch": "npm run lint -- --watch",
     "coverage-report": "cat ./coverage/lcov.info | coveralls",
-    "test": "nyc --reporter=text --reporter=html --reporter=lcov mocha --reporter progress server/testSetup.js \"client/**/*.test.js\" && npm run coverage-report",
+    "test": "mocha --reporter progress server/testSetup.js \"client/**/*.test.js\"",
     "test:watch": "npm run test -- --watch",
     "open:server": "nodemon --watch server --exec babel-node -- ./server/app.js",
-    "servertest": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register ./server/tests/auth.test.js",
+    "servertest": "cross-env NODE_ENV=test nyc --reporter=text --reporter=html --reporter=lcov mocha --compilers js:babel-core/register ./server/tests/auth.test.js --timeout 150000 && npm run coverage-report",
     "migrate:undo": "node_modules/.bin/sequelize db:migrate:undo:all",
     "migrate": "node_modules/.bin/sequelize db:migrate"
   },
