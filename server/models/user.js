@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) =>{
       required: true,
       allowNull: false,
       unique: true,
-      validate: {
-        is: /^[a-z0-9\_\-]+$/i,
-      }
+      // validate: {
+      //   is: /^[a-z0-9\_\-]+$/i,
+      // }
   },
 
   email: {
@@ -22,31 +22,31 @@ module.exports = (sequelize, DataTypes) =>{
       isEmail: {
         msg: "Email address must be valid"
            },
-      len: {
-        args: [6, 128],
-        msg: "Email address must be between 6 and 128 characters in length"
-      },
+      // len: {
+      //   args: [6, 128],
+      //   msg: "Email address must be between 6 and 128 characters in length"
+      // },
     }
   },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-    validate: {
-      len: {
-        args: [4, 100],
-        msg: 'Your password is too short'
-      }
-    }
+    // validate: {
+    //   len: {
+    //     args: [4, 100],
+    //     msg: 'Your password is too short'
+    //   }
+    // }
   },
   phone: {
     type: DataTypes.STRING,
     allowNull: true,
-    validate: {
-      len: {
-        args: [11, 15],
-        msg: 'Your phone number is too short'
-      }
-    }
+    // validate: {
+    //   len: {
+    //     args: [11, 15],
+    //     msg: 'Your phone number is too short'
+    //   }
+    // }
   },
   }, {
       classMethods: {

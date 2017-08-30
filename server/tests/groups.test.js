@@ -1,9 +1,11 @@
+import chai from 'chai';
 import supertest from 'supertest';
-import 'mocha';
-import 'chai';
-import should from 'should';
-import app from '../../app';
-import { loginUser } from './helpers/user.helper';
-import { groupDetails, updateInfo, noGrpName } from './helpers/group.helper';
+import app from '../app';
+import factory from './helpers/auth.helper';
+import db from '../models';
 
-const server = supertest.agent(app);
+const expect = chai.expect;
+const request = supertest(app);
+
+let token, wrongUser, userParams;
+

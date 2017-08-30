@@ -15,13 +15,15 @@ let token, wrongUser, userParams;
 describe('Auth Suite', () => {
 
   before((done) => {
-    userParams = factory.users;
-    wrongUser = factory.wrongUser;
-    done();
+    db.sequelize.sync().then(() => {
+      userParams = factory.users;
+      wrongUser = factory.wrongUser;
+      done();
+    });
   });
 
   after((done) => {
-    db.User.sequelize.sync({ force: true }).then(() => {
+    db.sequelize.sync({ force: true }).then(() => {
       done();
     });
   });

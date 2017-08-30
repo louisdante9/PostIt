@@ -11,7 +11,6 @@ export default {
       })
       .then((group) => {
         if (group) {
-          // console.log(group);
           const groupUser = {
             groupId: group.id,
             userId: req.decoded.userId,

@@ -7,16 +7,16 @@ import pry from 'pryjs';
 
 function sendMessage(data, flag) {
   switch (flag) {
-            case 'urgent':
-              mailer(data);
-              break;
-            case 'critical':
-              mailer(data);
-              smsSender(data);
-              break;
-            default:
-              break;
-    }
+    case 'urgent':
+      mailer(data);
+      break;
+    case 'critical':
+      mailer(data);
+      smsSender(data);
+      break;
+    default:
+      break;
+  }
 }
 
 
@@ -31,17 +31,27 @@ const Messages = {
    */
 
   getGroupMessage(req, res) {
-    db.Message.findAll({
-      where: { groupId: req.params.groupId },
-      include: [{
-        model: db.User,
-        attributes: { exclude: ['password'] },
-        order: [['createdAt', 'DESC']]
-      }],
-      order: [['createdAt', 'ASC']]
-    }).then((messages) => {
-      res.status(200).json({
-        messages
+    db.Group.find({
+      where: { id: req.params.groupId },
+    }).then((group) => {
+      if (!group) {
+        return res.status(400).json({
+          error: 'bad request'
+        });
+      }
+
+      db.Message.findAll({
+        where: { groupId: req.params.groupId },
+        include: [{
+          model: db.User,
+          attributes: { exclude: ['password'] },
+          order: [['createdAt', 'DESC']]
+        }],
+        order: [['createdAt', 'ASC']]
+      }).then((messages) => {
+        res.status(200).json({
+          messages
+        });
       });
     })
       .catch((error) => {
@@ -57,9 +67,6 @@ const Messages = {
    * @returns {void}
    */
 
-
-
-
   createNewMessage(req, res, Mailer) {
     db.Group.findById(req.params.groupId).then((group) => {
       if (group) {
@@ -69,31 +76,34 @@ const Messages = {
           flag: req.body.flag,
           groupId: group.id
         };
-        
+
         db.Message.create(newMessage).then((addedMessage) => {
           res.status(201).json(addedMessage);
-         db.GroupUser.findAll({where: { groupId: req.params.groupId}, 
-                                include:  [
-                                {model: db.Group, required: true, attributes: ['name']}, 
-                                {model: db.User, required: true, attributes: ['username',  'phone', 'email']}
-                              ],
-                            raw: true}).then((data) => sendMessage(data, addedMessage.flag));
-        
-      }).catch((err) => {
-        return res.status(400).json({
-          message: 'Bad Request',
-          err: handleError(err)
+          db.GroupUser.findAll({
+            where: { groupId: req.params.groupId },
+            include: [
+              { model: db.Group, required: true, attributes: ['name'] },
+              { model: db.User, required: true, attributes: ['username', 'phone', 'email'] }
+            ],
+            raw: true
+          }).then((data) => sendMessage(data, addedMessage.flag));
+
+
+        }).catch((err) => {
+          return res.status(400).json({
+            message: 'Bad Request',
+            err: handleError(err)
+          });
         });
+      } else {
+        return res.status(404).json({
+          message: 'No such group found'
+        });
+      }
+    })
+      .catch((error) => {
+        res.status(500).json(error);
       });
-  } else {
-    return res.status(404).json({
-      message: 'No such group found'
-    });
-  }
-})
-    .catch((error) => {
-  res.status(500).json(error);
-});
   }
 };
 

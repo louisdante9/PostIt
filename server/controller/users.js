@@ -20,7 +20,6 @@ const Users = {
   */
   signup(req, res) {
     const { username, email, password, phone } = req.body;
-
     db.User.find({
       where: {
         email: email
@@ -30,7 +29,6 @@ const Users = {
         return res.status(409).json({ message: `User with ${email} already exists` });
       } else {
         db.User.create(req.body).then((user) => {
-          console.log(user);
           if (user) {
             const jwtData = {
               username: user.username.trim(),
@@ -45,7 +43,6 @@ const Users = {
           }
         })
           .catch(error => {
-            console.log(error);
             return res.status(400).json({
               message: 'Bad request sent to the server',
               errors: handleError(error)
@@ -216,13 +213,14 @@ const Users = {
   },
 };
 
-export default Users;
 
-export function handleError(errors) {
+export function handleError(error) {
   const result = {};
-  errors.forEach(error => {
-    result[error.path] = error.message;
+  error.errors.forEach(err => {
+    result[err.path] = err.message;
   });
-
+  
   return result;
 }
+
+export default Users;

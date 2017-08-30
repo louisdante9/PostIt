@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
+
 export const Component = ({ messages, groups }) => {
  
     const emptyMessage = (

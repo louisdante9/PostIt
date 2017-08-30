@@ -18,7 +18,8 @@ class Dashboard extends Component {
     this.state = {
         groupId: '',
         message: '',
-        flag: 'normal'
+        flag: 'normal',
+        msg: {}
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -28,23 +29,25 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.props.getGroups();
-    // this.props.createMessage();
   }
 
   setGroupMessages(id){
     return (evt) => {
       evt.preventDefault();
-      console.log(id);
       this.props.getMessages(id);
-       this.setState({ groupId: id });
+      this.setState({ groupId: id });
     };
   }
+//update new messages coming through to the client 
+ handleCallback(msg) {
 
+ }
+
+//handles submit event 
   onSubmit(event){
     event.preventDefault();
     const { userId, username } = this.props.user;
     const data = Object.assign({}, this.state, { userId, username});
-    console.log(data);
     this.props.createMessage(this.state.groupId, data);
     this.setState({message:''});
   }
@@ -67,7 +70,6 @@ class Dashboard extends Component {
 
   getGroupName(evn){
     return (evt) => {
-      console.log(evn, 'i was called');
       return evn;
     };
   }
@@ -111,7 +113,6 @@ class Dashboard extends Component {
   }
   
     render() {
-      console.log('HERE: ', this.state.id);
       const { groups, messages } = this.props;
       const GroupName = groups.find(group => group.id === this.state.groupId);
         return (

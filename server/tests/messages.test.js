@@ -4,7 +4,7 @@
 import chai from 'chai';
 import supertest from 'supertest';
 import app from '../app';
-import factory from './helpers/user.helper';
+import factory from './helpers/auth.helper';
 import db from '../models';
 
 const expect = chai.expect;
@@ -17,7 +17,7 @@ describe('Messages Routes', () => {
   userParams = factory.users;
 
   before((done) => {
-    db.User.sequelize.sync({ force: true }).then(() => {
+    db.sequelize.sync().then(() => {
       request
         .post('/api/user/signup')
         .send(userParams)
@@ -32,25 +32,20 @@ describe('Messages Routes', () => {
             .send({ name: 'group1', description: 'New group' })
             .end((err, res) => {
               if (err) {
-                return err;
+                return done(err);
               }
               group = res.body.data;
               done();
             });
         });
+    }).catch((error) => {
     });
   });
 
   after((done) => {
-    db.Message.sequelize.sync({ force: true}).then(() => {
-      db.GroupUser.sequelize.sync({ force: true }).then(() => {
-        db.Group.sequelize.sync({ force: true }).then(() => {
-          db.User.sequelize.sync({ force: true }).then(() => {
-            done();
-          });
-        });
-      });
-    });
+    db.sequelize.sync({ force: true }).then(() => {
+      done();
+    })
   });
 
   describe('Create Messages', () => {
@@ -58,10 +53,10 @@ describe('Messages Routes', () => {
       request
         .post(`/api/group/${group.id}/messages`)
         .set('authorization', token)
-        .send({ message: 'A new new message', flag: 'critical'})
+        .send({ message: 'A new new message', flag: 'critical' })
         .end((err, res) => {
           if (err) {
-            return err;
+            return done(err);
           }
           expect(res.status).to.equal(201);
           done();
@@ -69,14 +64,14 @@ describe('Messages Routes', () => {
     });
 
 
-    it('should not create a message if the group does not exist', (done) => {
+    it('should not create a message ggg if the group does not exist', (done) => {
       request
         .post(`/api/group/${group.id * 5}/messages`)
         .set('authorization', token)
-        .send({ message: 'A new new message', flag: 'critical'})
+        .send({ message: 'A new new message', flag: 'critical' })
         .end((err, res) => {
           if (err) {
-            return err;
+            return done(err);
           }
           expect(res.status).to.equal(404);
           done();
@@ -84,16 +79,17 @@ describe('Messages Routes', () => {
     })
   });
 
-  it('should not create a message if the group does not exist', (done) => {
+  it('should not get messages from a group that does not exist', (done) => {
     request
-      .gwt(`/api/group/${group.id * 5}/messages`)
+      .get(`/api/group/${group.id * 5}/messages`)
       .set('authorization', token)
-      .send({ message: 'A new new message', flag: 'critical'})
+      .send({ message: 'A new new message', flag: 'critical' })
       .end((err, res) => {
         if (err) {
-          return err;
+          return done(err);
         }
-        expect(res.status).to.equal(404);
+        expect(res.status).to.equal(400);
         done();
-      })
-  })
+      });
+  });
+});
