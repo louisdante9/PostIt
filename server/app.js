@@ -118,8 +118,12 @@ export { io };
 io.on('connect', (soc)=>{
   console.log('connected');
   soc.on('newMessage', (payload)=>{
+    console.log(payload);
     soc.broadcast.emit('groupMessage', payload);
-  })
+  });
+  // soc.on('readMessage', (data)=>{
+  //   //listen for user that read and then emit to tell the client user the user who read it 
+  // })
   soc.on('disconnect',()=>{
     console.log('Disconnected');
   });

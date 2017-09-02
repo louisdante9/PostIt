@@ -1,14 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export const Component = ({ showModal, groups, setGroupMessages }) => {
+export const Component = ({ showModal, groups, setGroupMessages, unread }) => {
+    console.log(unread);
     const renderGroups = () => {
-
-        return groups.map(group => (
+        return groups.map(group => {
+            const show = (unread[group.id] || 0) > 0;
+            return (
             <li key={group.id} className="collection-item avatar email-unread group-channel" onClick={setGroupMessages(group.id)}>
                 <a href=""><span className="group-title">{group.name}</span></a>
-                <a href="#!" className="secondary-content"><span className="new badge reddish">6</span></a>
+                {show && <a href="#!" className="secondary-content"><span className="new badge reddish">{unread[group.id]}</span></a>}
             </li>
-        ));
+        )
+    });
     };
 
     return(
@@ -38,4 +42,14 @@ Component.propTypes={
     setGroupMessages: React.PropTypes.func.isRequired
 };
 
-export default Component;
+const mapStateToProps = (state) => {
+    return {
+      unread: state.messages.unread,
+    };
+  };
+  
+  
+  
+  
+  
+  export default connect(mapStateToProps)(Component);

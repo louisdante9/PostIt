@@ -113,7 +113,8 @@ class Dashboard extends Component {
   }
   
     render() {
-      const { groups, messages } = this.props;
+      const { groups, allMsgs } = this.props;
+      const messages = allMsgs[this.state.groupId] || [];
       const GroupName = groups.find(group => group.id === this.state.groupId);
         return (
           <div>
@@ -194,7 +195,7 @@ Dashboard.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     groups: state.groups,
-    messages: state.messages,
+    allMsgs: state.messages.msg,
     user: state.auth.user,
   };
 };

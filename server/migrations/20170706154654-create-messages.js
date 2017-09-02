@@ -13,6 +13,7 @@ module.exports = {
 
       },
       message: Sequelize.TEXT,
+      msgRead: Sequelize.ARRAY(Sequelize.INTEGER),
       groupId: {
         type: Sequelize.INTEGER,
         allowNull: false,

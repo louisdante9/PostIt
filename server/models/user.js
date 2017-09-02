@@ -58,6 +58,9 @@ module.exports = (sequelize, DataTypes) =>{
           through: 'GroupUser',
           foreignKey: 'userId',
         });
+        User.hasMany(models.UserMessages, {
+          foreignKey: 'userId',
+        });
       }
     },
      instanceMethods: {

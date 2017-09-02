@@ -1,5 +1,5 @@
 import axios from '../utils/setAuthToken';
-import { CREATE_USER_GROUP, GET_USER_GROUP, GET_GROUP_MESSAGES, CREATE_GROUP_MESSAGE,GET_ALL_USERS, ADD_USER_TO_GROUP} from './types';
+import { CREATE_USER_GROUP, GET_USER_GROUP, GET_GROUP_MESSAGES, CREATE_GROUP_MESSAGE,GET_ALL_USERS, ADD_USER_TO_GROUP, INCREASE_UNREAD_MESSAGE} from './types';
 import socket from './../utils/socket';
 
 export function getGroups() {
@@ -35,8 +35,13 @@ export function createGroup(groupData) {
              .then(res => {
                  dispatch({
                      type: GET_GROUP_MESSAGES,
-                     payload: res.data.messages
+                     payload: res.data.messages,
+                     groupId
                  });
+                 dispatch({
+                     type: INCREASE_UNREAD_MESSAGE,
+                     
+                 })
              })
              .catch(err => console.log(err));
      };
@@ -50,7 +55,8 @@ export function createGroup(groupData) {
                  socket.emit('newMessage', payload);
                  dispatch({
                      type: CREATE_GROUP_MESSAGE,
-                     payload
+                     payload,
+                     groupId
                  });
              })
              .catch(err => console.log(err.response));
