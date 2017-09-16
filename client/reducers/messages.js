@@ -8,7 +8,6 @@ const initialState = {
 };
 
 export default (state=initialState, action) => {
-    console.log(action);
     switch(action.type) {
         case GET_GROUP_MESSAGES: {
             const { groupId, payload } = action;

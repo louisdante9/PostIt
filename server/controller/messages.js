@@ -122,13 +122,13 @@ const Messages = {
 
 export default Messages;
 
-function generateUserMessageData(data, userId, messageId) {
+function generateUserMessageData(data, userId) {
   return data.map(metadata => {
     const value =  {
       read: false,
       userId: metadata.userId,
       groupId: metadata.groupId,
-      messageId
+      // messageId
     };
     if(value.userId !== userId) {
       return value;

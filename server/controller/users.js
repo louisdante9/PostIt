@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import db from '../models';
 import UserHelper from './helpers/userHelper';
 import _ from 'lodash';
+// import { sendMail } from '../helpers';
 
 require('dotenv').config({ silent: true });
 
@@ -73,7 +74,7 @@ const Users = {
         user = UserHelper.transformUser(user);
         return res.status(200).json({ token, expiresIn: 86400, user });
       }
-
+      
       return res.status(401).json({ errors: { message: 'Failed to authenticate user' } });
     })
       .catch(error => res.status(500).json({ error }));
@@ -211,6 +212,87 @@ const Users = {
         return res.status(200).json({ message: 'User successfully deleted' });
       });
   },
+
+
+
+  /**
+  * Reacover user password
+  * @param {Object} req Request object
+  * @param {Object} res Response object
+  * @returns {Object} - Returns response object
+  */
+  
+  updatePassword(req, res) {
+    db.PasswordRequests
+    .findOne({
+      where: { hash: req.params.hash }
+    }).then((result) => {
+      const email = result.dataValues.email;
+      const date = new Date();
+      const now = `${date.toString().split(' ')[2]}:${date.toString().split(' ')[4]}`;
+      if (now > result.dataValues.expiresIn) {
+        res.status(400).send({ message: 'Link has expired', status: 400 });
+        return;
+      }
+      return db.Users
+        .update(
+          { password: req.body.password },
+          { where: { email } }
+        ).then(() =>
+          res.status(200).send({ message: 'Password Reset Successful', status: 200 })
+        );
+    });
+  },
+  passwordRequest(req, res) {
+    const email = req.body.email;
+    const hash = crypto
+    .createHash('sha256', process.env.PASSWORD_HASH_SECRET)
+    .update(Date.now().toString())
+    .digest('hex');
+    const date = new Date();
+    date.setHours(date.getHours() + 1);
+    const expiresIn = `${date.toString().split(' ')[2]}:${date.toString().split(' ')[4]}`;
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(req.body.email)) {
+      return res.status(400)
+      .send({ error: 'Invalid email', status: 400 });
+    }
+    const message = `Hello ${email},\
+ if you have requested for a new password, please follow \
+ <a href='http://localhost:3000/#/new-password/${hash}'>this link</a> to reset your password`;
+
+    db.Users
+    .findOne({
+      where: { email }
+    }).then((foundUser) => {
+      if (!foundUser) {
+        return res.status(404).send({ error: 'Email does not have an account', status: 404 });
+      }
+      db.PasswordRequests
+      .findOne({
+        where: { email }
+      }).then((response) => {
+        if (response === null) {
+          db.PasswordRequests
+          .create({
+            email,
+            expiresIn,
+            hash
+          }).then(() => {
+            sendMail(email, { subject: 'Password Reset Request', message });
+          });
+        } else {
+          response.update({
+            hash,
+            expiresIn
+          }).then(() => {
+            sendMail(email, { subject: 'Password Reset Request', message });
+          });
+        }
+      });
+      res.status(200).send({ message: 'Request made', status: 200 });
+    });
+  }
+
 };
 
 

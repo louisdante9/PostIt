@@ -11,9 +11,9 @@ const expect = chai.expect;
 const request = supertest(app);
 
 const server = supertest.agent(app);
-let userParams, wrongUser, token, group;
+let userParams, token, group;
 
-describe('Messages Routes', () => {
+describe('Messages suite', () => {
   userParams = factory.users;
 
   before((done) => {
@@ -64,7 +64,7 @@ describe('Messages Routes', () => {
     });
 
 
-    it('should not create a message ggg if the group does not exist', (done) => {
+    it('should not create a message if the group does not exist', (done) => {
       request
         .post(`/api/group/${group.id * 5}/messages`)
         .set('authorization', token)
@@ -91,5 +91,103 @@ describe('Messages Routes', () => {
         expect(res.status).to.equal(400);
         done();
       });
+  });
+
+  describe('Add user to a new group', () => {
+    it('should return 200 to add a user to a group', (done) => {
+      request
+      .post('/api/group/1/user/')
+      .set('authorization', token)
+      .send({
+        userId: 2
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        expect(res.status).to.equal(200);
+        done();
+      });
+    });
+  });
+  describe('Send message to a group', () => {
+    it('returns 200 response', (done) => {
+      request
+      .post('/api/group/1/message/')
+      .set('authorization', token)
+      .send({
+        message: 'test message'
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        expect(res.status).to.equal(200);
+        done();
+      });
+    });
+    it('should work with priority level critical', (done) => {
+      request
+      .post('/api/group/1/message/')
+      .set('authorization', token)
+      .send({
+        message: 'test message',
+        priority: 'critical'
+      })
+      .end((err, res) => {
+        if(err){
+          return done(err);
+        }
+        expect(res.status).to.equal(201);
+        done();
+      });
+    });
+    it('should work with priority level urgent', (done) => {
+      request
+      .post('/api/group/1/message/')
+      .set('authorization', token)      
+      .send({
+        message: 'test message',
+        priority: 'urgent'
+      })
+      .end((err, res) => {
+        if(err){
+          return done(err)
+        }
+        expect(res.status).to.equal(201);
+        done();
+      });
+    });
+    it('should not with priority level high', (done) => {
+      request
+      .post('/api/group/1/message/')
+      .set('authorization', token)      
+      .send({
+        message: 'test message',
+        priority: 'high'
+      })
+      .end((err, res) => {
+        if(err){
+          return done(err)
+        }
+        expect(res.status).to.equal(400)
+        done();
+      });
+    });
+    describe('View all messages in a group', () => {
+      it('returns 200 response', (done) => {
+        request
+        .get('/api/group/1/messages/')
+        .set('authorization', token)              
+        .send()
+        .end((err, res) => {
+          if(err){
+            return done(err);
+          }
+          expect(res.status).to.equal(200);
+          done();
+        });
+      });
+    });
   });
 });

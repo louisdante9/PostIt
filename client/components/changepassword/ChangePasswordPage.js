@@ -10,7 +10,8 @@ class SigninPage extends React.Component {
     render() {
         return (
             <div className="container">
-                <h2>Sign In Here</h2>
+                <h2>Forgot Your Password?</h2>
+                <p></p>
                 <SigninForm />
                 <p className="authlink">Don't have an account <a>Sign Up</a> </p>
                 <p className="authlink">Forgot password? <a>Click here</a></p>

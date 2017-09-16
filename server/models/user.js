@@ -42,11 +42,12 @@ module.exports = (sequelize, DataTypes) =>{
     type: DataTypes.STRING,
     allowNull: true,
     // validate: {
-    //   len: {
+      //   is: /^[0-9]+$/i,
+      //   len: {
     //     args: [11, 15],
     //     msg: 'Your phone number is too short'
     //   }
-    // }
+      // }
   },
   }, {
       classMethods: {

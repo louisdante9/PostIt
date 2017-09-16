@@ -4,7 +4,7 @@ import TextFieldGroup from '../common/TextFieldGroup';
 import { connect } from 'react-redux';
 import { login } from '../../actions/authActions';
 
-class SigninForm extends React.Component {
+export class SigninForm extends React.Component {
     constructor(props){
         super(props);
         this.state ={

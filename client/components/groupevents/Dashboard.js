@@ -24,7 +24,7 @@ class Dashboard extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.setGroupMessages =  this.setGroupMessages.bind(this);
-    this.openSlideaAdduser = this.openSlideaAdduser.bind(this);
+    this.openSlideAdduser = this.openSlideAdduser.bind(this);
   }
 
   componentDidMount() {
@@ -52,7 +52,7 @@ class Dashboard extends Component {
     this.setState({message:''});
   }
 
-  openSlideaAdduser(){
+  openSlideAdduser(){
     $('select').material_select();
     $('.modal').modal();
   }
@@ -82,7 +82,7 @@ class Dashboard extends Component {
           <p className="email-subject truncate"><span className="email-tag grey lighten-3">{GroupName && GroupName.name}</span>
             <a href="#modal2" className="secondary-content modal-trigger" onClick={(event) => {
               event.preventDefault();
-              this.openSlideaAdduser();
+              this.openSlideAdduser();
             }}>
               click to add user
         
@@ -138,7 +138,7 @@ class Dashboard extends Component {
                               <p className="email-subject truncate"><span className="email-tag grey lighten-3">{GroupName && GroupName.name}</span>
                                 <a href="#modal2" className="secondary-content modal-trigger" onClick={(event) => {
                                   event.preventDefault();
-                                  this.openSlideaAdduser();
+                                  this.openSlideAdduser();
                                 }}>
                                   click to add user
                             <span className="send">
@@ -190,9 +190,10 @@ Dashboard.propTypes = {
   messages: React.PropTypes.array.isRequired,
   user: React.PropTypes.object.isRequired,
   active : React.PropTypes.bool.isRequired,
+  allMsgs: React.PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     groups: state.groups,
     allMsgs: state.messages.msg,

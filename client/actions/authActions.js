@@ -27,7 +27,9 @@ export function userSignupRequest(userData) {
             const token = res.data.token;
             localStorage.setItem('jwtToken', token);
             setAuthToken(token);
+            console.log('i am here',decode(token))
             dispatch(setCurrentUser(decode(token)));
+            
         });
     };
 }

@@ -3,12 +3,7 @@ module.exports = function(sequelize, DataTypes) {
   const UserMessages = sequelize.define('UserMessages', {
     groupId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
-    messageId: DataTypes.INTEGER,
-    read: {
-      allowNull: false,
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
-    },
+    read: DataTypes.BOOLEAN,
   }, {
     classMethods: {
       associate: function(models) {
@@ -18,9 +13,6 @@ module.exports = function(sequelize, DataTypes) {
         });
         UserMessages.belongsTo(models.Group, {
           foreignKey: 'groupId' 
-        });
-        UserMessages.belongsTo(models.Message, {
-          foreignKey: 'messageId' 
         });
       }
     }

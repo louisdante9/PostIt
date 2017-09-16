@@ -24,19 +24,9 @@ module.exports = {
           model: 'Users'
         }
       },
-      messageId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          foreignKey: 'id',
-          model: 'Messages'
-        }
-      },
-      read: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
-      },
+    
+      read: Sequelize.BOOLEAN,
+      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

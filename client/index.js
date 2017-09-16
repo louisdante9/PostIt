@@ -25,8 +25,9 @@ if (localStorage.jwtToken) {
     const hasExpired = decodedToken.exp - (Date.now() / 1000) < 0;
     if (!hasExpired) {
         setAuthToken(localStorage.jwtToken);
+        console.log(jwt.decode(localStorage.jwtToken))
         store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
-        console.log(decodedToken);
+        // console.log(decodedToken);
     } else {
         localStorage.removeItem('jwtToken');
     }

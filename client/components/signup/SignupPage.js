@@ -15,7 +15,7 @@ class SignupPage extends React.Component{
                   <div className="cover-container">
                     <div className="inner cover">
                       <h2>Join Our Community!</h2>
-                      <SignupForm userSignupRequest={userSignupRequest} addFlashMessage={ addFlashMessage} />
+                      <SignupForm userSignupRequest={userSignupRequest} addFlashMessage={addFlashMessage} />
                       <p className="authlink">Already have an account <a href="#">Sign In</a> </p>
                     </div>
                 </div>
