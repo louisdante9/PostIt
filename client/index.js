@@ -6,26 +6,34 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './rootReducer';
-import routes  from './routes';
+import routes from './routes';
 import './public/css/styles.scss';
 import setAuthToken from './utils/setAuthToken';
 import jwt from 'jsonwebtoken';
-import {setCurrentUser} from './actions/authActions';
+import { setCurrentUser } from './actions/authActions';
 
 
-const store = createStore(
+export const store = createStore(
     rootReducer,
     compose(
-      applyMiddleware(thunk),
-      window.devToolsExtension ? window.devToolsExtension() : f => f
+        applyMiddleware(thunk),
+        window.devToolsExtension ? window.devToolsExtension() : f => f
     )
 );
 if (localStorage.jwtToken) {
-    setAuthToken(localStorage.jwtToken);
-    store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken )));
+    const decodedToken = jwt.decode(localStorage.jwtToken);
+    const hasExpired = decodedToken.exp - (Date.now() / 1000) < 0;
+    if (!hasExpired) {
+        setAuthToken(localStorage.jwtToken);
+        console.log(jwt.decode(localStorage.jwtToken))
+        store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
+        // console.log(decodedToken);
+    } else {
+        localStorage.removeItem('jwtToken');
+    }
 }
 
 render(
     <Provider store={store}>
-        <Router history={browserHistory}  routes={routes}/>
+        <Router history={browserHistory} routes={routes} />
     </Provider>, document.getElementById('app'));

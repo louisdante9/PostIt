@@ -6,7 +6,6 @@ import { addFlashMessage } from '../actions/flashMessages';
 export default function (ComposedComponent) {
     class Autheticate extends Component {
         componentWillMount(){
-            console.log(this.props);
             const { location: { pathname }, active } = this.props;
             if (!active && pathname.includes('dashboard')) {
                 this.props.addFlashMessage({

@@ -23,12 +23,7 @@ import {addUsers} from '../../actions/groupAction';
     handleChange(event, groupId) {
         event.preventDefault();
         const query = event.target.value;
-        // axios().get(`/api/user/search?name=${query}`).then(res => {
-        //     console.log(res);
-        //     this.setState({ matchingUsers: res.data.users });
-        // })
         axios().get(`/api/user/search?name=${query}&groupId=${this.props.group}`).then(res => {
-            console.log(res);
             this.setState({ matchingUsers: res.data.users });
         });
     }
@@ -38,10 +33,7 @@ import {addUsers} from '../../actions/groupAction';
     }
 
     handleSubmit(event) {
-        event.preventDefault();
-        // this.props.createGroup(this.state).then(() => {
-        //     $('.modal').modal('close');
-        // });        
+        event.preventDefault();     
         this.props.addUsers(this.props.group, this.state.userId).then(()=>{
             $('.modal').modal('close');
         });

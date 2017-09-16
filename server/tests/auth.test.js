@@ -15,13 +15,15 @@ let token, wrongUser, userParams;
 describe('Auth Suite', () => {
 
   before((done) => {
-    userParams = factory.users;
-    wrongUser = factory.wrongUser;
-    done();
+    db.sequelize.sync().then(() => {
+      userParams = factory.users;
+      wrongUser = factory.wrongUser;
+      done();
+    });
   });
 
   after((done) => {
-    db.User.sequelize.sync({ force: true }).then(() => {
+    db.sequelize.sync({ force: true }).then(() => {
       done();
     });
   });
@@ -30,14 +32,34 @@ describe('Auth Suite', () => {
     it('should successfully create a new user on successful registration', (done) => {
       request
         .post('/api/user/signup')
-        .send(userParams)
+        .send({
+          email: 'testuser@email.com',
+          username: 'testuser1',
+          password: 'testuser2',
+          phone: '07030742489'
+        })
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(201);
           done();
         });
     });
-
+    it('(409 error) with duplicate email', (done) => {
+      request
+        .post('/api/users/signup')
+        .type('form')
+        .send({
+          email: 'testuser@email.com',
+          username: 'testuser2',
+          password: 'testuser',
+          phone: '07030742489'
+        })
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(409);
+          done();
+        });
+    });
     it('should return an error when the signup form is missing a field', (done) => {
       request
         .post('/api/user/signup')
@@ -62,7 +84,7 @@ describe('Auth Suite', () => {
       });
   });
 
-  describe('Login User POST: /api/users/login', () => {
+  describe('Login User POST: /api/users/signin', () => {
     it('should successfully log in a registered user', (done) => {
       request
         .post('/api/user/signin')
@@ -93,6 +115,21 @@ describe('Auth Suite', () => {
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(401);
+          done();
+        });
+    });
+    it('(400 error) with invalid email format', (done) => {
+      request
+        .post('/api/users/signup')
+        .send({
+          email: 'test',
+          username: 'testusername3',
+          password: 'testpassword',
+          phone: '07069473974'
+        })
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(400);
           done();
         });
     });

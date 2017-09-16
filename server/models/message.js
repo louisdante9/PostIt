@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes)=> {
       }
 
     },
+    msgRead : {
+      type: DataTypes.ARRAY(DataTypes.INTEGER)
+    },
     message:{
       type: DataTypes.TEXT,
       allowNull: false,
@@ -30,6 +33,9 @@ module.exports = (sequelize, DataTypes)=> {
           foreignKey: 'groupId',
         });
         Message.belongsTo(models.User, {
+          foreignKey: 'userId' 
+        });
+        Message.hasMany(models.UserMessages, {
           foreignKey: 'userId' 
         });
       }

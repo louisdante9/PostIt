@@ -17,6 +17,9 @@ export default function validateInput(data) {
   if (Validator.isEmpty(data.password)) {
     errors.password = 'Password field is required';
   }
+  if (Validator.isEmpty(data.phone)) {
+    errors.phone = 'Phone field is require for message notifications';
+  }
 
   return {
     errors,

@@ -12,7 +12,6 @@ export function setCurrentUser(user) {
 }
 export function login(data) {
     return dispatch => {
-        console.log(axios.default);
         return axios.post('/api/user/signin', data).then(res => {
             const token = res.data.token;
             localStorage.setItem('jwtToken', token);
@@ -28,7 +27,9 @@ export function userSignupRequest(userData) {
             const token = res.data.token;
             localStorage.setItem('jwtToken', token);
             setAuthToken(token);
+            console.log('i am here',decode(token))
             dispatch(setCurrentUser(decode(token)));
+            
         });
     };
 }

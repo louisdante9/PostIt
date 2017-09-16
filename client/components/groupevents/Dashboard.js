@@ -18,38 +18,41 @@ class Dashboard extends Component {
     this.state = {
         groupId: '',
         message: '',
-        flag: 'normal'
+        flag: 'normal',
+        msg: {}
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.setGroupMessages =  this.setGroupMessages.bind(this);
-    this.openSlideaAdduser = this.openSlideaAdduser.bind(this);
+    this.openSlideAdduser = this.openSlideAdduser.bind(this);
   }
 
   componentDidMount() {
     this.props.getGroups();
-    // this.props.createMessage();
   }
 
   setGroupMessages(id){
     return (evt) => {
       evt.preventDefault();
-      console.log(id);
       this.props.getMessages(id);
-       this.setState({ groupId: id });
+      this.setState({ groupId: id });
     };
   }
+//update new messages coming through to the client 
+ handleCallback(msg) {
 
+ }
+
+//handles submit event 
   onSubmit(event){
     event.preventDefault();
     const { userId, username } = this.props.user;
     const data = Object.assign({}, this.state, { userId, username});
-    console.log(data);
     this.props.createMessage(this.state.groupId, data);
     this.setState({message:''});
   }
 
-  openSlideaAdduser(){
+  openSlideAdduser(){
     $('select').material_select();
     $('.modal').modal();
   }
@@ -67,7 +70,6 @@ class Dashboard extends Component {
 
   getGroupName(evn){
     return (evt) => {
-      console.log(evn, 'i was called');
       return evn;
     };
   }
@@ -80,7 +82,7 @@ class Dashboard extends Component {
           <p className="email-subject truncate"><span className="email-tag grey lighten-3">{GroupName && GroupName.name}</span>
             <a href="#modal2" className="secondary-content modal-trigger" onClick={(event) => {
               event.preventDefault();
-              this.openSlideaAdduser();
+              this.openSlideAdduser();
             }}>
               click to add user
         
@@ -111,8 +113,8 @@ class Dashboard extends Component {
   }
   
     render() {
-      console.log('HERE: ', this.state.id);
-      const { groups, messages } = this.props;
+      const { groups, allMsgs } = this.props;
+      const messages = allMsgs[this.state.groupId] || [];
       const GroupName = groups.find(group => group.id === this.state.groupId);
         return (
           <div>
@@ -136,7 +138,7 @@ class Dashboard extends Component {
                               <p className="email-subject truncate"><span className="email-tag grey lighten-3">{GroupName && GroupName.name}</span>
                                 <a href="#modal2" className="secondary-content modal-trigger" onClick={(event) => {
                                   event.preventDefault();
-                                  this.openSlideaAdduser();
+                                  this.openSlideAdduser();
                                 }}>
                                   click to add user
                             <span className="send">
@@ -188,12 +190,13 @@ Dashboard.propTypes = {
   messages: React.PropTypes.array.isRequired,
   user: React.PropTypes.object.isRequired,
   active : React.PropTypes.bool.isRequired,
+  allMsgs: React.PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     groups: state.groups,
-    messages: state.messages,
+    allMsgs: state.messages.msg,
     user: state.auth.user,
   };
 };

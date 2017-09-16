@@ -4,7 +4,7 @@ import TextFieldGroup from '../common/TextFieldGroup';
 import { connect } from 'react-redux';
 import { login } from '../../actions/authActions';
 
-class SigninForm extends React.Component {
+export class SigninForm extends React.Component {
     constructor(props){
         super(props);
         this.state ={
@@ -22,7 +22,6 @@ class SigninForm extends React.Component {
         const { errors, isValid } = validateInput(this.state);
         if (isValid) {
             this.setState({ isLoading: true});
-            console.log('===', this.state);
             this.props.login(this.state)
             .then((res) => this.context.router.push('/dashboard'))
             .catch((err) => {

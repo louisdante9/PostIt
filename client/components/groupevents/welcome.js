@@ -5,7 +5,7 @@ export const Component = (props) => {
         <div>
       `      <div className="email-content-wrap">
                 <div className="row">
-                   <p>This is a new route</p>
+                   <p>Welcome to post it </p>
                 </div>
                 
             </div>

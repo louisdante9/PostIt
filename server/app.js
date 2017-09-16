@@ -11,6 +11,7 @@ import open from 'open';
 import config from '../webpack.config.dev';
 import webpack from 'webpack';
 import morgan from 'morgan';
+import socket from 'socket.io';
 
 
 // Set up the express app
@@ -18,10 +19,12 @@ const app = express();
 
 //config setup
 dotenv.config();
+
 // debug('dms:server');
 Logger.useDefaults();
-const compiler = webpack(config);
 app.use(morgan());
+
+
 /**
  * Normalize a port into a number, string, or false.
  * @param {number} val port number to be used
@@ -75,30 +78,30 @@ const onListening = () => {
   debug(`🚧 Application is Listening on ${bind}`);
 };
 
-db.sequelize.sync()
-  .then(() => server.listen(port))
-  .then(() => Logger
-    .warn(`🚧 Application is Listening on ${port}`))
-  .catch(error => Logger.error(error));
-
-
 //rendering static files
 app.set('views', path.join(__dirname, '/template'));
 app.use(express.static('public'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath
-}));
 
-app.use(require('webpack-hot-middleware')(compiler));
+if (process.env.NODE_ENV != 'test') {
+  const compiler = webpack(config);
+  app.use(require('webpack-dev-middleware')(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath
+  }));
+
+  app.use(require('webpack-hot-middleware')(compiler));
+}
+
+
+
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 require('./routes')(app);
 app.get('*', (req, res) => {
   res.status(200)
-  .sendFile(path.join( __dirname, '../client/index.html'));
+  .sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 // This will be our application entry. We'll setup our server here.
@@ -106,11 +109,38 @@ const port = parseInt(process.env.PORT, 10);
 app.set('port', port);
 
 const server = http.createServer(app);
-server.listen(port, function(err) {
+
+//declare socket for real time 
+const io = socket(server);
+
+export { io };  
+
+io.on('connect', (soc)=>{
+  console.log('connected');
+  soc.on('newMessage', (payload)=>{
+    console.log(payload);
+    soc.broadcast.emit('groupMessage', payload);
+  });
+  // soc.on('readMessage', (data)=>{
+  //   //listen for user that read and then emit to tell the client user the user who read it 
+  // })
+  soc.on('disconnect',()=>{
+    console.log('Disconnected');
+  });
+});
+
+// db.sequelize.sync()
+// // .then(() => server.listen(port))
+// .then(() => Logger
+//   .warn(`🚧 Application is Listening on ${port}`))
+// .catch(error => Logger.error(error));
+
+
+server.listen(port, function (err) {
   if (err) {
     console.log(err);
   } else {
-    open(`http://localhost:${port}`);
+    // open(`http://localhost:${port}`);
   }
 });
 export default app;

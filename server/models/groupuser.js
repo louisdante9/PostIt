@@ -3,7 +3,8 @@ module.exports = function(sequelize, DataTypes) {
   const GroupUser = sequelize.define('GroupUser', {
     groupId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
-    isAdmin: DataTypes.BOOLEAN
+    isAdmin: DataTypes.BOOLEAN,
+    unread: DataTypes.INTEGER,
   }, {
     classMethods: {
       associate: function(models) {

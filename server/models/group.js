@@ -33,6 +33,9 @@ export default (sequelize, DataTypes)=> {
           through: 'GroupUser',
           foreignKey: 'groupId',
         });
+        Group.hasMany(models.UserMessages, {
+          foreignKey: 'groupId',
+        });
       }
     }
   });

@@ -30,7 +30,6 @@ export default {
         path.join(__dirname, 'client'),
         path.join(__dirname, 'server/shared/')
       ], loaders: ['babel']},
-      // {test: /(\.css)$/, loaders: ['style', 'css', 'sass']},
       {test: /\.(css|scss)$/, loaders: ['style', 'css', 'sass']},
       {test: /\.(jpe?g|png|gif|svg)$/i, loaders: [
       'file?hash=sha512&digest=hex&name=[hash].[ext]',

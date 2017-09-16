@@ -13,16 +13,14 @@ const nexmo = new Nexmo({
 
 const handleResponse = (error, responseData) => {
   if (error) {
-    console.log(error);
+    // console.log(error);
   } else {
-    console.log(responseData);
+    // console.log(responseData);
   }
 };
 
  export default function smsSender(smsObjects){
-   console.log(smsObject);
  let smsObject = smsObjects[0];
-
   nexmo.message.sendSms(
     'Post-It App', smsObject['User.phone'],
     `A critical message has been posted in ${smsObject['Group.name']}`,
