@@ -17,7 +17,7 @@ describe('auth reducer', () => {
     Reducer(reducer).expect({type: 'NOT_EXISTING'}).toReturnState(initialState);
   });
   it('should create a flash message', () => {
-    const user = {id: 1, text: 'this should work'};
+    const user = {id: 1, text: 'this should work for reducer test'};
     const action = {id: 1, type: actionTypes.ADD_FLASH_MESSAGE, user};
     console.log(action)
     Reducer(reducer).expect(action).toReturnState({...initialState, user });

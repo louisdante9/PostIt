@@ -20,7 +20,7 @@ const factory = {
   secondUser: {
     username: faker.internet.userName(),
     email: faker.internet.email(),
-    password: faker.internet.password(),
+    password: faker.internet.password(6),
     
   },
 

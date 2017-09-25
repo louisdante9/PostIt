@@ -66,7 +66,6 @@ export function createGroup(groupData) {
 
 
  export function addUsers(groupId, userId) {
-     console.log(userId);
     return dispatch => {
          return axios().post(`/api/group/${groupId}/user`, {userId})
              .then(res => {

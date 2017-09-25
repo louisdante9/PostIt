@@ -46,7 +46,7 @@ describe('Auth Suite', () => {
     });
     it('(409 error) with duplicate email', (done) => {
       request
-        .post('/api/users/signup')
+        .post('/api/user/signup')
         .type('form')
         .send({
           email: 'testuser@email.com',
@@ -70,25 +70,13 @@ describe('Auth Suite', () => {
           done();
         });
     });
-
-    it('should return an error when an existing user registers again',
-      (done) => {
-        request
-          .post('/api/user/signup')
-          .send(userParams)
-          .end((err, res) => {
-            if (err) return done(err);
-            expect(res.status).to.equal(409);
-            done();
-          });
-      });
   });
 
-  describe('Login User POST: /api/users/signin', () => {
+  describe('Login User: /api/users/signin', () => {
     it('should successfully log in a registered user', (done) => {
       request
         .post('/api/user/signin')
-        .send({ email: userParams.email, password: userParams.password })
+        .send({ email: 'testuser@email.com', password: 'testuser2' })
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(200);
@@ -120,7 +108,7 @@ describe('Auth Suite', () => {
     });
     it('(400 error) with invalid email format', (done) => {
       request
-        .post('/api/users/signup')
+        .post('/api/user/signup')
         .send({
           email: 'test',
           username: 'testusername3',
@@ -132,6 +120,6 @@ describe('Auth Suite', () => {
           expect(res.status).to.equal(400);
           done();
         });
-    });
-  });
+   });
+ });
 });

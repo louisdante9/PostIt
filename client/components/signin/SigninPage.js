@@ -12,8 +12,8 @@ class SigninPage extends React.Component {
             <div className="container">
                 <h2>Sign In Here</h2>
                 <SigninForm />
-                <p className="authlink">Don't have an account <a>Sign Up</a> </p>
-                <p className="authlink">Forgot password? <a>Click here</a></p>
+                <p className="authlink">Don't have an account <a href="/signup">Sign Up</a> </p>
+                <p className="authlink"><a href="/forgotpassword">Forgot password?</a></p>
             </div>
         );
     }

@@ -1,8 +1,12 @@
 import jwt from 'jsonwebtoken';
+import _ from 'lodash';
+// import bcrypt from 'bcrypt';
+import generator from 'generate-password';
+import crypto from 'crypto';
+import { passwordResetMail,resetSuccessfulResetMail } from './helpers/mailer';
 import db from '../models';
 import UserHelper from './helpers/userHelper';
-import _ from 'lodash';
-// import { sendMail } from '../helpers';
+
 
 require('dotenv').config({ silent: true });
 
@@ -213,7 +217,132 @@ const Users = {
       });
   },
 
+  /**
+  * request reset password
+  * @param {Object} req Request object
+  * @param {Object} res Response object
+  * @returns {Object} - Returns response object
+  */
 
+requestnewpassword(req, res) {
+  const { email } = req.body;
+  
+    if (!email) {
+      res.status(401).send({
+        err: 'Please provide your email'
+      });
+    } else {
+      return db.User
+        .findOne({
+          where: {
+            email: email
+          }
+        })
+        .then((user) => {
+          if (!user) {
+            res.status(404).send({
+              err: 'Account associated with this email not found'
+            });
+          } else {
+            const token = crypto.randomBytes(20).toString('hex');
+            db.User.update({
+              resetPasswordToken: token,
+              expiryTime: Date.now() + 3600000
+            }, {
+              where: {
+                email: email
+              }
+            })
+              .then(() => {
+                passwordResetMail(email, token, req.headers.host);
+                return res.status(200).send({ message: "password updated succesfully"});
+
+              }, (err) => {
+                res.status(400).send({
+                  success: false,
+                  message: err.message
+                });
+              });
+          }
+        }, (err) => {
+          res.status(500).send({
+            success: false,
+            message: err.message
+          });
+        });
+    }
+  },
+
+  /**
+  * reset password
+  * @param {Object} req Request object
+  * @param {Object} res Response object
+  * @returns {Object} - Returns response object
+  */
+  resetpassword(req, res) {
+    return db.User
+      .findOne({
+        where: {
+          resetPasswordToken: req.params.token
+        }
+      })
+      .then((user) => {
+        if (!user) {
+          res.status(400).send({
+            success: false,
+            err: 'failed token authentication'
+          });
+        } else {
+          console.log(Date.now());
+          console.log(user.expiryTime);
+          if ((Date.now()) > user.expiryTime) {
+            user.update({
+              resetPasswordToken: null,
+              expiryTime: null
+            }, {
+              where: {
+                resetPasswordToken: req.params.token
+              }
+            })
+              .then(() => {
+                res.status(400).send({ err: false });
+              }, err => res.status(400).send(err.message));
+          } else if (req.body.newPassword &&
+            req.body.confirmPassword && (req.body.newPassword === req.body.confirmPassword)) {
+              
+            user.update({
+              // password: bcrypt.hashSync(req.body.newPassword.trim(), 10),
+              password: req.body.newPassword,
+              resetPasswordToken: null,
+              expiryTime: null
+            })
+              .then((updatedUser) => {
+                console.log(updatedUser);
+                resetSuccessfulResetMail(updatedUser.email);
+                res.status(201).send({
+                  success: true,
+                  message: 'successfully updated password'
+                });
+              }, (err) => {
+                res.status(400).send({
+                  success: false,
+                  err: err.message
+                });
+              });
+          } else {
+            res.status(400).send({
+              success: false,
+              err: 'invalid passwords'
+            });
+          }
+        }
+      }, (err) => {
+        res.status(400).send({
+          success: false,
+          err: err.message
+        });
+      });
+  },
 
   /**
   * Reacover user password
@@ -223,75 +352,46 @@ const Users = {
   */
   
   updatePassword(req, res) {
-    db.PasswordRequests
-    .findOne({
-      where: { hash: req.params.hash }
-    }).then((result) => {
-      const email = result.dataValues.email;
-      const date = new Date();
-      const now = `${date.toString().split(' ')[2]}:${date.toString().split(' ')[4]}`;
-      if (now > result.dataValues.expiresIn) {
-        res.status(400).send({ message: 'Link has expired', status: 400 });
-        return;
+    const { email } = req.body;
+    db.User.findOne({
+      where: {
+        email: email
       }
-      return db.Users
-        .update(
-          { password: req.body.password },
-          { where: { email } }
-        ).then(() =>
-          res.status(200).send({ message: 'Password Reset Successful', status: 200 })
-        );
+    }).then((result) => {
+      if(result){
+        //generate password and update database then send mail to the user 
+        const pass = generator.generate({
+          length: 8,
+          numbers: true
+      });
+      console.log(pass, '========> this is the password');
+
+      const password = bcrypt.hashSync(pass.trim(), 10);
+
+      console.log(password, '========> this is the result');
+     
+      db.User.update({
+        password,
+      }, {
+        where: {
+          email
+        }
+      }).then(() => {
+       //send mail and update user 
+       passwordResetMail(email, pass);
+        return res.status(200).send({ message: "password updated succesfully"});
+      });
+     
+       }
+      else{
+         //send a response message to the user email doesnt exist
+         return res.status(404).send({err:'email not found'});
+         
+        }
+    }).catch((error) => {
+      return res.status(500).json(error);
     });
   },
-  passwordRequest(req, res) {
-    const email = req.body.email;
-    const hash = crypto
-    .createHash('sha256', process.env.PASSWORD_HASH_SECRET)
-    .update(Date.now().toString())
-    .digest('hex');
-    const date = new Date();
-    date.setHours(date.getHours() + 1);
-    const expiresIn = `${date.toString().split(' ')[2]}:${date.toString().split(' ')[4]}`;
-    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(req.body.email)) {
-      return res.status(400)
-      .send({ error: 'Invalid email', status: 400 });
-    }
-    const message = `Hello ${email},\
- if you have requested for a new password, please follow \
- <a href='http://localhost:3000/#/new-password/${hash}'>this link</a> to reset your password`;
-
-    db.Users
-    .findOne({
-      where: { email }
-    }).then((foundUser) => {
-      if (!foundUser) {
-        return res.status(404).send({ error: 'Email does not have an account', status: 404 });
-      }
-      db.PasswordRequests
-      .findOne({
-        where: { email }
-      }).then((response) => {
-        if (response === null) {
-          db.PasswordRequests
-          .create({
-            email,
-            expiresIn,
-            hash
-          }).then(() => {
-            sendMail(email, { subject: 'Password Reset Request', message });
-          });
-        } else {
-          response.update({
-            hash,
-            expiresIn
-          }).then(() => {
-            sendMail(email, { subject: 'Password Reset Request', message });
-          });
-        }
-      });
-      res.status(200).send({ message: 'Request made', status: 200 });
-    });
-  }
 
 };
 

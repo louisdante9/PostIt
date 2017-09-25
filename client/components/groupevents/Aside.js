@@ -34,9 +34,9 @@ class Component extends React.Component {
         };
         return (
             <div>
-                <div id="email-list" className="col s10 m3 l3 card-panel z-depth-1">
-                    <ul className="collection">
-                        <li className="collection-item avatar">
+                <div id="group-list" className="col s10 m3 l3 card-panel z-depth-1 card-1">
+                    <ul>
+                        <li>
                             <span className="group-title "> Click Icon to create group</span>
                             <a className="secondary-content modal-trigger" href="#modal1"><span className="material-icons" onClick={(event) => {
                                 event.preventDefault();
