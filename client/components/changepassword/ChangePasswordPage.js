@@ -1,23 +1,20 @@
 import React from 'react';
-import SigninForm from './SiginForm';
-import { connect } from 'react-redux';
+import ChangePasswordForm from './ChangePasswordForm';
 import { compose } from 'redux';
-import requireauth from '../../utils/requireAuth';
-import { addFlashMessage } from '../../actions/flashMessages';
 
 
-class SigninPage extends React.Component {
+class ChangePasswordPage extends React.Component {
     render() {
+        console.log(this.props.params.token);        
         return (
             <div className="container">
-                <h2>Forgot Your Password?</h2>
+                <h2>Reset Password</h2>
                 <p></p>
-                <SigninForm />
-                <p className="authlink">Don't have an account <a>Sign Up</a> </p>
-                <p className="authlink">Forgot password? <a>Click here</a></p>
+                <ChangePasswordForm token={this.props.params.token} />
+                
             </div>
         );
     }
 }
 
-export default SigninPage;
+export default ChangePasswordPage;

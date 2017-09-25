@@ -78,8 +78,6 @@ const onListening = () => {
   debug(`🚧 Application is Listening on ${bind}`);
 };
 
-//rendering static files
-app.set('views', path.join(__dirname, '/template'));
 app.use(express.static('public'));
 
 app.use(bodyParser.json());
@@ -112,29 +110,18 @@ const server = http.createServer(app);
 
 //declare socket for real time 
 const io = socket(server);
-
 export { io };  
-
 io.on('connect', (soc)=>{
   console.log('connected');
   soc.on('newMessage', (payload)=>{
     console.log(payload);
     soc.broadcast.emit('groupMessage', payload);
   });
-  // soc.on('readMessage', (data)=>{
-  //   //listen for user that read and then emit to tell the client user the user who read it 
-  // })
+
   soc.on('disconnect',()=>{
     console.log('Disconnected');
   });
 });
-
-// db.sequelize.sync()
-// // .then(() => server.listen(port))
-// .then(() => Logger
-//   .warn(`🚧 Application is Listening on ${port}`))
-// .catch(error => Logger.error(error));
-
 
 server.listen(port, function (err) {
   if (err) {

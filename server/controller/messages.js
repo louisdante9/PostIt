@@ -1,18 +1,17 @@
 import db from '../models';
 import { handleError } from './helpers/handleErrors';
-import mailer from './helpers/mailer';
+import priorityMail from './helpers/mailer';
 import smsSender from './helpers/smsHelper';
 import pry from 'pryjs';
 import { io } from '../app';
 
-
-function sendMessage(data, flag) {
+ function sendMessage(data, flag) {
   switch (flag) {
     case 'urgent':
-      mailer(data);
+    priorityMail(data);
       break;
     case 'critical':
-      mailer(data);
+    priorityMail(data);
       smsSender(data);
       break;
     default:
@@ -139,7 +138,7 @@ function generateUserMessageData(data, userId) {
 
 
 function createUnreadMessages(data) {
-  console.log(data)
+  console.log(data);
   return db.UserMessages.bulkCreate(data);
 }
 

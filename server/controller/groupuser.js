@@ -58,15 +58,19 @@ const GroupUsers = {
    */
 
   addUsersToGroup(req, res) {
-    
+    // const groupId = parseInt(req.params.groupId);
+
+    // models.Group.find({
+    //     id: groupId
+    // }).then(console.log('i got here ')).catch(console.log('there is an error'))
     models.GroupUser
       .create({
         userId: req.body.userId,
-        groupId: req.params.groupId
+        groupId: parseInt(req.params.groupId)
       })
       .then(groupUser => res.status(201).send(groupUser))
       .catch(error => res.status(400).send(error));
-  },
+   },
 
 
 addUnread(req, res) {

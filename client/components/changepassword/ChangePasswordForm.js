@@ -1,18 +1,16 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
-import validateInput from '../../../server/shared/validations/signup';
+import { connect } from 'react-redux';
+import axios from 'axios';
+import { confirmPasswordResetRequest } from '../../actions/authActions';
+import validateInput from '../../../server/shared/validations/changepassword';
 import TextFieldGroup from '../common/TextFieldGroup';
 
-class SignupForm extends React.Component{
+class ChangePasswordForm extends React.Component{
    constructor(props){
     super(props);
     this.state = {
-      username: '',
-      email: '',
-      password: '', 
-      phone: '',
-      errors: {},
-      isLoading: false
+      newPassword: '', 
+      confirmPassword : '',
     };
     
     this.onChange = this.onChange.bind(this);
@@ -24,98 +22,43 @@ class SignupForm extends React.Component{
       [e.target.name]: e.target.value,
     });
   }
-  // isValid(){
-  //   const { errors ={}, isValid } = validateInput(this.state);
-  //   if (!isValid) {
-  //     this.setState({ errors });
-  //   }
-  //   return isValid;
-  // }
-  onSubmit(e){
+  onSubmit(e) {
     e.preventDefault();
-    const {errors, isValid} = validateInput(this.state);
-    if (isValid) {
-      this.setState({ isLoading: true });
-      this.props.userSignupRequest(this.state).then(
-        (result) =>{
-          this.props.addFlashMessage({
-            type: 'success',
-            text: 'You signed up successfull. Welcome!'
-          });
-          browserHistory.push('/dashboard');
-        }
-        // (error, resp) => {
-        //   this.setState({ errors: error.response.data, isLoading: false });
-        // }
-      )
-      .catch((err) => {
-        console.log(err);
-        const error =  err.response.errors;
-        this.handleErrors(error);
-        this.setState({ isLoading: false });
-    });
-    }
-    else {
-      this.handleErrors(errors);
-  }
-  }
-  handleErrors(errors) {
-    Object.keys(errors).forEach((error) => {
-        Materialize.toast(errors[error], 3000);
-    });
+    const token = this.props.token;
+    // const { errors, isValid } = validateInput(this.state);
+    // if (isValid) {
+      this.props.confirmPasswordResetRequest(token, this.state);
+   // }
   }
     render(){
       
-      // const { errors } = this.state;
+       const { errors, newPassword, confirmPassword } = this.state;
       return(
             <form className="col s12" onSubmit={this.onSubmit}>
               <div className="row">
-                <TextFieldGroup
-                  error={this.state.errors.username}
-                  onChange={this.onChange}
-                  value={this.state.username}
-                  field ="username"
-                  placeholder="Enter Username"
-                 />
-              </div>
-              <div className="row">
-                <TextFieldGroup
-                  error={this.state.errors.email}
-                  onChange={this.onChange}
-                  value={this.state.email}
-                  field ="email"
-                  placeholder="Enter Email"
-                 />
-              </div>
-              <div className="row">
-                <TextFieldGroup
-                  error={this.state.errors.password}
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  type="password"
-                  field ="password"
-                  placeholder="Enter Password"
-                 />
-              </div>
-              <div className="row">
               <TextFieldGroup
-                error={this.state.errors.phone}
                 onChange={this.onChange}
-                value={this.state.phone}
-                type="text"
-                field ="phone"
-                placeholder="Enter Phone number"
+                value={this.state.newPassword}
+                type="password"
+                field ="newPassword"
+                placeholder="Enter New Password"
                />
             </div>
-              <button  className="btn waves-effect waves-light">Sign Up</button>  
+            <div className="row">
+            <TextFieldGroup
+              onChange={this.onChange}
+              value={this.state.confirmPassword}
+              type="password"
+              field ="confirmPassword"
+              placeholder="Confirm Password"
+             />
+          </div>
+              <button  className="btn waves-effect waves-light">Update password</button>  
           </form>
        );
    }  
 }
-
-SignupForm.propTypes ={
-  userSignupRequest: React.PropTypes.func.isRequired,
-  addFlashMessage: React.PropTypes.func.isRequired
+ChangePasswordForm.propTypes = {
+  confirmPasswordResetRequest: React.PropTypes.func.isRequired
 };
-
-export default SignupForm;
+export default connect(null, {confirmPasswordResetRequest})(ChangePasswordForm);

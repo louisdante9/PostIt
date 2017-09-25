@@ -4,6 +4,8 @@ import App from './components/App';
 import HomePage from './components/home/HomePage';
 import SignupPage from './components/signup/SignupPage';
 import SigninPage from './components/signin/SigninPage';
+import ForgotPassword from './components/forgotpassword/ForgotPasswordPage';
+import ChangePassword from './components/changepassword/ChangePasswordPage';
 import Dashboard from './components/groupevents/Dashboard';
 import requireAuth from './utils/requireAuth';
 
@@ -13,7 +15,8 @@ export default(
         <Route path="signup" component={requireAuth(SignupPage)}/>
         <Route path="signin" component={requireAuth(SigninPage)}/>
         <Route path="dashboard" component={requireAuth(Dashboard)}/>
-        
+        <Route path="forgotpassword" component={requireAuth(ForgotPassword)}/>
+        <Route path="resetpassword/:token"  component={requireAuth(ChangePassword)}/>
     </Route>
     
 );

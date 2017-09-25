@@ -31,12 +31,12 @@ module.exports = (sequelize, DataTypes) =>{
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-    // validate: {
-    //   len: {
-    //     args: [4, 100],
-    //     msg: 'Your password is too short'
-    //   }
-    // }
+    validate: {
+      len: {
+        args: [4, 100],
+        msg: 'Your password is too short'
+      }
+    }
   },
   phone: {
     type: DataTypes.STRING,
@@ -48,6 +48,14 @@ module.exports = (sequelize, DataTypes) =>{
     //     msg: 'Your phone number is too short'
     //   }
       // }
+  },
+  resetPasswordToken:{
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  expiryTime:{
+    type: DataTypes.STRING,
+    allowNull: true
   },
   }, {
       classMethods: {

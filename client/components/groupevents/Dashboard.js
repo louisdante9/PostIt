@@ -119,7 +119,7 @@ class Dashboard extends Component {
         return (
           <div>
             <section id="content">
-              <div className="container">
+              <div>
                 <div id="mail-app" className="section">
                   <div className="row">
                     <div className="col s12">
@@ -129,7 +129,7 @@ class Dashboard extends Component {
                         groups={groups}
                         setGroupMessages={this.setGroupMessages}
                       />
-                      <div id="email-details" className="col s12 m8 l8 card-panel">
+                      <div id="email-details" className="col s12 m8 l8 card-panel card-1">
                       {this.state.groupId ? 
                         (
                           <div>

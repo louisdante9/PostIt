@@ -9,12 +9,6 @@ class NavigationBar extends React.Component{
       this.logout = this.logout.bind(this);
     }
    
-     // componentWillMount(nextProps) {
-    //   console.log('props was received');
-    //   if(localStorage.getItem('jwtToken')) {
-    //       this.props.authenticate();
-    //   }
-    // }
     logout(e) {
      e.preventDefault();
      this.props.logout();
@@ -37,8 +31,8 @@ class NavigationBar extends React.Component{
       </ul>
     );
     return(
-      <div className="navbar-fixed">
-        <nav className="grey darken-2">
+      <div className="navbar-fixed card-1">
+        <nav className="">
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo">POST-IT</Link>
             <img alt=""/>
@@ -49,9 +43,7 @@ class NavigationBar extends React.Component{
     );
   }
 }
-// NavigationBar.contextTypes = {
-//   router: React.PropTypes.object.isRequired
-// };
+
 NavigationBar.propTypes = {
   auth: React.PropTypes.object.isRequired,
   logout: React.PropTypes.func.isRequired,

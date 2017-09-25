@@ -1,7 +1,7 @@
  import axios from 'axios';
  import setAuthToken from '../utils/setAuthToken'; 
  import jwtDecode from 'jwt-decode';
- import { USER_AUTHENTICATED } from './types';
+ import { USER_AUTHENTICATED, RESET_PASSWORD_SUCCESS } from './types';
 
 
 export function setCurrentUser(user) {
@@ -27,12 +27,12 @@ export function userSignupRequest(userData) {
             const token = res.data.token;
             localStorage.setItem('jwtToken', token);
             setAuthToken(token);
-            console.log('i am here',decode(token))
             dispatch(setCurrentUser(decode(token)));
             
         });
     };
 }
+
 
 
 export function logout() {
@@ -55,3 +55,26 @@ export function authenticate(payload) {
 function decode(token) {
     return jwtDecode(token);
 }
+
+const confirmPasswordResetSuccess = password => ({
+    type: 'RESET_PASSWORD_SUCCESS',
+     password
+  });
+  
+  const confirmPasswordResetFailed = password => ({
+    type: 'RESET_PASSWORD_FAILED',
+     password
+  });
+  
+  export const confirmPasswordResetRequest = (token, newPassword) => dispatch =>
+    axios.post(`/api/user/resetpassword/${token}`, newPassword)
+      .then((response) => {
+        dispatch(confirmPasswordResetSuccess(response));
+        Materialize.toast('Password reset successful', 6000, 'green');
+        history.push('/login');
+      })
+      .catch((err) => {
+        dispatch(confirmPasswordResetFailed(err));
+        console.log(err)
+        Materialize.toast(err.response.data.err, 3000, 'red');
+      });
