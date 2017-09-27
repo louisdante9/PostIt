@@ -35,6 +35,7 @@ describe('Messages suite', () => {
                 return done(err);
               }
               group = res.body.data;
+              db.User.bulkCreate(userParams);
               done();
             });
         });
@@ -45,7 +46,7 @@ describe('Messages suite', () => {
   after((done) => {
     db.sequelize.sync({ force: true }).then(() => {
       done();
-    })
+    });
   });
 
   describe('Create Messages', () => {
@@ -60,7 +61,7 @@ describe('Messages suite', () => {
           }
           expect(res.status).to.equal(201);
           done();
-        })
+        });
     });
 
 
@@ -95,33 +96,24 @@ describe('Messages suite', () => {
 
   describe('Add user to a new group', () => {
     it('should return 200 to add a user to a group', (done) => {
+      token;
       request
-      .post('/api/user/signup')
+      .post(`/api/group/1/user`)
+      .set('authorization', token)      
       .send({ 
-        email: 'testuser@email.com',
-        username: 'testuser2',
-        password: 'testuser',
-        phone: '07030742489'
-    })
-      .end((err, res) => {
-        if (err) {
-          return done(err);
-        }
-        token = res.body.token;
-      request
-      .post('/api/group/1/user/')
-      .set('authorization', token)
-      .send({
         userId: 2
       })
+      
       .end((err, res) => {
         if (err) {
           return done(err);
         }
+        console.log(res.body, 'this is from the test file ====>');
+        
         expect(res.status).to.equal(200);
         done();
       });
-    });
+
   });
 //   describe('Send message to a group', () => {
 //     it('returns 200 response', (done) => {

@@ -10,17 +10,11 @@ class SignupPage extends React.Component{
     render(){
         const { userSignupRequest, addFlashMessage } = this.props;
         return(
-            <div className="site-wrapper">
-                <div className="site-wrapper-inner">
-                  <div className="cover-container">
-                    <div className="inner cover">
+                    <div className="container align">
                       <h2>Join Our Community!</h2>
                       <SignupForm userSignupRequest={userSignupRequest} addFlashMessage={addFlashMessage} />
                       <p className="authlink">Already have an account <a href="#">Sign In</a> </p>
                     </div>
-                </div>
-            </div>
-        </div>
         );
     }
 }

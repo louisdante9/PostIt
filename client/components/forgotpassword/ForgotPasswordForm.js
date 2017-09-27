@@ -79,7 +79,7 @@ class ForgotPasswordForm extends React.Component {
             placeholder="Enter Email"
           />
         </div>
-        <button className="btn waves-effect waves-light">Send Password</button>
+        <button className="btn waves-effect waves-light black card-1">Send </button>
       </form>
     );
   }
