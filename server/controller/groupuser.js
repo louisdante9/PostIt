@@ -58,11 +58,7 @@ const GroupUsers = {
    */
 
   addUsersToGroup(req, res) {
-    // const groupId = parseInt(req.params.groupId);
-
-    // models.Group.find({
-    //     id: groupId
-    // }).then(console.log('i got here ')).catch(console.log('there is an error'))
+    console.log(req.body);
     models.GroupUser
       .create({
         userId: req.body.userId,

@@ -9,7 +9,7 @@ import { addFlashMessage } from '../../actions/flashMessages';
 class SigninPage extends React.Component {
     render() {
         return (
-            <div className="container">
+            <div className="container align">
                 <h2>Sign In Here</h2>
                 <SigninForm />
                 <p className="authlink">Don't have an account <a href="/signup">Sign Up</a> </p>

@@ -204,6 +204,10 @@ html, body {
     /* Add a hover color */
   }
 }
+.align{
+  text-align: center;
+  padding-top: 120px;
+}
 
 /* .active {
     background-color: #4CAF50; /* Add an active/current color 
@@ -303,6 +307,7 @@ nav {
   // height: 40px;
   line-height: 40px;
   background-color: #040000;
+
   color: #fff;
   i, [class^="mdi-"], [class*="mdi-"], i.material-icons, .button-collapse i {
     // height: 40px;
@@ -313,9 +318,27 @@ nav {
     display: inline-block;
     height: 100%;
     padding-left: 40px;
+    padding-top: 10px;
+  }
+  ul{
+    height: 100%;
+  }
+  li{
+    height: 100%;
+  }
+  li a{
+    padding-top: 10px;
+  }
+  li a:hover{
+    height: 100%;
+    background-color: #fff;
+    color: #000000;
   }
 }
-
+.mastfoot p{
+  color: #fff;
+  padding-bottom: 10px;
+}
 @media only screen and (min-width: 601px) {
   nav {
     // height: 40px;
@@ -347,7 +370,9 @@ nav {
   margin-right: 50%;
 }
 
-
+.notfound{
+  font-size: 16em;
+}
 #email-details {
   margin-left: 10px;
 }

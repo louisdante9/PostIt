@@ -7,6 +7,7 @@ import SigninPage from './components/signin/SigninPage';
 import ForgotPassword from './components/forgotpassword/ForgotPasswordPage';
 import ChangePassword from './components/changepassword/ChangePasswordPage';
 import Dashboard from './components/groupevents/Dashboard';
+import NotFound from './components/notfound/NotFound';
 import requireAuth from './utils/requireAuth';
 
 export default(
@@ -17,6 +18,6 @@ export default(
         <Route path="dashboard" component={requireAuth(Dashboard)}/>
         <Route path="forgotpassword" component={requireAuth(ForgotPassword)}/>
         <Route path="resetpassword/:token"  component={requireAuth(ChangePassword)}/>
-    </Route>
-    
+        <Route path="*" component={NotFound} />
+    </Route>  
 );

@@ -66,7 +66,7 @@ export class SigninForm extends React.Component {
                         placeholder="Enter Password"
                         />
                     </div>
-                    <button className="btn waves-effect waves-light" type="submit" name="action">Sign In</button>  
+                    <button className="btn waves-effect waves-light black card-1" type="submit" name="action">Sign In</button>  
                 </form>
         );
     }

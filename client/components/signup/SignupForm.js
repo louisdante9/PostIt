@@ -24,13 +24,7 @@ class SignupForm extends React.Component{
       [e.target.name]: e.target.value,
     });
   }
-  // isValid(){
-  //   const { errors ={}, isValid } = validateInput(this.state);
-  //   if (!isValid) {
-  //     this.setState({ errors });
-  //   }
-  //   return isValid;
-  // }
+
   onSubmit(e){
     e.preventDefault();
     const {errors, isValid} = validateInput(this.state);
@@ -38,19 +32,11 @@ class SignupForm extends React.Component{
       this.setState({ isLoading: true });
       this.props.userSignupRequest(this.state).then(
         (result) =>{
-          this.props.addFlashMessage({
-            type: 'success',
-            text: 'You signed up successfull. Welcome!'
-          });
+          Materialize.toast('You signed up successfull. Welcome!', 3000, 'green');          
           browserHistory.push('/dashboard');
-        }
-        // (error, resp) => {
-        //   this.setState({ errors: error.response.data, isLoading: false });
-        // }
-      )
+        })
       .catch((err) => {
-        console.log(err);
-        const error =  err.response.errors;
+        const error =  err.response.data.message;
         this.handleErrors(error);
         this.setState({ isLoading: false });
     });
@@ -60,13 +46,16 @@ class SignupForm extends React.Component{
   }
   }
   handleErrors(errors) {
-    Object.keys(errors).forEach((error) => {
-        Materialize.toast(errors[error], 3000);
-    });
+    if(typeof errors !== "string"){
+        Object.keys(errors).forEach((error) => {
+                Materialize.toast(errors[error], 3000, 'red');
+            });
+    }else{
+      Materialize.toast(errors, 3000, 'red');      
+    }
+    
   }
     render(){
-      
-      // const { errors } = this.state;
       return(
             <form className="col s12" onSubmit={this.onSubmit}>
               <div className="row">
@@ -107,7 +96,7 @@ class SignupForm extends React.Component{
                 placeholder="Enter Phone number"
                />
             </div>
-              <button  className="btn waves-effect waves-light">Sign Up</button>  
+              <button  className="btn waves-effect waves-light black card-1">Sign Up</button>  
           </form>
        );
    }  

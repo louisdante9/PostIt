@@ -53,7 +53,8 @@ class ChangePasswordForm extends React.Component{
               placeholder="Confirm Password"
              />
           </div>
-              <button  className="btn waves-effect waves-light">Update password</button>  
+              <button  className="btn waves-effect waves-light black card-1">Update password</button> 
+              <p> </p>
           </form>
        );
    }  
