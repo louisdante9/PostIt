@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 class FlashMessagesList extends React.Component {
     render(){
-        console.log(this.props);
         const msg = this.props.messages;
         const messages = msg.map(message =>
             <FlashMessage key={message.id} message={message} /> 

@@ -5,7 +5,6 @@ import { compose } from 'redux';
 
 class ChangePasswordPage extends React.Component {
     render() {
-        console.log(this.props.params.token);        
         return (
             <div className="container align">
                 <h2>Change Password</h2>

@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 
 // export const Component = ({ showModal, groups, setGroupMessages, unread }) => {
 class Component extends React.Component {
-    componentWillUnmount() {
-        console.log(this.props, 'pppppp')
-    }
     render() {
         // console.log(unread);
         const { showModal, groups, setGroupMessages, unread } = this.props;

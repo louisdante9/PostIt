@@ -7,10 +7,7 @@ export default class Modal extends React.Component {
         this.state = {
             name: '',
             description: ''
-        };
-
-        console.log(this.props);
-        
+        };        
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }

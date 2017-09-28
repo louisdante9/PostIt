@@ -1,7 +1,6 @@
 import React from 'react';
 
 export const Component = ({ message, flag, onChange, onSubmit }) => {
-    // groups.filter(group => )
     return(
         <div>
       `      <div className="email-content-wrap">

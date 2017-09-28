@@ -25,10 +25,7 @@ class ChangePasswordForm extends React.Component{
   onSubmit(e) {
     e.preventDefault();
     const token = this.props.token;
-    // const { errors, isValid } = validateInput(this.state);
-    // if (isValid) {
       this.props.confirmPasswordResetRequest(token, this.state);
-   // }
   }
     render(){
       

@@ -25,10 +25,7 @@ class ForgotPasswordForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     const { errors, isValid } = validateInput(this.state);
-
     const { email } = this.state;
-
-    console.log(email, 'this is the mail');
 
     if (isValid) {
       axios({
@@ -64,9 +61,6 @@ class ForgotPasswordForm extends React.Component {
   
   render() {
     const message = this.state.successMessage;
-    // if (!message === '') {
-    //   Materialize.toast(message, 3000);
-    // }
     return (
       <form className="col s12 " onSubmit={this.onSubmit}>
 

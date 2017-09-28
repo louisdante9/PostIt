@@ -30,9 +30,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    this.props.getGroups();
-    // introJs().start()
-    
+    this.props.getGroups();    
   }
   componentDidUpdate () {
     if(this.state.introjs) {
@@ -42,7 +40,6 @@ class Dashboard extends Component {
 onClickTour(event){
   event.preventDefault();
   this.setState({introjs: true});
-  console.log('this is working')
 }
 
   setGroupMessages(id){

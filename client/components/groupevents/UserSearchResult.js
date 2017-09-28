@@ -10,7 +10,6 @@ export const Component = ({ userResult = [], handleSelect, pageCount, pageClick 
           <label htmlFor={user.id} onClick={(e) => handleSelect(e, user.id)}>{user.username}</label>
         </p>
       ))}
-      {console.log(pageCount, 'this is the page count')}
       <ReactPaginate
         previousLabel={'previous'}
         nextLabel={'next'}
