@@ -19,17 +19,31 @@ class Dashboard extends Component {
         groupId: '',
         message: '',
         flag: 'normal',
-        msg: {}
+        msg: {},
+        introjs: false
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.setGroupMessages =  this.setGroupMessages.bind(this);
     this.openSlideAdduser = this.openSlideAdduser.bind(this);
+    this.onClickTour = this.onClickTour.bind(this);
   }
 
   componentDidMount() {
     this.props.getGroups();
+    // introJs().start()
+    
   }
+  componentDidUpdate () {
+    if(this.state.introjs) {
+      introJs().start();
+    }
+  }
+onClickTour(event){
+  event.preventDefault();
+  this.setState({introjs: true});
+  console.log('this is working')
+}
 
   setGroupMessages(id){
     return (evt) => {
@@ -109,7 +123,7 @@ class Dashboard extends Component {
         {/**  message box */}
         <MessageBox message={this.state.message} flag={this.state.flag} onChange={this.onChange} onSubmit={this.onSubmit} groups={groups} />
       </div>
-    )
+    );
   }
   
     render() {
@@ -136,14 +150,15 @@ class Dashboard extends Component {
                             <hr className="grey-text text-lighten-2" />
                             <div className="collection-item avatar">
                               <p className="email-subject truncate"><span className="email-tag grey lighten-3">{GroupName && GroupName.name}</span>
-                                <a href="#modal2" className="secondary-content modal-trigger" onClick={(event) => {
+                                <a href="#modal2" className=" modal-trigger" onClick={(event) => {
                                   event.preventDefault();
                                   this.openSlideAdduser();
                                 }}>
-                                  click to add user
-                            <span className="send">
+                                                              
+                            <span className="send" data-intro="Add users here">
                                     Add User
                             </span></a>
+                            <span className="send"  onClick={this.onClickTour}>Take a tour</span>   
                               </p>
                               <hr />
                             </div>
@@ -163,7 +178,7 @@ class Dashboard extends Component {
                             </div>
                             <hr />
                             {/**  message box */}
-                            <MessageBox message={this.state.message} flag={this.state.flag} onChange={this.onChange} onSubmit={this.onSubmit} groups={groups} />
+                            <MessageBox message={this.state.message} flag={this.state.flag} onChange={this.onChange} onSubmit={this.onSubmit} groups={groups} onClick={this.onClickTour} />
                           </div>
                         )        
                       : <Welcome />}

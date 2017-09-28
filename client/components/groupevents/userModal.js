@@ -12,21 +12,41 @@ import {addUsers} from '../../actions/groupAction';
         super(props);
             this.state = {
                 matchingUsers: [],
-                userId: ''
+                userId: '',
+                offset: 0,
+                count: 0,
+                addUser: ''
             };
         this.handleChange = this.handleChange.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.pageClick = this.pageClick.bind(this);
     }
 
 
-    handleChange(event, groupId) {
+    handleChange(event, groupId, offset) {
         event.preventDefault();
         const query = event.target.value;
-        axios().get(`/api/user/search?name=${query}&groupId=${this.props.group}`).then(res => {
-            this.setState({ matchingUsers: res.data.users });
+        axios().get(`/api/user/search?name=${query}&groupId=${this.props.group}&offset=${this.state.offset}`).then(res => {
+            this.setState({ 
+                matchingUsers: res.data.users.rows,
+                count : res.data.pageCount,
+                addUser: query
+            });
         });
     }
+    pageClick(data) {
+        const selected = data.selected;
+        const query = this.state.addUser;
+        axios().get(`/api/user/search?name=${query}&groupId=${this.props.group}&offset=${selected}`).then(res => {
+            this.setState({ 
+               matchingUsers: res.data.users.rows,
+               count : res.data.pageCount,
+               addUser: query,
+               offset: selected 
+            });
+        });
+      }
 
     handleSelect(event, userId){
        this.setState({ userId });   
@@ -43,7 +63,7 @@ import {addUsers} from '../../actions/groupAction';
         return (
             <div id="modal2" className="modal">
                 <div className="modal-content">
-                    <nav className="cyan">
+                    <nav className="white">
                         <div className="nav-wrapper">
                             <div className="left col s12 m5 l5">
                                 <ul>
@@ -53,8 +73,8 @@ import {addUsers} from '../../actions/groupAction';
                                             </i>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#!" className="email-type">
+                                    <li className="black">
+                                        <a href="#!" className="email-type card-1">
                                             Add users to group
                                         </a>
                                     </li>
@@ -63,9 +83,9 @@ import {addUsers} from '../../actions/groupAction';
                             <div className="col s12 m7 l7 hide-on-med-and-down" >
                                 <ul className="right" onClick={this.handleSubmit}>
                                     <li>
-                                        <a className="red" href="#!">
+                                        <a className="black" href="#!">
                                             <i className="material-icons">
-                                                Add
+                                                add
                                             </i>
                                         </a>
                                     </li>
@@ -92,7 +112,7 @@ import {addUsers} from '../../actions/groupAction';
                         </form>
                     </div>
                 </div>
-                <UserSearchResult userResult = {this.state.matchingUsers} handleSelect={this.handleSelect}/>
+                <UserSearchResult userResult = {this.state.matchingUsers} handleSelect={this.handleSelect} pageCount={this.state.count} pageClick={this.pageClick}/>
             </div>
         );
     }

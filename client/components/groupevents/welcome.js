@@ -3,12 +3,12 @@ import React from 'react';
 export const Component = (props) => {
     return(
         <div>
-      `      <div className="email-content-wrap">
-                <div className="row">
-                   <p>Welcome to post it </p>
+      `      <div className="email-content-wrap align">
+                <div className="row welcome">
+                   <h2>Welcome to post it </h2>
                 </div>
-                
-            </div>
+                <p>add some text here!!!</p>
+                </div>
         </div>
     );
 };
