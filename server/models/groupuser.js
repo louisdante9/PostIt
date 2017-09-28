@@ -18,5 +18,6 @@ export default (sequelize, DataTypes) => {
       }
     }
   });
+  
   return GroupUser;
 };

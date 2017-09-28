@@ -1,5 +1,5 @@
 'use strict';
-export default (sequelize, DataTypes)=> {
+export default (sequelize, DataTypes) => {
   const Group = sequelize.define('Group', {
     name: {
       allowNull: false,
@@ -21,8 +21,6 @@ export default (sequelize, DataTypes)=> {
       }
     }
   },
-  
-  
    {
      classMethods: {
       associate: (models) => {
@@ -39,5 +37,6 @@ export default (sequelize, DataTypes)=> {
       }
     }
   });
+
   return Group;
 };

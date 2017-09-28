@@ -27,11 +27,15 @@ const Users = {
     const { username, email, password, phone } = req.body;
     db.User.find({
       where: {
-        email: email
+        $or:[
+          {email: email},
+          {username: username}
+        ]
       }
     }).then((returnedUsers) => {
+      console.log(returnedUsers);
       if (returnedUsers) {
-        return res.status(409).json({ message: `User with ${email} already exists` });
+        return res.status(409).json({ message: `User with "${email}" or "${username}" already exists` });
       } else {
         db.User.create(req.body).then((user) => {
           if (user) {
@@ -126,13 +130,16 @@ const Users = {
   search(req, res) {
     const match = req.query.name;
     const groupId = Number(req.query.groupId);
+    const offset = req.query.offset * 5;
     const query = {
       where: {
         username: { $iLike: `%${match}%` },
         email: { $iLike: `%${match}%` },
       },
       attributes :['id', 'username', 'email',
-      'createdAt', 'updatedAt']
+      'createdAt', 'updatedAt'],
+      limit: 5,
+      offset: offset
     };
 
     db.Group.find({
@@ -151,9 +158,12 @@ const Users = {
       }
       const omitUsers = _.map(group.toJSON().Users, 'id');//flags an error if the group is null...also return password....
       query.where.id = { $notIn: omitUsers };
-      db.User.findAll(query).then((result) => {
+      db.User.findAndCountAll(query).then((result) => {
         return res.status(200)
-          .json({ users: result });
+          .json({ 
+            users: result,
+            pageCount: Math.ceil(result.count/5)
+          });
       });
     });
 

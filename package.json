@@ -1,11 +1,13 @@
 {
   "name": "postit",
+  "author": "louisdante9",
   "version": "1.0.0",
   "description": "PostIt is a simple application that allows friends and colleagues create groups for notifications. This way one person can post notifications to everyone by sending a message once. The application allows people create accounts, create groups and add registered users to the groups, and then send messages out to these groups whenever they want.",
   "main": "app.js",
   "engines": {
     "node": "6.9.4"
   },
+  "license": "MIT",
   "scripts": {
     "prestart": "babel-node server/startMessage.js",
     "start:dev": "npm-run-all --parallel test:watch open:server ",
@@ -17,13 +19,14 @@
     "test:watch": "npm run test -- --watch",
     "tests": "jest",
     "tests:watch": "npm test -- --watch",
+    "testserver": "cross-env NODE_ENV=test nyc --reporter=text --reporter=html --reporter=lcov mocha --compilers js:babel-core/register ./server/tests/*.test.js --timeout 150000",
     "open:server": "nodemon --watch server --exec babel-node -- ./server/app.js",
-    "servertest": "npm run migrate && cross-env NODE_ENV=test nyc --reporter=text --reporter=html --reporter=lcov mocha --compilers js:babel-core/register ./server/tests/*.test.js --timeout 150000 && npm run coverage-report",
+    "servertest": "npm-run-all --sequential migrate:test:down migrate:test testserver coverage-report",
     "migrate:undo": "node_modules/.bin/sequelize db:migrate:undo:all",
-    "migrate": "cross-env NODE_ENV=test node_modules/.bin/sequelize db:migrate"
+    "migrate": "cross-env NODE_ENV=development node_modules/.bin/sequelize db:migrate",
+    "migrate:test": "cross-env NODE_ENV=test node_modules/.bin/sequelize db:migrate",
+    "migrate:test:down": "cross-env NODE_ENV=test node_modules/.bin/sequelize db:migrate:undo:all"
   },
-  "author": "louis",
-  "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2",
     "babel-cli": "^6.24.1",
@@ -34,6 +37,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-hmre": "1.1.1",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",
     "bcrypt": "^1.0.3",
     "bcrypt-nodejs": "0.0.3",
@@ -59,11 +63,13 @@
     "nodemailer": "^4.0.1",
     "nodemailer-smtp-transport": "^2.7.4",
     "nodemon": "^1.11.0",
+    "open": "0.0.5",
     "pg": "^6.4.0",
     "pg-hstore": "^2.3.2",
     "pryjs": "^1.0.3",
     "react": "15.0.2",
     "react-dom": "15.0.2",
+    "react-paginate": "^4.4.4",
     "react-redux": "4.4.5",
     "react-router": "2.4.0",
     "react-router-redux": "4.0.4",
