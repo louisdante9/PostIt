@@ -7,6 +7,7 @@
   "engines": {
     "node": "6.9.4"
   },
+  "license": "MIT",
   "scripts": {
     "prestart": "babel-node server/startMessage.js",
     "start:dev": "npm-run-all --parallel test:watch open:server ",
@@ -26,13 +27,11 @@
     "migrate:test": "cross-env NODE_ENV=test node_modules/.bin/sequelize db:migrate",
     "migrate:test:down": "cross-env NODE_ENV=test node_modules/.bin/sequelize db:migrate:undo:all"
   },
-  "author": "louis",
-  "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
-    "babel-loader": "^7.1.1",
+    "babel-loader": "^6.0.0",
     "babel-plugin-react-display-name": "2.0.0",
     "babel-polyfill": "6.8.0",
     "babel-preset-es2015": "^6.24.1",
