@@ -4,66 +4,42 @@
 import chai from 'chai';
 import supertest from 'supertest';
 import app from '../app';
-import factory from './helpers/auth.helper';
+import fakerObj from './helpers/auth.helper';
 import db from '../models';
 
 const expect = chai.expect;
 const request = supertest(app);
 
-let token, wrongUser, userParams;
+let token;
 
-describe('Auth Suite', () => {
-
-  before((done) => {
-    db.sequelize.sync().then(() => {
-      userParams = factory.users;
-      wrongUser = factory.wrongUser;
-      done();
-    });
-  });
-
-  after((done) => {
-    db.sequelize.sync({ force: true }).then(() => {
-      done();
-    });
-  });
-
+describe('Auth Suite', () => {  
   describe('Create User POST: /api/user/signup', () => {
     it('should successfully create a new user on successful registration', (done) => {
       request
         .post('/api/user/signup')
-        .send({
-          email: 'testuser@email.com',
-          username: 'testuser1',
-          password: 'testuser2',
-          phone: '07030742489'
-        })
+        .send(fakerObj.users)
+        .expect('Content-Type', /json/)
+        .expect(201)
         .end((err, res) => {
-          if (err) return done(err);
-          expect(res.status).to.equal(201);
+          expect(res.body.user.email).to.equal(fakerObj.users.email);
           done();
         });
     });
     it('(409 error) with duplicate email', (done) => {
       request
         .post('/api/user/signup')
-        .type('form')
-        .send({
-          email: 'testuser@email.com',
-          username: 'testuser2',
-          password: 'testuser',
-          phone: '07030742489'
-        })
+        .send(fakerObj.users)
+        .expect('Content-Type', /json/)
+        .expect(409)
         .end((err, res) => {
-          if (err) return done(err);
-          expect(res.status).to.equal(409);
+          expect(res.body.user.email).to.equal(fakerObj.users.email);
           done();
         });
     });
     it('should return an error when the signup form is missing a field', (done) => {
       request
         .post('/api/user/signup')
-        .send(wrongUser)
+        .send(fakerObj.wrongUser)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(400);
@@ -76,7 +52,7 @@ describe('Auth Suite', () => {
     it('should successfully log in a registered user', (done) => {
       request
         .post('/api/user/signin')
-        .send({ email: 'testuser@email.com', password: 'testuser2' })
+        .send(fakerObj.users)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(200);
@@ -122,4 +98,4 @@ describe('Auth Suite', () => {
         });
    });
  });
-});
+ });

@@ -19,7 +19,8 @@ export const Component = ({ message, flag, onChange, onSubmit }) => {
                             <a href="" className="secondary-content" onClick={onSubmit}>
                             <span className="send">
                                 SEND
-                            </span></a>
+                            </span>
+                            </a>
                         </li>
                         </ul>
                     </div>

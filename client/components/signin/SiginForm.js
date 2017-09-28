@@ -23,7 +23,9 @@ export class SigninForm extends React.Component {
         if (isValid) {
             this.setState({ isLoading: true});
             this.props.login(this.state)
-            .then((res) => this.context.router.push('/dashboard'))
+            .then((res) =>{ 
+                Materialize.toast('Welcome!', 3000, 'green');   
+                this.context.router.push('/dashboard')})
             .catch((err) => {
                 console.log(err);
                 const error =  err.response.data.errors;
