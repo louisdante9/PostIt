@@ -33,7 +33,6 @@ const Users = {
         ]
       }
     }).then((returnedUsers) => {
-      console.log(returnedUsers);
       if (returnedUsers) {
         return res.status(409).json({ message: `User with "${email}" or "${username}" already exists` });
       } else {
