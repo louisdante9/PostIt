@@ -7,7 +7,7 @@ export const Component = (props) => {
                 <div className="row welcome">
                    <h2>Welcome to post it </h2>
                 </div>
-                <p>add some text here!!!</p>
+                <p>To view your messages click on the groups on the side nav</p>
                 </div>
         </div>
     );

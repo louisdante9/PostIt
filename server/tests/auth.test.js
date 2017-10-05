@@ -12,7 +12,7 @@ const request = supertest(app);
 
 let token;
 
-describe('Auth Suite', () => {  
+describe('Auth Suite', () => {
   describe('Create User POST: /api/user/signup', () => {
     it('should successfully create a new user on successful registration', (done) => {
       request
@@ -30,7 +30,7 @@ describe('Auth Suite', () => {
         .post('/api/user/signup')
         .send(fakerObj.users)
         .end((err, res) => {
-          expect(res.status).to.equal(409);          
+          expect(res.status).to.equal(409);
           done();
         });
     });
@@ -93,6 +93,6 @@ describe('Auth Suite', () => {
           expect(res.status).to.equal(400);
           done();
         });
-   });
- });
- });
+    });
+  });
+});

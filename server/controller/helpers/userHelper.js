@@ -19,7 +19,7 @@ const UserHelper = {
 
     return attributes;
   },
-}
+};
 
 export function handleErrors(errors) {
   errors.map(error => error.message);

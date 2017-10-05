@@ -19,6 +19,16 @@ const fakerObj = {
     email: faker.internet.email(),
     password: faker.internet.password(6),  
   },
+  thirdUser: {
+    username: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(6),  
+  },
+  fourthUser: {
+    username: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(6),  
+  },
   wrongUser: {
     username: undefined,
     email: 'factory@email.com',
