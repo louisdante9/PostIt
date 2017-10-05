@@ -127,7 +127,6 @@ function generateUserMessageData(data, userId) {
       read: false,
       userId: metadata.userId,
       groupId: metadata.groupId,
-      // messageId
     };
     if(value.userId !== userId) {
       return value;

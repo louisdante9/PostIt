@@ -427,6 +427,7 @@ span {
     box-sizing: border-box;
   }
   &.send {
+    cursor: pointer;
     margin-left: 5px;
     font-weight: 300;
     text-align: center;
@@ -463,6 +464,13 @@ span {
     
   }
 }
+.material-icons {
+  height: 100%;
+  padding: 10px;
+}
+.addicon{
+  padding-bottom: 15px;
+}
 .group{
   font-weight: 300;
   font-size: 14px;
@@ -487,7 +495,12 @@ span {
       color: white;
    }
 }
-
+.container{
+  width: 48%;
+}
+.elementHeight{
+  height: 100%
+}
 #group-list {
   height: calc(100vh - 99px);
   overflow: scroll;
