@@ -30,10 +30,10 @@ export default class Modal extends React.Component {
             <div id="modal1" className="modal">
                 <div className="modal-content">
                     <nav className="">
-                        <div className="nav-wrapper card-1 black elementHeight">
+                        <div className="nav-wrapper black elementHeight">
                             <div className="left col s12 m5 l5 elementHeight">
                                 <ul>
-                                    <li><a className="email-type elementHeight">Create a New Group</a></li>
+                                    <li className="modalHeader"><span className="email-type elementHeight ">Create a New Group</span></li>
                                 </ul>
                             </div>
                             <div className="col s12 m7 l7 hide-on-med-and-down elementHeight" >
@@ -73,9 +73,10 @@ export default class Modal extends React.Component {
                                 </div>
                             </div>
                         </form>
-                        <span className="send" data-intro="Add users here">
-                            cancel
-                        </span>
+                       
+                        <button className="btn waves-effect waves-light black card-1 createGroup" type="submit">cancel</button>                          
+                        
+                        <button className="btn waves-effect waves-light black card-1 createGroup" type="submit" onClick={this.handleSubmit}>Sign In</button>                          
                     </div>
                 </div>
             </div>

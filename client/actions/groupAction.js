@@ -41,7 +41,7 @@ export function createGroup(groupData) {
                  dispatch({
                      type: INCREASE_UNREAD_MESSAGE,
                      
-                 })
+                 });
              })
              .catch(err => console.log(err));
      };

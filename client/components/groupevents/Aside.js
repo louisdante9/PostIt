@@ -10,7 +10,7 @@ class Component extends React.Component {
             return groups.map(group => {
                 const show = (unread[group.id] || 0) > 0;
                 return (
-                    <li key={group.id} className="collection-item avatar email-unread group-channel card-1 group" onClick={setGroupMessages(group.id)}>
+                    <li key={group.id} className="collection-item avatar email-unread group-channel group" onClick={setGroupMessages(group.id)}>
                         <a href="" className="group-names"><span className="group-title">{group.name}</span></a>
                         {show && <a href="#!" className="secondary-content"><span className="new badge reddish">{unread[group.id]}</span></a>}
                     </li>
