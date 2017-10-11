@@ -81,6 +81,7 @@ html, body {
   .mastfoot {
     position: fixed;
     bottom: 0;
+    padding-bottom: 54px;
   }
   /* Start the vertical centering */
   .site-wrapper-inner {
@@ -206,9 +207,11 @@ html, body {
 }
 .align{
   text-align: center;
-  padding-top: 120px;
+  // padding-top: 120px;
 }
-
+.signincontainer{
+  padding-top: 82px;
+}
 /* .active {
     background-color: #4CAF50; /* Add an active/current color 
 } */
@@ -443,7 +446,10 @@ span {
     padding-right: 10px;
   }
 }
-
+.createGroup{
+  float: right;
+  margin-right:5px 
+}
 .secondary-content {
   top: 9px !important;
 }
@@ -499,7 +505,10 @@ span {
   width: 48%;
 }
 .elementHeight{
-  height: 100%
+  height: 100%;
+}
+.modalHeader{
+  padding: 14px;  
 }
 #group-list {
   height: calc(100vh - 99px);

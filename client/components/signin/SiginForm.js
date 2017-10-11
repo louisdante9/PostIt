@@ -17,8 +17,8 @@ export class SigninForm extends React.Component {
         this.onChange = this.onChange.bind(this);
     }
 
-      onSubmit(e){
-        e.preventDefault();
+      onSubmit(event){
+        event.preventDefault();
         const { errors, isValid } = validateInput(this.state);
         if (isValid) {
             this.setState({ isLoading: true});
@@ -42,8 +42,8 @@ export class SigninForm extends React.Component {
         });
       }
 
-      onChange(e){
-          this.setState({ [e.target.name]: e.target.value});
+      onChange(event){
+          this.setState({ [event.target.name]: event.target.value});
       }
     render(){
         const { email, password , errors, isLoading } = this.state;

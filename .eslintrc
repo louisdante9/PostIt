@@ -22,8 +22,8 @@
     "mocha": true,
     "browser": true
   },
-  "max-len": [1, 80, 2],
   "rules": {
+    "max-len": [1, 80, 2],
     "quotes": 0,
     "no-console": 1,
     "no-debugger": 1,
