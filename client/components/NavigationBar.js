@@ -25,7 +25,7 @@ class NavigationBar extends React.Component{
     );
     const guestLink = (
       <ul id="nav-mobile" className="right hide-on-med-and-down">
-          <li><a href="#">Download App</a></li>
+          <li><span>Download App</span></li>
           <li><Link to="/signup">Sign up</Link></li>
           <li><Link to="/signin">Sign in</Link></li>
       </ul>

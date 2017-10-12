@@ -12,17 +12,6 @@
   *  Edit and update group details
   *  Delete a group
 
-## Dependencies
-
-### Back End Dependencies
-This app's functionality depends on multiple NPM packages including;
-  *  **[Express](https://www.npmjs.com/package/express)** - This framework enables robust routing and building web Applications and API's with focus on high performance
-  *  **[Sequelize](https://www.npmjs.com/package/sequelize)** - A a promise-based ORM for Node.js and io.js. Used in this project as ORM for postgres
-  *  **[Sequelize-cli](https://github.com/sequelize/cli)** - The Sequelize Command Line Interface (CLI)
-  *  **[Postgres](https://www.postgresql.org/)** - A a promise-based ORM for Node.js and io.js. Used in this project as ORM for postgres
-  *  **[Body-Parser](https://www.npmjs.com/package/body-parser)** - This package parse incoming request bodies in a middleware and makes it available under *req.body* property
-  *  **[JsonWebToken](https://jwt.io/)** - The module is a middleware for authenticating node.js applications
-  *  **[dotenv](https://github.com/kennethreitz/autoenv)** - Enables loading environment variables from a .env file into process.env.
 
 ## Installation and Setup
 *  Navigate to a directory of choice on `terminal`.
@@ -50,62 +39,9 @@ This app's functionality depends on multiple NPM packages including;
   *  `npm start`
   *  Running the command above will run the app at localhost://3002.
 
-## Endpoints Summary
+## Dependencies
+* See Package.json for reference 
 
-name   |     url       |      verb      |     description
------- | ------------- | -------------- | -------------------
-**AUTH**    |               |                 |
-REGISTER     |  /api/user/signup     |     POST     |     Allows users to register an account on PostIt
-LOGIN     |    /api/user/signin   |    POST      |    Allows a registered user to login
-**GROUP** |
-GET ALL     |    /api/groups   |    GET      |    Allows a registered user to retrieve all groups he belongs to
-CREATE     |  /api/group     |     POST     |     Allows a registered user to create a new group
-**ADD USERS TO A GROUP**|
-CREATE     |    /api/group/:id/user   |    POST      |    Adds one member to a group
-**MESSAGES** |
-GET     |    /api/group/:id/messages   |    GET      |    Retrieves one member-group and all it's messages
-CREATE     |  /api/group/:id/message     |     POST     |     Allows group members to post messages in memeber groups
-
-## Payload Examples for POST and PUT Requests
-
-#### Register New User: `/api/user/register`
-To register a new user, send the following parameters `(example below)`:
-```
-{
-  "username": "louis",
-  "password": "louis1223",
-  "email": "louisdante9@gmail.com"
-  "phone": "234000000000"
-}
-```
-
-#### Create New Group: `/api/group`
-To create a new group, send the following parameters `(Name cannot be empty. Example below)`:
-```
-{
-  "name": "Collaborate more",
-  "description": "Learn how to collaborate more"
-}
-```
-N:B: You can only edit details of groups you created
-
-#### Add New Users to a Group: `/api/group/:id/user`
-To add new users to a group, send the following parameter `(Example below)`:
-```
-{
-  "idToAdd": 1
-}
-```
-N:B: You can only add users to a group you create
-
-#### Post messages in Groups you belong: `/api/group/:groupid/message`
-To post messages in group, you need to send the following parameters `(Example below)`:
-```
-{
-  "message": "I enjoyed every bit of learning today"
-}
-```
-N:B: You can only post message in groups you have created or have been added to
 
 ## Tests
 *  The tests have been written using **[Mocha](https://www.npmjs.com/package/mocha)** , **[Chai](https://www.npmjs.com/package/chai)** as it's assertion library and **[Supertest](https://www.npmjs.com/package/supertest)** class.
