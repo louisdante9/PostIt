@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link, browserHistory, Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import  { logout } from '../actions/authActions';
+import { logout } from '../actions/authActions';
 
 /**
- * 
  * 
  * @class NavigationBar
  * @extends {React.Component}
@@ -15,6 +14,7 @@ class NavigationBar extends React.Component{
      * Creates an instance of NavigationBar.
      * @param {any} props 
      * @memberof NavigationBar
+     * @returns {void}
      */
     constructor(props) {
       super(props);
@@ -23,9 +23,9 @@ class NavigationBar extends React.Component{
    
     /**
      * 
-     * 
      * @param {any} e 
      * @memberof NavigationBar
+     * @returns {void}
      */
     logout(e) {
      e.preventDefault();
@@ -36,8 +36,8 @@ class NavigationBar extends React.Component{
   /**
    * 
    * 
-   * @returns 
    * @memberof NavigationBar
+   * @returns {void}
    */
   render() {
     const{ active, user } = this.props.auth;
@@ -78,7 +78,7 @@ NavigationBar.propTypes = {
  * 
  * 
  * @param {any} state 
- * @returns 
+ * @returns {void}
  */
 function mapStateToProps(state) {
   return {
