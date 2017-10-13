@@ -1,18 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-// export const Component = ({ showModal, groups, setGroupMessages, unread }) => {
 class Component extends React.Component {
     render() {
-        // console.log(unread);
         const { showModal, groups, setGroupMessages, unread } = this.props;
         const renderGroups = () => {
             return groups.map(group => {
                 const show = (unread[group.id] || 0) > 0;
                 return (
-                    <li key={group.id} className="collection-item avatar email-unread group-channel card-1 group" onClick={setGroupMessages(group.id)}>
-                        <a href="" className="group-names"><span className="group-title">{group.name}</span></a>
-                        {show && <a href="#!" className="secondary-content"><span className="new badge reddish">{unread[group.id]}</span></a>}
+                    <li key={group.id} className="collection-item avatar email-unread group-channel group" onClick={setGroupMessages(group.id)}>
+                        <a className="group-names"><span className="group-title">{group.name}</span></a>
+                        {show && <span className="secondary-content"><span className="new badge reddish">{unread[group.id]}</span></span>}
                     </li>
                 );
             });
@@ -43,7 +41,8 @@ class Component extends React.Component {
 Component.propTypes = {
     showModal: React.PropTypes.func.isRequired,
     groups: React.PropTypes.array.isRequired,
-    setGroupMessages: React.PropTypes.func.isRequired
+    setGroupMessages: React.PropTypes.func.isRequired,
+    unread: React.PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => {

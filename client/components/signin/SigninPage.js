@@ -10,10 +10,17 @@ class SigninPage extends React.Component {
     render() {
         return (
             <div className="container align">
+               <div className="signincontainer">
                 <h2>Sign In Here</h2>
                 <SigninForm />
                 <p className="authlink">Don't have an account <a href="/signup">Sign Up</a> </p>
                 <p className="authlink"><a href="/forgotpassword">Forgot password?</a></p>
+               </div>
+                <div className="mastfoot black">
+                <p className="">Post-IT, by <a href="https://github.com/louisdante9/PostIt">@louisdante9</a>.</p>
+                <div className="inner">
+                </div>
+              </div>
             </div>
         );
     }

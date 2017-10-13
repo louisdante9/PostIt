@@ -155,7 +155,7 @@ onClickTour(event){
                             <span className="send" data-intro="Add users here">
                                     Add User
                             </span></a>
-                            <span className="send"  onClick={this.onClickTour}>Take a tour</span>   
+                            {/**<span className="send"  onClick={this.onClickTour}>Take a tour</span>  */} 
                               </p>
                               <hr />
                             </div>

@@ -1,8 +1,14 @@
-import models from '../models';
+import db from '../models';
 
+  /**
+   * This methods gets all the users that are in a particular group
+   * @param {object} req
+   * @param {object} res - A group and it's members
+   * @returns {void}
+   */
 const GroupUsers = {
   getAllUsers(req, res) {
-    models.User.findAll({
+    db.User.findAll({
       attributes: { exclude: ['password', 'updatedAt'] }
     }).then((users) => {
       res.status(200).json({
@@ -21,11 +27,11 @@ const GroupUsers = {
    * @returns {void}
    */
   getUsersInGroup(req, res) {
-    models.Group.findOne({
+    db.Group.findOne({
       where: { id: req.params.id },
       include: [
         {
-          model: models.User,
+          model: db.User,
           attributes: { exclude: ['password', 'updatedAt'] },
           through: { attributes: [] }
         }
@@ -58,8 +64,7 @@ const GroupUsers = {
    */
 
   addUsersToGroup(req, res) {
-    console.log(req.body);
-    models.GroupUser
+    db.GroupUser
       .create({
         userId: req.body.userId,
         groupId: parseInt(req.params.groupId)
@@ -70,7 +75,7 @@ const GroupUsers = {
 
 
 addUnread(req, res) {
-  models.GroupUser
+  db.GroupUser
     .find({
       userId: req.body.userId,
       groupId: req.params.groupId

@@ -2,7 +2,10 @@ import React from 'react';
 import validateInput from '../../../server/shared/validations/signin';
 import TextFieldGroup from '../common/TextFieldGroup';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import requireauth from '../../utils/requireAuth';
 import { login } from '../../actions/authActions';
+import Footer from '../common/footer.jsx';
 
 export class SigninForm extends React.Component {
     constructor(props){
@@ -17,8 +20,8 @@ export class SigninForm extends React.Component {
         this.onChange = this.onChange.bind(this);
     }
 
-      onSubmit(e){
-        e.preventDefault();
+      onSubmit(event){
+        event.preventDefault();
         const { errors, isValid } = validateInput(this.state);
         if (isValid) {
             this.setState({ isLoading: true});
@@ -42,12 +45,15 @@ export class SigninForm extends React.Component {
         });
       }
 
-      onChange(e){
-          this.setState({ [e.target.name]: e.target.value});
+      onChange(event){
+          this.setState({ [event.target.name]: event.target.value});
       }
     render(){
         const { email, password , errors, isLoading } = this.state;
         return(
+            <div className="container align">
+            <div className="signincontainer">
+             <h2>Sign In Here</h2>
                 <form className="col s12" onSubmit={this.onSubmit}>
                     <div className="row">
                         <TextFieldGroup
@@ -70,6 +76,16 @@ export class SigninForm extends React.Component {
                     </div>
                     <button className="btn waves-effect waves-light black card-1" type="submit" name="action">Sign In</button>  
                 </form>
+                <p className="authlink">Don't have an account <a href="/signup">Sign Up</a> </p>
+                <p className="authlink"><a href="/forgotpassword">Forgot password?</a></p>
+               </div>
+              { /**<div className="mastfoot black">
+               <p className="">Post-IT, by <a href="https://github.com/louisdante9/PostIt">@louisdante9</a>.</p>
+               <div className="inner">
+               </div>
+        </div>*/}
+        <Footer />
+               </div>
         );
     }
 }

@@ -1,20 +1,13 @@
 import jwt from 'jsonwebtoken';
 import _ from 'lodash';
-// import bcrypt from 'bcrypt';
 import generator from 'generate-password';
 import crypto from 'crypto';
 import { passwordResetMail,resetSuccessfulResetMail } from './helpers/mailer';
 import db from '../models';
 import UserHelper from './helpers/userHelper';
-
-
 require('dotenv').config({ silent: true });
 
 const secretKey = process.env.JWT_SECRET_KEY;
-
-
-
-
 const Users = {
 
   /**
@@ -33,9 +26,10 @@ const Users = {
         ]
       }
     }).then((returnedUsers) => {
-      console.log(returnedUsers);
       if (returnedUsers) {
-        return res.status(409).json({ message: `User with "${email}" or "${username}" already exists` });
+        return res.status(409).json({ 
+          message: `User with "${email}" or "${username}" already exists` 
+        });
       } else {
         db.User.create(req.body).then((user) => {
           if (user) {
@@ -83,25 +77,12 @@ const Users = {
         return res.status(200).json({ token, expiresIn: 86400, user });
       }
       
-      return res.status(401).json({ errors: { message: 'Failed to authenticate user' } });
+      return res.status(401).json({ 
+        errors:
+         { message: 'Failed to authenticate user' }
+       });
     })
       .catch(error => res.status(500).json({ error }));
-  },
-
-  /**
-  * Logs a user out of the api
-  * @param {Object} req Request object
-  * @param {Object} res Response object
-  * @returns {Object} - Returns response object
-  */
-  logout(req, res) {
-    const token = req.headers.authorization || req.headers['x-access-token'];
-
-    if (!token) {
-      return res.status(400).json({ message: 'User not logged in before' });
-    }
-
-    return res.status(200).json({ message: 'User successfully logged out' });
   },
 
   /**
@@ -156,7 +137,8 @@ const Users = {
           message: "group doesn't exist"
         });
       }
-      const omitUsers = _.map(group.toJSON().Users, 'id');//flags an error if the group is null...also return password....
+      //flags an error if the group is null...also return password.
+      const omitUsers = _.map(group.toJSON().Users, 'id');
       query.where.id = { $notIn: omitUsers };
       db.User.findAndCountAll(query).then((result) => {
         return res.status(200)
@@ -179,7 +161,9 @@ const Users = {
     const userId = req.params.id;
     db.User.findById(userId).then((user) => {
       if (!user) {
-        return res.status(404).json({ message: 'No user with Id found' });
+        return res.status(404).json({ 
+          message: 'No user with Id found' 
+        });
       }
       user = UserHelper.transformUser(user);
       return res.status(200).json(user);
@@ -204,27 +188,12 @@ const Users = {
       user.update(req.body).then((result) => {
         const updatedUser = UserHelper.transformUser(result);
         return res.status(200)
-          .json({ user: updatedUser, message: 'user updated successfully' });
+          .json({ 
+            user: updatedUser, 
+            message: 'user updated successfully' 
+          });
       });
     });
-  },
-
-  /**
-  * Delete a user
-  * @param {Object} req Request object
-  * @param {Object} res Response object
-  * @returns {Object} - Returns response object
-  */
-  destroy(req, res) {
-    const userId = req.params.id;
-    db.User.destroy({ where: { id: userId } })
-      .then((result) => {
-        if (!result) {
-          return res.status(404)
-            .json({ message: 'No user found to delete' });
-        }
-        return res.status(200).json({ message: 'User successfully deleted' });
-      });
   },
 
   /**
@@ -234,7 +203,7 @@ const Users = {
   * @returns {Object} - Returns response object
   */
 
-requestnewpassword(req, res) {
+requestNewPassword(req, res) {
   const { email } = req.body;
   
     if (!email) {
@@ -265,7 +234,9 @@ requestnewpassword(req, res) {
             })
               .then(() => {
                 passwordResetMail(email, token, req.headers.host);
-                return res.status(200).send({ message: "password updated succesfully"});
+                return res.status(200).send(
+                  { message: "password updated succesfully"}
+                );
 
               }, (err) => {
                 res.status(400).send({
@@ -289,7 +260,7 @@ requestnewpassword(req, res) {
   * @param {Object} res Response object
   * @returns {Object} - Returns response object
   */
-  resetpassword(req, res) {
+  resetPassword(req, res) {
     return db.User
       .findOne({
         where: {
@@ -303,8 +274,6 @@ requestnewpassword(req, res) {
             err: 'failed token authentication'
           });
         } else {
-          console.log(Date.now());
-          console.log(user.expiryTime);
           if ((Date.now()) > user.expiryTime) {
             user.update({
               resetPasswordToken: null,
@@ -318,7 +287,8 @@ requestnewpassword(req, res) {
                 res.status(400).send({ err: false });
               }, err => res.status(400).send(err.message));
           } else if (req.body.newPassword &&
-            req.body.confirmPassword && (req.body.newPassword === req.body.confirmPassword)) {
+            req.body.confirmPassword && 
+            (req.body.newPassword === req.body.confirmPassword)) {
               
             user.update({
               // password: bcrypt.hashSync(req.body.newPassword.trim(), 10),
@@ -327,7 +297,6 @@ requestnewpassword(req, res) {
               expiryTime: null
             })
               .then((updatedUser) => {
-                console.log(updatedUser);
                 resetSuccessfulResetMail(updatedUser.email);
                 res.status(201).send({
                   success: true,
@@ -354,58 +323,13 @@ requestnewpassword(req, res) {
       });
   },
 
-  /**
-  * Reacover user password
-  * @param {Object} req Request object
-  * @param {Object} res Response object
-  * @returns {Object} - Returns response object
-  */
-  
-  updatePassword(req, res) {
-    const { email } = req.body;
-    db.User.findOne({
-      where: {
-        email: email
-      }
-    }).then((result) => {
-      if(result){
-        //generate password and update database then send mail to the user 
-        const pass = generator.generate({
-          length: 8,
-          numbers: true
-      });
-      console.log(pass, '========> this is the password');
-
-      const password = bcrypt.hashSync(pass.trim(), 10);
-
-      console.log(password, '========> this is the result');
-     
-      db.User.update({
-        password,
-      }, {
-        where: {
-          email
-        }
-      }).then(() => {
-       //send mail and update user 
-       passwordResetMail(email, pass);
-        return res.status(200).send({ message: "password updated succesfully"});
-      });
-     
-       }
-      else{
-         //send a response message to the user email doesnt exist
-         return res.status(404).send({err:'email not found'});
-         
-        }
-    }).catch((error) => {
-      return res.status(500).json(error);
-    });
-  },
-
 };
 
-
+/**
+  * reset password
+  * @param {Object} error
+  * @returns {Array} - Returns an array
+  */
 export function handleError(error) {
   const result = {};
   error.errors.forEach(err => {

@@ -83,7 +83,7 @@ import {addUsers} from '../../actions/groupAction';
                             <div className="col s12 m7 l7 hide-on-med-and-down" >
                                 <ul className="right" onClick={this.handleSubmit}>
                                     <li>
-                                        <a className="black" href="#!">
+                                        <a className="black addicon" href="#!">
                                             <i className="material-icons">
                                                 add
                                             </i>

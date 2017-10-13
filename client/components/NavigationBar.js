@@ -2,36 +2,61 @@ import React from 'react';
 import { Link, browserHistory, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import  { logout } from '../actions/authActions';
+
+/**
+ * 
+ * 
+ * @class NavigationBar
+ * @extends {React.Component}
+ */
 class NavigationBar extends React.Component{
 
+    /**
+     * Creates an instance of NavigationBar.
+     * @param {any} props 
+     * @memberof NavigationBar
+     */
     constructor(props) {
       super(props);
       this.logout = this.logout.bind(this);
     }
    
+    /**
+     * 
+     * 
+     * @param {any} e 
+     * @memberof NavigationBar
+     */
     logout(e) {
      e.preventDefault();
      this.props.logout();
     }
 
 
+  /**
+   * 
+   * 
+   * @returns 
+   * @memberof NavigationBar
+   */
   render() {
     const{ active, user } = this.props.auth;
     const userLinks = (
       <ul id="nav-mobile" className="right hide-on-med-and-down">
-          <li><span>Welcome </span>{user.username} <span className="material-icons white">perm_identity </span></li>
+          <li><span>Welcome </span>{user.username} 
+          <span className="material-icons white">perm_identity </span>
+          </li>
           <li><a href="" onClick={this.logout}> Log out</a></li>
       </ul>
     );
     const guestLink = (
       <ul id="nav-mobile" className="right hide-on-med-and-down">
-          <li><span>Download App</span></li>
           <li><Link to="/signup">Sign up</Link></li>
           <li><Link to="/signin">Sign in</Link></li>
       </ul>
     );
     return(
-      <div className="navbar-fixed card-1">
+      <div className="navbar-fixed">
         <nav className="">
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo">POST-IT</Link>
@@ -49,6 +74,12 @@ NavigationBar.propTypes = {
   logout: React.PropTypes.func.isRequired,
 };
 
+/**
+ * 
+ * 
+ * @param {any} state 
+ * @returns 
+ */
 function mapStateToProps(state) {
   return {
     auth: state.auth

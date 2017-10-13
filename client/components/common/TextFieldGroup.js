@@ -1,6 +1,7 @@
 import React from 'react';
 
-const TextFieldGroup = ({ field, value, placeholder, error, type, onChange }) => {
+const TextFieldGroup = ({ field, value, 
+    placeholder, error, type, onChange }) => {
     return(
         <div className="input-field col s12">
             <input value={value} onChange={onChange} type={type}

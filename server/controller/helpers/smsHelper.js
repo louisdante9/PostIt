@@ -1,8 +1,6 @@
 
 import Nexmo from 'nexmo';
 import dotenv from 'dotenv';
-
-//config setup
 dotenv.config();
 
 const nexmo = new Nexmo({
@@ -13,12 +11,18 @@ const nexmo = new Nexmo({
 
 const handleResponse = (error, responseData) => {
   if (error) {
-    // console.log(error);
+    return error;
   } else {
-    // console.log(responseData);
+    return responseData;
   }
 };
 
+/**
+  * getAllUnreadMessage
+  * @function
+  * @param {integer} smsObjects, 
+  * @returns {Object} - Returns an object
+  */
  export default function smsSender(smsObjects){
  let smsObject = smsObjects[0];
   nexmo.message.sendSms(

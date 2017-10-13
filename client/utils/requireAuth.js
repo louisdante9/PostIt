@@ -8,10 +8,9 @@ export default function (ComposedComponent) {
         componentWillMount(){
             const { location: { pathname }, active } = this.props;
             if (!active && pathname.includes('dashboard')) {
-                this.props.addFlashMessage({
-                    type: 'error',
-                    text: 'You need to be logged in to access this page'
-                });
+               
+                    Materialize.toast('You need to be logged in to access this page', 3000, 'red');   
+                
                 
                 this.context.router.push('/signin');
             }
