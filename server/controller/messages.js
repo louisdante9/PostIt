@@ -49,7 +49,6 @@ const Messages = {
             error: 'bad request'
           });
         }
-
         db.Message.findAll({
           where: { groupId: req.params.groupId },
           include: [{
@@ -87,7 +86,6 @@ const Messages = {
           flag: req.body.flag,
           groupId: group.id
         };
-
         db.Message.create(newMessage).then((addedMessage) => {
           res.status(201).json(addedMessage);
           db.GroupUser.findAll({
@@ -142,7 +140,8 @@ function generateUserMessageData(data, userId) {
     if (value.userId !== userId) {
       return value;
     }
-    return Object.assign({}, value, { read: true });
+    // return Object.assign({}, value, { read: true });
+    return {...value, read: true};
   });
 }
 

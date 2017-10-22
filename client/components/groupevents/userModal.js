@@ -6,8 +6,19 @@ import UserSearchResult from './UserSearchResult';
 import {addUsers} from '../../actions/groupAction';
 
 
+ /**
+  * 
+  * 
+  * @class UserModal
+  * @extends {React.Component}
+  */
  class UserModal extends React.Component {
 
+    /**
+     * Creates an instance of UserModal.
+     * @param {any} props 
+     * @memberof UserModal
+     */
     constructor(props) {
         super(props);
             this.state = {
@@ -23,18 +34,46 @@ import {addUsers} from '../../actions/groupAction';
         this.pageClick = this.pageClick.bind(this);
     }
 
-
+    /**
+     * 
+     * 
+     * @param {any} event 
+     * @param {any} groupId 
+     * @param {any} offset 
+     * @memberof UserModal
+     * @returns {void}
+     */
     handleChange(event, groupId, offset) {
         event.preventDefault();
         const query = event.target.value;
-        axios().get(`/api/user/search?name=${query}&groupId=${this.props.group}&offset=${this.state.offset}`).then(res => {
+        if (!query.length) {
+            return this.setState({ 
+                matchingUsers: [],
+                count: 0,
+                addUser: ''
+            });
+        }
+        axios()
+        .get(`/api/user/search?name=${query}&groupId=${this.props.group}&offset=${this.state.offset}`)
+        .then(res => {
+            const mapResult = res.data.users.rows.map(user => {
+                const isInGroup = user.Groups.some(group => group.id === this.props.group);
+                return { ...user, isInGroup };
+            })
             this.setState({ 
-                matchingUsers: res.data.users.rows,
+                matchingUsers: mapResult,
                 count : res.data.pageCount,
                 addUser: query
             });
         });
     }
+
+    /**
+     * 
+     * 
+     * @param {any} data 
+     * @memberof UserModal
+     */
     pageClick(data) {
         const selected = data.selected;
         const query = this.state.addUser;
@@ -48,10 +87,23 @@ import {addUsers} from '../../actions/groupAction';
         });
       }
 
+    /**
+     * 
+     * 
+     * @param {any} event 
+     * @param {any} userId 
+     * @memberof UserModal
+     */
     handleSelect(event, userId){
        this.setState({ userId });   
     }
 
+    /**
+     * 
+     * 
+     * @param {any} event 
+     * @memberof UserModal
+     */
     handleSubmit(event) {
         event.preventDefault();     
         this.props.addUsers(this.props.group, this.state.userId).then(()=>{
@@ -59,6 +111,12 @@ import {addUsers} from '../../actions/groupAction';
         });
     }
 
+    /**
+     * 
+     * 
+     * @returns 
+     * @memberof UserModal
+     */
     render() {
         return (
             <div id="modal2" className="modal">
@@ -80,7 +138,7 @@ import {addUsers} from '../../actions/groupAction';
                                     </li>
                                 </ul>
                             </div>
-                            <div className="col s12 m7 l7 hide-on-med-and-down" >
+                            <div className="col s12 m7 l7 hide-on-med-and-down">
                                 <ul className="right" onClick={this.handleSubmit}>
                                     <li>
                                         <a className="black addicon" href="#!">
@@ -106,13 +164,17 @@ import {addUsers} from '../../actions/groupAction';
                                         name="name"
                                         onChange={this.handleChange}
                                     />
-                                    <label htmlFor="group-title">search for users</label>
+                                    <label htmlFor="group-title">
+                                    search for users
+                                    </label>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-                <UserSearchResult userResult = {this.state.matchingUsers} handleSelect={this.handleSelect} pageCount={this.state.count} pageClick={this.pageClick}/>
+                <UserSearchResult userResult = {this.state.matchingUsers} 
+                handleSelect={this.handleSelect} pageCount={this.state.count} 
+                pageClick={this.pageClick}/>
             </div>
         );
     }

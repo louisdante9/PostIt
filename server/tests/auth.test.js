@@ -9,12 +9,12 @@ import db from '../models';
 
 const expect = chai.expect;
 const request = supertest(app);
-
 let token;
 
 describe('Auth Suite', () => {
   describe('Create User POST: /api/user/signup', () => {
-    it('should successfully create a new user on successful registration', (done) => {
+    it('should successfully create a new user on successful registration', 
+    (done) => {
       request
         .post('/api/user/signup')
         .send(fakerObj.users)
@@ -34,7 +34,8 @@ describe('Auth Suite', () => {
           done();
         });
     });
-    it('should return an error when the signup form is missing a field', (done) => {
+    it('should return an error when the signup form is missing a field', 
+    (done) => {
       request
         .post('/api/user/signup')
         .send(fakerObj.wrongUser)
@@ -57,7 +58,6 @@ describe('Auth Suite', () => {
           done();
         });
     });
-
     it('should return an error if the password field is empty', (done) => {
       request
         .post('/api/user/signin')
@@ -68,7 +68,6 @@ describe('Auth Suite', () => {
           done();
         });
     });
-
     it('should return an error if the email field is empty', (done) => {
       request
         .post('/api/user/signin')

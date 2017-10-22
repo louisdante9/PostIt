@@ -1,10 +1,20 @@
 import React, {PropTypes}from 'react';
 import NavigationBar from './NavigationBar';
-import FlashMessagesList from './flash/FlashMessagesList';
 import { connect } from 'react-redux';
 
+/**
+ * 
+ * 
+ * @class App
+ * @extends {React.Component}
+ */
 class App extends React.Component {
 
+    /**
+     * Creates an instance of App.
+     * @param {any} props 
+     * @memberof App
+     */
     constructor(props) {
       super(props);
       this.state = {
@@ -12,11 +22,16 @@ class App extends React.Component {
       };
     }
 
+    /**
+     * 
+     * 
+     * @returns {void}
+     * @memberof App
+     */
     render() {
         return(
             <div>
                 <NavigationBar auth={this.props.auth}/>
-                <FlashMessagesList />
                 {this.props.children}
             </div>
         );

@@ -9,8 +9,8 @@ import db from '../models';
 
 const expect = chai.expect;
 const request = supertest(app);
-
 let token, group;
+
 before((done) => {
   request
     .post('/api/user/signup')
@@ -83,86 +83,83 @@ describe('Messages suite', () => {
     it('should return 201 to add a user to a group', (done) => {
       token;
       request
-      .post(`/api/group/1/user`)
-      .set('authorization', token)      
-      .send({ 
-        userId: 2
-      })
-      
-      .end((err, res) => {
-        if (err) {
-          return done(err);
-        }
-        console.log(res.body, 'this is from the test file ====>');
-        
-        expect(res.status).to.equal(201);
-        done();
-      });
-
-  });
-  describe('Send message to a group', () => {
-    it('returns 201 response', (done) => {
-      request
-      .post(`/api/group/${group.id}/messages`)
-      .set('authorization', token)
-      .send({
-        message: 'test message'
-      })
-      .end((err, res) => {
-        if (err) {
-          return done(err);
-        }
-        expect(res.status).to.equal(201);
-        done();
-      });
-    });
-    it('should work with priority level critical', (done) => {
-      request
-      .post(`/api/group/${group.id}/messages`)
-      .set('authorization', token)
-      .send({
-        message: 'test message',
-        priority: 'critical'
-      })
-      .end((err, res) => {
-        if(err){
-          return done(err);
-        }
-        expect(res.status).to.equal(201);
-        done();
-      });
-    });
-    it('should work with priority level urgent', (done) => {
-      request
-      .post(`/api/group/${group.id}/messages`)
-      .set('authorization', token)      
-      .send({
-        message: 'test message',
-        priority: 'urgent'
-      })
-      .end((err, res) => {
-        if(err){
-          return done(err)
-        }
-        expect(res.status).to.equal(201);
-        done();
-      });
-    });
-    describe('View all messages in a group', () => {
-      it('returns 200 response', (done) => {
-        request
-        .get(`/api/group/${group.id}/messages`)
-        .set('authorization', token)              
-        .send()
+        .post(`/api/group/1/user`)
+        .set('authorization', token)
+        .send({
+          userId: 2
+        })
         .end((err, res) => {
-          if(err){
+          if (err) {
             return done(err);
           }
-          expect(res.status).to.equal(200);
+          expect(res.status).to.equal(201);
           done();
+        });
+
+    });
+    describe('Send message to a group', () => {
+      it('returns 201 response', (done) => {
+        request
+          .post(`/api/group/${group.id}/messages`)
+          .set('authorization', token)
+          .send({
+            message: 'test message'
+          })
+          .end((err, res) => {
+            if (err) {
+              return done(err);
+            }
+            expect(res.status).to.equal(201);
+            done();
+          });
+      });
+      it('should work with priority level critical', (done) => {
+        request
+          .post(`/api/group/${group.id}/messages`)
+          .set('authorization', token)
+          .send({
+            message: 'test message',
+            priority: 'critical'
+          })
+          .end((err, res) => {
+            if (err) {
+              return done(err);
+            }
+            expect(res.status).to.equal(201);
+            done();
+          });
+      });
+      it('should work with priority level urgent', (done) => {
+        request
+          .post(`/api/group/${group.id}/messages`)
+          .set('authorization', token)
+          .send({
+            message: 'test message',
+            priority: 'urgent'
+          })
+          .end((err, res) => {
+            if (err) {
+              return done(err)
+            }
+            expect(res.status).to.equal(201);
+            done();
+          });
+      });
+      describe('View all messages in a group', () => {
+        it('returns 200 response', (done) => {
+          request
+            .get(`/api/group/${group.id}/messages`)
+            .set('authorization', token)
+            .send()
+            .end((err, res) => {
+              if (err) {
+                return done(err);
+              }
+              expect(res.status).to.equal(200);
+              done();
+            });
         });
       });
     });
-   });
   });
- });
+});

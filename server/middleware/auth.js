@@ -5,7 +5,6 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 const secretKey = process.env.JWT_SECRET_KEY;
-//const secretKey = 'louisdante9'
 const Authenticate = {
   /*
    * Verify auth middleware
@@ -29,5 +28,6 @@ const Authenticate = {
       next();
     });
   },
-}
+};
+
 export default Authenticate;

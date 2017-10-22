@@ -21,7 +21,6 @@ before((done) => {
         return done(err);
       }
       token = res.body.token;
-      console.log(token, 'this is the token result ');
       done();
     });
 });

@@ -3,12 +3,26 @@ import setAuthToken from '../utils/setAuthToken';
 import jwtDecode from 'jwt-decode';
 import { USER_AUTHENTICATED, RESET_PASSWORD_SUCCESS } from './types';
 
+/**
+ * 
+ * 
+ * @export
+ * @param {any} user 
+ * @returns {void}
+ */
 export function setCurrentUser(user) {
     return {
         type: USER_AUTHENTICATED,
         user
     };
 }
+/**
+ * 
+ * 
+ * @export
+ * @param {any} data 
+ * @returns {void}
+ */
 export function login(data) {
     return dispatch => {
         return axios.post('/api/user/signin', data).then(res => {
@@ -19,6 +33,13 @@ export function login(data) {
         });
     };
 }
+/**
+ * 
+ * 
+ * @export
+ * @param {any} userData 
+ * @returns {void}
+ */
 export function userSignupRequest(userData) {
     return dispatch => {
         return axios.post('/api/user/signup', userData).then(res => {
@@ -26,10 +47,16 @@ export function userSignupRequest(userData) {
             localStorage.setItem('jwtToken', token);
             setAuthToken(token);
             dispatch(setCurrentUser(decode(token)));
-
         });
     };
 }
+
+/**
+ * 
+ * 
+ * @export
+ * @returns {void}
+ */
 export function logout() {
     return dispatch => {
         localStorage.removeItem('jwtToken');
@@ -37,6 +64,14 @@ export function logout() {
         dispatch(setCurrentUser({}));
     };
 }
+
+/**
+ * 
+ * 
+ * @export
+ * @param {any} payload 
+ * @returns {void}
+ */
 export function authenticate(payload) {
     return dispatch => {
         dispatch({
@@ -45,6 +80,13 @@ export function authenticate(payload) {
         });
     };
 }
+
+/**
+ * 
+ * 
+ * @param {any} token 
+ * @returns {void}
+ */
 function decode(token) {
     return jwtDecode(token);
 }
@@ -59,15 +101,15 @@ const confirmPasswordResetFailed = password => ({
     password
 });
 
-export const confirmPasswordResetRequest = (token, newPassword) => dispatch =>
+export const confirmPasswordResetRequest = (token, newPassword) => 
+dispatch =>
     axios.post(`/api/user/resetpassword/${token}`, newPassword)
         .then((response) => {
             dispatch(confirmPasswordResetSuccess(response));
             Materialize.toast('Password reset successful', 6000, 'green');
             history.push('/login');
-        })
-        .catch((err) => {
-            dispatch(confirmPasswordResetFailed(err));
-            console.log(err)
-            Materialize.toast(err.response.data.err, 3000, 'red');
-        });
+    })
+    .catch((err) => {
+        dispatch(confirmPasswordResetFailed(err));
+        Materialize.toast(err.response.data.err, 3000, 'red');
+});

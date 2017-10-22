@@ -1,4 +1,6 @@
-import { GET_GROUP_MESSAGES, CREATE_GROUP_MESSAGE, INCREASE_UNREAD_MESSAGE } from '../actions/types';
+import { GET_GROUP_MESSAGES, 
+    CREATE_GROUP_MESSAGE, 
+    INCREASE_UNREAD_MESSAGE } from '../actions/types';
 
 const initialState = {
     msg: {},

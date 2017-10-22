@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Component = (props) => {
+export const Welcome = (props) => {
     return(
         <div>
       `      <div className="email-content-wrap align">
@@ -13,4 +13,3 @@ export const Component = (props) => {
     );
 };
 
-export default Component;

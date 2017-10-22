@@ -13,18 +13,10 @@ import webpack from 'webpack';
 import morgan from 'morgan';
 import socket from 'socket.io';
 
-
-// Set up the express app
 const app = express();
-
-//config setup
 dotenv.config();
-
-// debug('dms:server');
 Logger.useDefaults();
 app.use(morgan());
-
-
 /**
  * Normalize a port into a number, string, or false.
  * @param {number} val port number to be used
@@ -35,14 +27,18 @@ const normalizePort = (val) => {
   if (isNaN(port)) {
     return val;
   }
-
   if (port >= 0) {
     return port;
   }
   return false;
 };
 
-//par of the http server
+/**
+ * 
+ * par of the http server
+ * @param {any} error 
+ * @returns {void}
+ */
 const onError = (error) => {
   if (error.syscall !== 'listen') {
     throw error;
@@ -50,15 +46,11 @@ const onError = (error) => {
   const bind = typeof port === 'string'
     ? `Pipe ${port}`
     : `Port ${port}`;
-
-  // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(`${bind} requires elevated privileges`);
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(`${bind} is already in use`);
       process.exit(1);
       break;
     default:
@@ -68,18 +60,17 @@ const onError = (error) => {
 
 /**
  * Event listener for HTTP server "listening" event.
+ * @return {void}
  */
-
 const onListening = () => {
   const addr = server.address();
   const bind = typeof addr === 'string'
     ? `pipe ${addr}`
     : `port ${addr.port}`;
-  debug(`🚧 Application is Listening on ${bind}`);
+  debug(`Application is Listening on ${bind}`);
 };
 
 app.use(express.static('public'));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -89,13 +80,13 @@ if (process.env.NODE_ENV != 'test') {
     noInfo: true,
     publicPath: config.output.publicPath
   }));
-
   app.use(require('webpack-hot-middleware')(compiler));
 }
 
-
-
-// Setup a default catch-all route that sends back a welcome message in JSON format.
+/** Setup a default catch-all 
+ *  route that sends back 
+ *  a welcome message in JSON format.
+ */
 require('./routes')(app);
 app.get('*', (req, res) => {
   res.status(200)
@@ -105,7 +96,6 @@ app.get('*', (req, res) => {
 // This will be our application entry. We'll setup our server here.
 const port = parseInt(process.env.PORT, 10);
 app.set('port', port);
-
 const server = http.createServer(app);
 
 //declare socket for real time 
@@ -117,12 +107,10 @@ io.on('connect', (soc)=>{
     console.log(payload);
     soc.broadcast.emit('groupMessage', payload);
   });
-
   soc.on('disconnect',()=>{
     console.log('Disconnected');
   });
 });
-
 server.listen(port, function (err) {
   if (err) {
     console.log(err);
@@ -130,4 +118,5 @@ server.listen(port, function (err) {
     // open(`http://localhost:${port}`);
   }
 });
+
 export default app;

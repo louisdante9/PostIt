@@ -1,17 +1,16 @@
 import 'babel-polyfill';
 import React from 'react';
+import thunk from 'redux-thunk';
+import jwt from 'jsonwebtoken';
+import rootReducer from './rootReducer';
+import routes from './routes';
+import setAuthToken from './utils/setAuthToken';
 import { render } from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
-import rootReducer from './rootReducer';
-import routes from './routes';
-import './public/css/styles.scss';
-import setAuthToken from './utils/setAuthToken';
-import jwt from 'jsonwebtoken';
 import { setCurrentUser } from './actions/authActions';
-
+import './public/css/styles.scss';
 
 export const store = createStore(
     rootReducer,
@@ -30,7 +29,6 @@ if (localStorage.jwtToken) {
         localStorage.removeItem('jwtToken');
     }
 }
-
 render(
     <Provider store={store}>
         <Router history={browserHistory} routes={routes} />

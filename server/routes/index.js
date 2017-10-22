@@ -16,4 +16,5 @@ module.exports = (app) => {
   Authenticate.verifyToken, Messages.createNewMessage);
   app.post('/api/user/resetpassword/:token', Users.resetPassword);
   app.post('/api/user/reqpass', Users.requestNewPassword);
+  //app.post('/api/getusers', GroupUsers.getAllUsers);
 };

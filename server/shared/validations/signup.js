@@ -1,10 +1,15 @@
 import Validator from 'validator';
 import isEmpty from 'lodash/isEmpty';
 
+/**
+ * this function handle validation for signup form 
+ * 
+ * @export
+ * @param {any} data 
+ * @returns {void}
+ */
 export default function validateInput(data) {
-      
-  let errors ={};
-
+  let errors = {};
   if (Validator.isEmpty(data.username)) {
     errors.username = 'Username field is required';
   }
@@ -20,7 +25,6 @@ export default function validateInput(data) {
   if (Validator.isEmpty(data.phone)) {
     errors.phone = 'Phone field is require for message notifications';
   }
-
   return {
     errors,
     isValid: isEmpty(errors)
