@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {PropTypes} from 'prop-types';
+
 
 /**
  * 
@@ -60,10 +62,10 @@ export default function (ComposedComponent) {
         } 
     }
     Autheticate.contextTypes = {
-        router: React.PropTypes.object.isRequired
+        router: PropTypes.object.isRequired
     };
     Autheticate.propTypes = {
-        active : React.PropTypes.bool.isRequired,
+        active : PropTypes.bool.isRequired,
     };
     
     /**

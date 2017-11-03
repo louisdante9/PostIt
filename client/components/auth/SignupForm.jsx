@@ -1,6 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
+import {PropTypes} from 'prop-types';
 import Footer from '../common/footer.jsx';
 import { userSignupRequest } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
@@ -12,7 +13,7 @@ import validateInput from '../../../server/shared/validations/signup';
  * @class SignupForm
  * @extends {React.Component}
  */
-class SignupForm extends React.Component {
+export class SignupForm extends React.Component {
   /**
    * Creates an instance of SignupForm.
    * @param {any} props 
@@ -101,6 +102,15 @@ class SignupForm extends React.Component {
         <form className="col s12" onSubmit={this.onSubmit}>
         <div className="row">
           <TextFieldGroup
+            error={this.state.errors.username}
+            onChange={this.onChange}
+            value={this.state.username}
+            field="username"
+            placeholder="Enter Username"
+          />
+        </div>
+        <div className="row">
+          <TextFieldGroup
             error={this.state.errors.email}
             onChange={this.onChange}
             value={this.state.email}
@@ -108,15 +118,6 @@ class SignupForm extends React.Component {
             placeholder="Enter Email"
           />
         </div>
-          <div className="row">
-            <TextFieldGroup
-              error={this.state.errors.username}
-              onChange={this.onChange}
-              value={this.state.username}
-              field="username"
-              placeholder="Enter Username"
-            />
-          </div>
           <div className="row">
             <TextFieldGroup
               error={this.state.errors.password}
@@ -152,7 +153,7 @@ class SignupForm extends React.Component {
 }
 
 SignupForm.propTypes = {
-  userSignupRequest: React.PropTypes.func.isRequired,
+  userSignupRequest: PropTypes.func.isRequired,
 };
 const mapDispatchToProps = { userSignupRequest };
 export default connect(null, mapDispatchToProps)(SignupForm);

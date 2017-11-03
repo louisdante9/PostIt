@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import {PropTypes} from 'prop-types';
 import requireauth from '../../utils/requireAuth';
 import { login } from '../../actions/authActions';
 import validateInput from '../../../server/shared/validations/signin';
@@ -45,7 +46,7 @@ export class SigninForm extends React.Component {
         if (isValid) {
             this.setState({ isLoading: true });
             this.props.login(this.state)
-                .then((res) => {
+                .then(() => {
                     Materialize.toast('Welcome!', 3000, 'green');
                     this.context.router.push('/dashboard');
                 })
@@ -132,10 +133,10 @@ export class SigninForm extends React.Component {
 }
 
 SigninForm.propTypes = {
-    login: React.PropTypes.func.isRequired
+    login: PropTypes.func.isRequired
 };
 SigninForm.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
 };
 
 export default connect(null, { login })(SigninForm);

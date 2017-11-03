@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {PropTypes} from 'prop-types';
+
 
 /**
  * 
@@ -50,7 +52,7 @@ class Component extends React.Component {
                             <a className="secondary-content modal-trigger"
                                 href="#modal1">
                                 <span className="large material-icons"
-                                    onClick={showModal}> group_add</span></a>
+                                    > group_add</span></a>
                         </li>
                         <li className="collection-item avatar email-unread group-collection aside-font-size "
                             data-intro="Here are the list of groups you belong to">
@@ -68,10 +70,9 @@ class Component extends React.Component {
 }
 
 Component.propTypes = {
-    showModal: React.PropTypes.func.isRequired,
-    groups: React.PropTypes.array.isRequired,
-    setGroupMessages: React.PropTypes.func.isRequired,
-    unread: React.PropTypes.object.isRequired
+    groups: PropTypes.array.isRequired,
+    setGroupMessages: PropTypes.func.isRequired,
+    unread: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => {

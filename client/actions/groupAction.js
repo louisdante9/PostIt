@@ -23,7 +23,7 @@ export function getGroups() {
                 });
             })
             .catch(err => {
-                console.log(err.response.data)
+                console.log(err.response.data);
             });
     };
 }

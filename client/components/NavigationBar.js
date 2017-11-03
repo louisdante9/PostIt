@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, browserHistory, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { logout } from '../actions/authActions';
+import {PropTypes} from 'prop-types';
 
 /**
  * 
@@ -82,7 +83,7 @@ class NavigationBar extends React.Component {
         <nav className="">
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo">POST-IT</Link>
-            <img alt="" />
+            <img src="/img/logo.png" alt="test"/>
             {active ? userLinks : guestLink}
           </div>
         </nav>
@@ -91,8 +92,8 @@ class NavigationBar extends React.Component {
   }
 }
 NavigationBar.propTypes = {
-  auth: React.PropTypes.object.isRequired,
-  logout: React.PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 /**

@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-
+import {PropTypes} from 'prop-types';
 
 export const Component = ({ messages, groups }) => {
 
@@ -36,7 +36,7 @@ export const Component = ({ messages, groups }) => {
   );
 };
 Component.propTypes = {
-  messages: React.PropTypes.array.isRequired,
-  groups: React.PropTypes.array.isRequired
+  messages: PropTypes.array.isRequired,
+  groups: PropTypes.array.isRequired
 };
 export default Component;

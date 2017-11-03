@@ -22,8 +22,8 @@ export default class Modal extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.resetForm = this.resetForm.bind(this);
     }
-
 
     /**
      * 
@@ -39,6 +39,18 @@ export default class Modal extends React.Component {
     /**
      * 
      * @returns {void}
+     * @memberof Modal
+     */
+    resetForm() {
+        this.setState({
+            name: '',
+            description: ''
+        });
+      }
+    
+    /**
+     * 
+     * @returns {void}
      * @param {any} event 
      * @memberof Modal
      */
@@ -46,6 +58,10 @@ export default class Modal extends React.Component {
         event.preventDefault();
         this.props.createGroup(this.state).then(() => {
             $('.modal').modal('close');
+        });
+        this.setState({
+            name: '',
+            description: ''
         });
     }
 
@@ -97,7 +113,7 @@ export default class Modal extends React.Component {
                                     <textarea
                                         id="description"
                                         className="materialize-textarea"
-                                        length="500"
+                                        
                                         name="description"
                                         onChange={this.handleChange}
                                         value={this.state.description}></textarea>
@@ -108,8 +124,8 @@ export default class Modal extends React.Component {
                             </div>
                         </form>
                        
-                        <button className="btn waves-effect waves-light black card-1 createGroup" 
-                        type="submit">cancel</button>                          
+                        <button className="btn waves-effect waves-light black card-1 createGroup modal-close" 
+                        type="button" onClick={this.resetForm}>cancel</button>                          
                         
                         <button className="btn waves-effect waves-light black card-1 createGroup" 
                         type="submit" onClick={this.handleSubmit}>

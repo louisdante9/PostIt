@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Aside from './Aside';
-import Message from './Message';
-import MessageBox from './MessageBox';
-import Modal from './modal';
-import UserModal from './userModal';
-import { Welcome } from './welcome';
+import {PropTypes} from 'prop-types';
+import Aside from './Aside.jsx';
+import Message from './Message.jsx';
+import MessageBox from './MessageBox.jsx';
+import Modal from './modal.jsx';
+import UserModal from './userModal.jsx';
+import { Welcome } from './welcome.jsx';
 import { getGroups, createGroup, getMessages, createMessage }
   from '../../actions/groupAction';
 
@@ -33,7 +34,6 @@ class Dashboard extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.setGroupMessages = this.setGroupMessages.bind(this);
-    this.openSlideAdduser = this.openSlideAdduser.bind(this);
   }
 
   /**
@@ -79,18 +79,6 @@ class Dashboard extends Component {
 
   /**
    * 
-   * @param {any} event
-   * @memberof Dashboard
-   * @returns {void}
-   */
-  openSlideAdduser(event) {
-    event.preventDefault();
-    $('select').material_select();
-    $('.modal').modal();
-  }
-
-  /**
-   * 
    * 
    * @param {any} event 
    * @memberof Dashboard
@@ -100,18 +88,6 @@ class Dashboard extends Component {
     this.setState({
       [event.target.name]: event.target.value,
     });
-  }
-
-  /**
-   * 
-   * @param {any} event
-   * @memberof Dashboard
-   * @returns {void}
-   */
-  showModal(event) {
-    event.preventDefault();
-    $('select').material_select();
-    $('.modal').modal();
   }
 
   /**
@@ -126,65 +102,6 @@ class Dashboard extends Component {
       return evn;
     };
   }
-
-  /**
-   * 
-   * 
-   * @param {any} messages 
-   * @param {any} groups 
-   * @param {any} GroupName 
-   * @returns {void}
-   * @memberof Dashboard
-   */
-  // renderMessageBoard(messages, groups, GroupName) {
-  //   return (
-  //     <div>
-  //       <hr className="grey-text text-lighten-2" />
-  //       <div className="collection-item avatar">
-  //         <p className="email-subject truncate">
-  //           <span className="email-tag grey lighten-3">
-  //             {GroupName && GroupName.name}
-  //           </span>
-  //           <a href="#modal2" className="secondary-content modal-trigger"
-  //             onClick={
-  //               this.openSlideAdduser()}>
-  //             click to add user
-
-  //               Add User
-  //       </a>
-  //         </p>
-  //         <hr />
-  //       </div>
-  //       <div id="message-board" className="email-content-wrap">
-  //         <div className="row">
-  //           <div className="col s10 m10 l10">
-  //             <ul className="collection">
-  //               {/** single message **/}
-  //               <Message messages={messages} groups={groups} />
-  //             </ul>
-  //           </div>
-  //           <div className="col s2 m2 l2 email-actions">
-  //             <a href="#!">
-  //               <span>
-  //                 <i className="mdi-content-reply"></i>
-  //               </span>
-  //             </a>
-  //             <a href="#!">
-  //               <span>
-  //                 <i className="mdi-navigation-more-vert"></i>
-  //               </span>
-  //             </a>
-  //           </div>
-  //         </div>
-  //       </div>
-  //       <hr />
-  //       {/**  message box */}
-  //       <MessageBox message={this.state.message}
-  //         flag={this.state.flag} onChange={this.onChange}
-  //         onSubmit={this.onSubmit} groups={groups} />
-  //     </div>
-  //   );
-  // }
 
   /**
    * 
@@ -205,7 +122,7 @@ class Dashboard extends Component {
                 <div className="col s12">
                   {/** aside **/}
                   <Aside
-                    showModal={this.showModal}
+                    
                     groups={groups}
                     setGroupMessages={this.setGroupMessages}
                   />
@@ -221,10 +138,7 @@ class Dashboard extends Component {
                                 {GroupName && GroupName.name}
                               </span>
                               <a href="#modal2" className=" modal-trigger"
-                                onClick={(event) => {
-                                  event.preventDefault();
-                                  this.openSlideAdduser();
-                                }}>
+                              >
 
                                 <span className="send"
                                   data-intro="Add users here">
@@ -275,7 +189,7 @@ class Dashboard extends Component {
               </div>
               <Modal createGroup={this.props.createGroup} />
             </div>
-            <UserModal href="#modal2" group={this.state.groupId} />
+            <UserModal  group={this.state.groupId} />
           </div>
         </section>
       </div>
@@ -284,14 +198,14 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  createGroup: React.PropTypes.func.isRequired,
-  getGroups: React.PropTypes.func.isRequired,
-  getMessages: React.PropTypes.func.isRequired,
-  createMessage: React.PropTypes.func.isRequired,
-  groups: React.PropTypes.array.isRequired,
-  user: React.PropTypes.object.isRequired,
-  active: React.PropTypes.bool.isRequired,
-  allMsgs: React.PropTypes.object.isRequired
+  createGroup: PropTypes.func.isRequired,
+  getGroups: PropTypes.func.isRequired,
+  getMessages: PropTypes.func.isRequired,
+  createMessage: PropTypes.func.isRequired,
+  groups: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
+  active: PropTypes.bool.isRequired,
+  allMsgs: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => {

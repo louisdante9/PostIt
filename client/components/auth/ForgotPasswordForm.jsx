@@ -108,6 +108,3 @@ export class ForgotPasswordForm extends React.Component {
     );
   }
 }
-
-
-// export default ForgotPasswordForm;

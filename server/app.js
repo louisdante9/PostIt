@@ -70,14 +70,14 @@ const onListening = () => {
   debug(`Application is Listening on ${bind}`);
 };
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '../client/public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 if (process.env.NODE_ENV != 'test') {
   const compiler = webpack(config);
   app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
+    // noInfo: true,
     publicPath: config.output.publicPath
   }));
   app.use(require('webpack-hot-middleware')(compiler));

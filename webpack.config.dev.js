@@ -2,9 +2,9 @@ import webpack from 'webpack';
 import path from 'path';
 
 export default {
-  debug: true,
+  // debug: true,
   devtool: 'inline-source-map',
-  noInfo: false,
+  // noInfo: false,
   entry: [
     'eventsource-polyfill', // necessary for hot reloading with IE
     'webpack-hot-middleware/client?reload=true', //note that it reloads the page if hot module reloading fails.
@@ -22,15 +22,17 @@ export default {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    // new webpack.NoErrorsPlugin()
   ],
   module: {
     loaders: [
       {test: /.(js|jsx)$/, include: [
         path.join(__dirname, 'client'),
         path.join(__dirname, 'server/shared/')
-      ], loaders: ['babel']},
-      {test: /\.(css|scss)$/, loaders: ['style', 'css', 'sass']},
+      ], loaders: ['babel-loader']},
+      {test: /\.(css|scss)$/, loaders: ['style-loader', 'css-loader', 'sass-loader'],  include: [
+        path.join(__dirname, 'client')
+      ]},
       {test: /\.(jpe?g|png|gif|svg)$/i, loaders: [
       'file?hash=sha512&digest=hex&name=[hash].[ext]',
       'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'

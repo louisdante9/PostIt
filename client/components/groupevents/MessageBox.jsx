@@ -1,4 +1,5 @@
 import React from 'react';
+import {PropTypes} from 'prop-types';
 
 export const Component = ({message,flag, onChange, onSubmit }) => {
     return(
@@ -18,7 +19,7 @@ export const Component = ({message,flag, onChange, onSubmit }) => {
                                 <option value="urgent">Urgent</option>
                                 <option value="critical">Critical</option>
                             </select>
-                            <a href="" className="secondary-content" 
+                            <a href="" className="" 
                             onClick={onSubmit}>
                             <span className="send">
                                 SEND
@@ -34,10 +35,10 @@ export const Component = ({message,flag, onChange, onSubmit }) => {
 };
 
 Component.propTypes={
-    onChange: React.PropTypes.func.isRequired,
-    onSubmit: React.PropTypes.func.isRequired,
-    groups: React.PropTypes.array.isRequired,
-    message: React.PropTypes.string.isRequired,
-    flag: React.PropTypes.string.isRequired
+    onChange: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    groups: PropTypes.array.isRequired,
+    message: PropTypes.string.isRequired,
+    flag: PropTypes.string.isRequired
 };
 export default Component;

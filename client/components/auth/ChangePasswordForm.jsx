@@ -2,6 +2,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import React from 'react';
+import {PropTypes} from 'prop-types';
 import { confirmPasswordResetRequest } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 import validateInput from '../../../server/shared/validations/changepassword';
@@ -96,7 +97,7 @@ class ChangePasswordForm extends React.Component{
    }  
 }
 ChangePasswordForm.propTypes = {
-  confirmPasswordResetRequest: React.PropTypes.func.isRequired,
-  params: React.PropTypes.object,
+  confirmPasswordResetRequest: PropTypes.func.isRequired,
+  params: PropTypes.object,
 };
 export default connect(null, {confirmPasswordResetRequest})(ChangePasswordForm);

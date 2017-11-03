@@ -13,10 +13,6 @@
   }
 }
 
-/* .logo{
-  padding-left: 30px; 
-} */
-
 p {
   padding: 5px;
   font-size: 20px;
@@ -58,7 +54,14 @@ html, body {
 /*
  * Footer
  */
+.user-modal-header{
+  padding: 11px 17px;
+  
+}
+.user-modal-header-btn{
+  margin-right: 23px;
 
+}
 .mastfoot {
   color: #999;
   /* IE8 proofing */
@@ -461,7 +464,11 @@ span {
 }
 .createGroup{
   float: right;
-  margin-right:5px 
+  margin-right:7px; 
+}
+.clearGroup{
+  float: right;
+  margin-right: 17px 
 }
 .secondary-content {
   top: 9px !important;

@@ -22,7 +22,7 @@ export const Home = (props) => {
                     <a href="/signup"
                         className="waves-effect waves-light btn black card-1">
                         Get Started
-                        </a>
+                    </a>
                 </p>
             </div>
             <Footer />

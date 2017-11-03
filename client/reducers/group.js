@@ -4,12 +4,11 @@ const initialState = [];
 
 
 export default (state = initialState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case GET_USER_GROUP:
             return action.payload;
         case CREATE_USER_GROUP:
-            console.log(action.payload);
-           return [ action.payload, ...state];
+            return [action.payload, ...state];
         default:
             return state;
     }

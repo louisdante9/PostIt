@@ -1,6 +1,8 @@
-import React, {PropTypes}from 'react';
+import React from 'react';
 import NavigationBar from './NavigationBar';
 import { connect } from 'react-redux';
+import {PropTypes} from 'prop-types';
+
 
 /**
  * 
