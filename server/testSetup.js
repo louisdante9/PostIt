@@ -24,6 +24,7 @@ var Enzyme = require('enzyme');
 var  Adapter= require('enzyme-adapter-react-15');
 
 Enzyme.configure({ adapter: new Adapter() });
+
 process.env.NODE_ENV = 'test';
 
 // Register babel so that it will transpile ES6 to ES5
