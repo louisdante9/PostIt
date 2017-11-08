@@ -40,6 +40,11 @@ class NavigationBar extends React.Component {
    * @returns {void}
    */
   render() {
+    const navLogo = {
+      marginLeft: 33,
+      fontSize: 21,
+      fontWeight: 200
+    };
     const { active, user } = this.props.auth;
     const userLinks = (
       <span>
@@ -82,7 +87,7 @@ class NavigationBar extends React.Component {
       <div className="navbar-fixed">
         <nav className="">
           <div className="nav-wrapper">
-            <Link to="/" className="brand-logo">POST-IT</Link>
+            <Link to="/" className="brand-logo" style={navLogo}>POST-IT</Link>
             <img src="/img/logo.png" alt="test"/>
             {active ? userLinks : guestLink}
           </div>
