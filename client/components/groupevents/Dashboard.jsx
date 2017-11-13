@@ -8,7 +8,7 @@ import MessageBox from './MessageBox.jsx';
 import Modal from './modal.jsx';
 import UserModal from './userModal.jsx';
 import { Welcome } from './welcome.jsx';
-import { getGroups, createGroup, getMessages, createMessage }
+import { getGroups, createGroup, getMessages, createMessage,loadGroupUsers }
   from '../../actions/groupAction';
 
 /**
@@ -44,6 +44,7 @@ class Dashboard extends Component {
    */
   componentDidMount() {
     this.props.getGroups();
+    $('.modal').modal({ dismissible: false});
   }
 
   /**
@@ -57,6 +58,7 @@ class Dashboard extends Component {
     return (evt) => {
       evt.preventDefault();
       this.props.getMessages(id);
+      this.props.loadGroupUsers(id);
       this.setState({ groupId: id });
     };
   }
@@ -201,6 +203,7 @@ Dashboard.propTypes = {
   createGroup: PropTypes.func.isRequired,
   getGroups: PropTypes.func.isRequired,
   getMessages: PropTypes.func.isRequired,
+  loadGroupUsers: PropTypes.func.isRequired,
   createMessage: PropTypes.func.isRequired,
   groups: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
@@ -218,4 +221,4 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps,
   { getGroups, createGroup, getMessages, 
-    createMessage })(Dashboard);
+    createMessage,loadGroupUsers })(Dashboard);

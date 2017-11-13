@@ -4,7 +4,8 @@ import Authenticate from '../middleware/auth';
 module.exports = (app) => {
   app.post('/api/user/signup', Users.signup);
   app.post('/api/user/signin', Users.login);
-  app.get('/api/user/search', Users.search);
+  app.get('/api/user/searchuser', Users.searchUsers);
+  app.get('/api/v1/group/:groupId/user/list',  Authenticate.verifyToken,GroupUsers.listGroupUsers);
 
   app.post('/api/group', Authenticate.verifyToken, Groups.create);
   app.get('/api/group', Authenticate.verifyToken, Groups.list);
@@ -16,5 +17,5 @@ module.exports = (app) => {
   Authenticate.verifyToken, Messages.createNewMessage);
   app.post('/api/user/resetpassword/:token', Users.resetPassword);
   app.post('/api/user/reqpass', Users.requestNewPassword);
-  //app.post('/api/getusers', GroupUsers.getAllUsers);
+
 };

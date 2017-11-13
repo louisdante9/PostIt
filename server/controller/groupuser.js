@@ -7,40 +7,48 @@ import db from '../models';
  * @returns {void}
  */
 export default {
+
   /**
-   * This methods gets all the users that are in a particular group
-   * @param {object} req
-   * @param {object} res - A group and it's members
+   * 
+   * 
+   * @param {any} req 
+   * @param {any} res 
    * @returns {void}
    */
-  getUsersInGroup(req, res) {
-    db.Group.findOne({
-      where: { id: req.params.id },
-      include: [
-        {
-          model: db.User,
-          attributes: { exclude: ['password', 'updatedAt'] },
-          through: { attributes: [] }
+  listGroupUsers(req, res) {
+    return db.Group.findOne({
+      where: {
+        id: req.params.groupId
+      }
+    })
+      .then((group) => {
+        if (!group) {
+          return res.status(400).send({
+            success: false,
+            message: 'Group does not exist'
+          });
         }
-      ],
-      order: [['createdAt', 'DESC']]
-    }).then((found) => {
-      const currentGroup = {
-        groupId: found.id,
-        name: found.name,
-        description: found.description,
-        ownerId: found.UserId,
-        createdAt: found.createdAt
-      };
-      res.status(200).json({
-        success: 'Successful.',
-        currentGroup,
-        groupUser: found.Users
-      });
-    }).catch((err) => {
-      res.status(500).json(err);
-    });
+        return db.GroupUser
+          .findAll({
+            where: {
+              groupId: req.params.groupId
+            },
+            attributes: ['id', 'userId', 'groupId'],
+            include: [
+              {
+                model: db.User,
+                attributes: ['id', 'username']
+              }
+            ]
+          })
+          .then(users => res.status(200).send(users));
+      })
+      .catch(err => res.status(400).send({
+        success: false,
+        message: err.message
+      }));
   },
+  
 
   /**
    * This method add new users to a group
@@ -50,36 +58,92 @@ export default {
    *
    * @returns {void}
    */
+  // addUsersToGroup(req, res) {
+  //   db.User
+  //     .findById(req.body.userId)
+  //     .then((user) => {
+  //       if (!user) {
+  //         return Promise.reject({
+  //           status: 400,
+  //           message: 'user not found'
+  //         });
+  //       }
+  //       return db.Group.findById(req.params.groupId);
+  //     })
+  //     .then((group) => {
+  //       if (!group) {
+  //         return Promise.reject({
+  //           status: 400,
+  //           message: 'group not found'
+  //         });
+  //       }
+  //       return db.GroupUser.create({
+  //         userId: req.body.userId,
+  //         groupId: parseInt(req.params.groupId)
+  //       });
+  //     })
+  //     .then((groupUser) => {
+  //       res.status(201).send(groupUser);
+  //     })
+  //     .catch(error => res.status(error.status || 500).send(error));
+  // },
+/**
+   * add a user to a new group
+   * @param {object} req users request object
+   * @param {object} res servers response
+   * @return {void}
+   */
   addUsersToGroup(req, res) {
-    db.User
-      .findById(req.body.userId)
-      .then((user) => {
-        if (!user) {
-          return Promise.reject({
-            status: 400,
-            message: 'user not found'
-          });
-        }
-        return db.Group.findById(req.params.groupId);
-      })
-      .then((group) => {
-        if (!group) {
-          return Promise.reject({
-            status: 400,
-            message: 'group not found'
-          });
-        }
-        return db.GroupUser.create({
-          userId: req.body.userId,
-          groupId: parseInt(req.params.groupId)
-        });
-      })
-      .then((groupUser) => {
-        res.status(201).send(groupUser);
-      })
-      .catch(error => res.status(error.status || 500).send(error));
-  },
+        return db.Group.findOne({
+          where: {
+            id: req.params.groupId
+          }
+        })
+        .then((group) => {
+          if (!group) {
+            return res.status(400).send({
+              success: false,
+              message: 'Group does not exist'
+            });
+          }
 
+          return db.GroupUser.findOne({
+            where: {
+              userId: req.body.userId,
+              groupId: req.params.groupId
+            }
+          })
+          .then((member) => {
+            if (member) {
+              return res.status(401).send({
+                success: false,
+                message: 'User already in group'
+              });
+            }
+            db.GroupUser.create({
+              userId: req.body.userId,
+              groupId: req.params.groupId
+            })
+            .then((addedMember) => {
+              res.status(201).send({
+                success: true,
+                message: 'successfully added to group',
+                id: addedMember.id
+              });
+            }, err => res.status(400).send({
+              success: false,
+              message: err.message
+            }));
+          }, err => res.status(400).send({
+            success: false,
+            message: err.message
+          }));
+        }, err => res.status(400).send({
+          success: false,
+          message: err.message
+        }));
+      },
+    
   /**
    * 
    * 

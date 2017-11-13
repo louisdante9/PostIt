@@ -1,4 +1,7 @@
-import { CREATE_USER_GROUP, GET_USER_GROUP } from '../actions/types';
+import {
+    CREATE_USER_GROUP, GET_USER_GROUP,
+    GET_USER_IN_A_GROUP
+} from '../actions/types';
 
 const initialState = [];
 

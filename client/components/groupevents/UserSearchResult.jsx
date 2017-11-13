@@ -3,15 +3,22 @@ import ReactPaginate from 'react-paginate';
 import {PropTypes} from 'prop-types';
 
 export const UserSearchResult = 
-({ userResult = [], handleSelect, pageCount, pageClick }) => {
+({ userResult = [], handleSelect, pageCount, pageClick, groupUser }) => {
+  const rUsers = userResult.map(user => 
+    ({ 
+      ...user,
+      isGroup: groupUser.some(gUser => gUser.userId === user.id)
+    }));
+    console.log(rUsers, groupUser)
   return (
     <div>
-      {userResult.map(user => {
-        return user.isInGroup ? <p>{user.username}</p> : (
-          <p key={user.id}>
+      {rUsers.map((user, index) => {
+        console.log(user);
+        return user.isGroup ? <p key={index}>{user.username}</p> : (
+          <p key={index}>
             <input type="checkbox" id={user.id} />
             <label htmlFor={user.id} 
-            onClick={handleSelect(user.id)}>
+            onClick={()=>handleSelect(user)}>
             {user.username}
             </label>
           </p>

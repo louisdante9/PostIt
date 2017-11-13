@@ -12,7 +12,6 @@ import { addUsers } from '../../actions/groupAction';
   * @extends {React.Component}
   */
  class UserModal extends React.Component {
-
     /**
      * Creates an instance of UserModal.
      * @param {any} props 
@@ -22,18 +21,32 @@ import { addUsers } from '../../actions/groupAction';
         super(props);
             this.state = {
                 matchingUsers: [],
+                name: '',
                 userId: '',
                 offset: 0,
                 count: 0,
-                addUser: ''
+                addUser: '',
+                groupUser: this.props.groupUser
             };
         this.handleChange = this.handleChange.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        //this.handleSubmit = this.handleSubmit.bind(this);
         this.pageClick = this.pageClick.bind(this);
         this.resetForm = this.resetForm.bind(this);
+        this.isGroupMember = this.isGroupMember.bind(this);
     }
+    
 
+    /**
+     * @param {any} nextProps 
+     * @memberof UserModal
+     * @return {void}
+     */
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            groupUser: nextProps.groupUser
+        });
+    }
     /**
      * 
      * 
@@ -45,6 +58,7 @@ import { addUsers } from '../../actions/groupAction';
      */
     handleChange(event, groupId, offset) {
         event.preventDefault();
+        this.setState({[event.target.name]: event.target.value});
         const query = event.target.value;
         if (!query.length) {
             return this.setState({ 
@@ -54,17 +68,15 @@ import { addUsers } from '../../actions/groupAction';
             });
         }
         axios()
-        .get(`/api/user/search?name=${query}&groupId=
-        ${this.props.group}&offset=${this.state.offset}`)
+        .get(`/api/user/searchuser?name=${query}&limit=
+        ${5}&offset=${this.state.offset}`)
         .then(res => {
             const mapResult = res.data.users.rows.map(user => {
-                const isInGroup = user.Groups
-                .some(group => group.id === this.props.group);
-                return { ...user, isInGroup };
+                return { ...user };
             });
             this.setState({ 
                 matchingUsers: mapResult,
-                count : res.data.pageCount,
+                count : res.data.data.pageCount,
                 addUser: query
             });
         });
@@ -79,13 +91,17 @@ import { addUsers } from '../../actions/groupAction';
     pageClick(data) {
         const selected = data.selected;
         const query = this.state.addUser;
-        axios().get(`/api/user/search?name=${query}&groupId=
-        ${this.props.group}&offset=${selected}`).then(res => {
+        const limit = 5;
+        axios().get(`/api/user/searchuser?name=${query}&limit=
+        ${limit}&offset=${selected}`).then(res => {
+            const mapResult = res.data.users.rows.map(user => {
+                return { ...user };
+            });
             this.setState({ 
-               matchingUsers: res.data.users.rows,
-               count : res.data.pageCount,
+               matchingUsers: mapResult,
+               count : res.data.data.pageCount,
                addUser: query,
-               offset: selected 
+               offset: Math.ceil(selected * limit)  
             });
         });
       }
@@ -93,13 +109,15 @@ import { addUsers } from '../../actions/groupAction';
     /**
      * 
      * @return {void}
-     * @param {any} event 
-     * @param {any} userId 
+     * @param {any} user 
      * @memberof UserModal
      */
-    handleSelect(event, userId){
-        event.preventDefault();
-       this.setState({ userId });   
+    handleSelect(user){
+       this.props.addUsers(this.props.group, user.id).then(()=>{
+           this.setState((state) => ({
+               groupUser: [...state.groupUser, { ...user, userId: user.id }]
+           }));
+    });
     }
 
     /**
@@ -109,7 +127,7 @@ import { addUsers } from '../../actions/groupAction';
      */
     resetForm() {
         this.setState({
-            userId: '',
+            name: '',
         });
       }
     /**
@@ -118,13 +136,28 @@ import { addUsers } from '../../actions/groupAction';
      * @param {any} event 
      * @memberof UserModal
      */
-    handleSubmit(event) {
-        event.preventDefault();     
-        this.props.addUsers(this.props.group, this.state.userId).then(()=>{
-            $('.modal').modal('close');
-        });
-    }
+    // handleSubmit(event) {
+    //     event.preventDefault();     
+    //     this.props.addUsers(this.props.group, this.state.userId).then(()=>{
+    //         $('.modal').modal('close');
+    //     });
+    // }
+/**
+   * check if user belongs to group or not
+   * @param {any} id the users id to be checked
+   * @memberof PlatformUsers
+   * @return {boolean} result to signify if user belongs to group
+   */
+  isGroupMember(id) {
+    const { groupUser } = this.state;
+    let groupMember = false;
+    (groupUser.length > 0) &&
+      groupUser.map((user) => {
+        if (id === user.userId) groupMember = true;
+      });
 
+    return groupMember;
+  }
     /**
      * 
      * 
@@ -139,11 +172,8 @@ import { addUsers } from '../../actions/groupAction';
                         <div className="nav-wrapper black">
                             <div className="left col s12 m5 l5">
                                 <ul>
-                                
                                     <li className="black user-modal-header">
-                                     
                                             Add users to group
-                                    
                                     </li>
                                 </ul>
                             </div>
@@ -161,6 +191,7 @@ import { addUsers } from '../../actions/groupAction';
                                         type="text"
                                         className="validate"
                                         name="name"
+                                        value= {this.state.name}
                                         onChange={this.handleChange}
                                     />
                                     <label htmlFor="group-title">
@@ -173,16 +204,20 @@ import { addUsers } from '../../actions/groupAction';
                 </div>
                 <button className="btn waves-effect waves-light black card-1 clearGroup user-modal-header-btn modal-close" 
                 type="submit" onClick={this.resetForm}>cancel</button>
-                <button className="btn waves-effect waves-light black card-1 createGroup" 
+                {/*<button className="btn waves-effect waves-light black card-1 createGroup" 
                 type="submit" onClick={this.handleSubmit}>
-                create</button>    
+        create</button>*/}    
                 <UserSearchResult userResult = {this.state.matchingUsers} 
                 handleSelect={this.handleSelect} pageCount={this.state.count} 
-                pageClick={this.pageClick}/>
+                pageClick={this.pageClick} groupUser={this.state.groupUser}/>
                 
             </div>
         );
     }
 }
-
-export default connect(null, {addUsers})(UserModal);
+const mapStateToProps = state => {
+    return {
+        groupUser: state.groupUser        
+    };
+};
+export default connect(mapStateToProps, {addUsers})(UserModal);

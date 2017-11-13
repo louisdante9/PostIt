@@ -4,6 +4,7 @@ import generator from 'generate-password';
 import crypto from 'crypto';
 import { passwordResetMail, resetSuccessfulResetMail } from './helpers/mailer';
 import db from '../models';
+import paginate from '../shared/paginate';
 import UserHelper from './helpers/userHelper';
 require('dotenv').config({ silent: true });
 
@@ -143,6 +144,41 @@ export default {
     });
   },
 
+  searchUsers(req, res) {
+    const{ offset, limit } = req.query;
+    // validate request object
+    if (!req.query.name || !req.query.limit) {
+      return res.status(400).send({
+        success: false,
+        message: 'no search parameter/limit',
+        users: []
+      });
+    }
+    return db.User
+    .findAndCountAll({
+      // offset: req.params.offset * req.body.limit,
+      offset:offset * limit,
+      limit: limit,
+      where: {
+        username: { $like: `%${req.query.name}%` }
+      },
+      attributes: ['id', 'username']
+    })
+    .then((users) => {
+      res.status(200).send({
+        success: true,
+        users,
+        data: paginate(users.count, limit, offset * 5)
+      });
+    }, (err) => {
+      res.status(400).send({
+        success: false,
+        message: 'an error occured searching users',
+        error: err.message,
+        users: []
+      });
+    });
+  },
   /**
   * Update a user
   * @param {Object} req Request object
