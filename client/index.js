@@ -10,7 +10,8 @@ import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { setCurrentUser } from './actions/authActions';
-import './public/css/styles.scss';
+import './public/scss/styles.scss';
+import './public/scss/main.scss';
 
 export const store = createStore(
     rootReducer,

@@ -84,8 +84,8 @@ class NavigationBar extends React.Component {
       </span>
     );
     return (
-      <div className="navbar-fixed">
-        <nav className="">
+      <div className="navbar-fixed navbar-main">
+        <nav>
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo" style={navLogo}>POST-IT</Link>
             <img src="/img/logo.png" alt="test"/>

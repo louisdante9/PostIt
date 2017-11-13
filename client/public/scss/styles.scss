@@ -314,60 +314,67 @@ html, body {
 */
 
 nav {
-  line-height: 40px;
-  background-color: #040000;
-  color: #fff;
-  i, [class^="mdi-"], [class*="mdi-"], i.material-icons, .button-collapse i {
-    // height: 40px;
-    line-height: 40px;
-  }
-  .brand-logo {
-    font-size: 1rem;
-    display: inline-block;
-    height: 100%;
-    padding-left: 40px;
-    padding-top: 10px;
-  }
-  ul{
-    height: 100%;
-  }
-  li{
-    height: 100%;
-  }
-  li a{
-    padding-top: 10px;
-  }
-  li a:hover{
-    height: 100%;
-    background-color: #fff;
-    color: #000000;
-  }
+  // line-height: 40px;
+  // background-color: #040000;
+  // color: #fff;
+  // i, [class^="mdi-"], [class*="mdi-"], i.material-icons, .button-collapse i {
+  //   // height: 40px;
+  //   line-height: 40px;
+  // }
+  // .brand-logo {
+  //   font-size: 1rem;
+  //   display: inline-block;
+  //   height: 100%;
+  //   padding-left: 40px;
+  //   padding-top: 10px;
+  // }
+  // ul{
+  //   height: 100%;
+  // }
+  // li{
+  //   height: 100%;
+  // }
+  // li a{
+  //   padding-top: 10px;
+  // }
+  // li a:hover{
+  //   height: 100%;
+  //   background-color: #fff;
+  //   color: #000000;
+  // }
 }
+// @media only screen and (min-width: 601px) {
+//   nav {
+//     // height: 40px;
+//     line-height: 40px;
+//     // li{
+//     //   height: 48px;
+//     // }
+//     .nav-wrapper i {
+//       height: 40px;
+//       line-height: 40px;
+//     }
+//     a.button-collapse {
+//       // height: 40px;
+//       line-height: 40px;
+//       i {
+//         height: 40px;
+//         line-height: 40px;
+//       }
+//     }
+//   }
+// }
+
+
+/*
+*style for the mastfoot
+*/
+
 .mastfoot p{
   color: #fff;
   padding-bottom: 10px;
 }
-@media only screen and (min-width: 601px) {
-  nav {
-    // height: 40px;
-    line-height: 40px;
-    // li{
-    //   height: 48px;
-    // }
-    .nav-wrapper i {
-      height: 40px;
-      line-height: 40px;
-    }
-    a.button-collapse {
-      // height: 40px;
-      line-height: 40px;
-      i {
-        height: 40px;
-        line-height: 40px;
-      }
-    }
-  }
-}
+
 
 /*
 *style for the dashboard page
