@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {PropTypes} from 'prop-types';
 import axios from '../../utils/setAuthToken';
 import { UserSearchResult } from './UserSearchResult.jsx';
 import { addUsers } from '../../actions/groupAction';
@@ -130,18 +131,7 @@ import { addUsers } from '../../actions/groupAction';
             name: '',
         });
       }
-    /**
-     * 
-     * @return {void}
-     * @param {any} event 
-     * @memberof UserModal
-     */
-    // handleSubmit(event) {
-    //     event.preventDefault();     
-    //     this.props.addUsers(this.props.group, this.state.userId).then(()=>{
-    //         $('.modal').modal('close');
-    //     });
-    // }
+   
 /**
    * check if user belongs to group or not
    * @param {any} id the users id to be checked
@@ -203,10 +193,7 @@ import { addUsers } from '../../actions/groupAction';
                     </div>
                 </div>
                 <button className="btn waves-effect waves-light black card-1 clearGroup user-modal-header-btn modal-close" 
-                type="submit" onClick={this.resetForm}>cancel</button>
-                {/*<button className="btn waves-effect waves-light black card-1 createGroup" 
-                type="submit" onClick={this.handleSubmit}>
-        create</button>*/}    
+                type="submit" onClick={this.resetForm}>cancel</button>   
                 <UserSearchResult userResult = {this.state.matchingUsers} 
                 handleSelect={this.handleSelect} pageCount={this.state.count} 
                 pageClick={this.pageClick} groupUser={this.state.groupUser}/>
@@ -215,6 +202,10 @@ import { addUsers } from '../../actions/groupAction';
         );
     }
 }
+
+UserModal.propTypes = {
+  addUsers: PropTypes.func.isRequired,
+};
 const mapStateToProps = state => {
     return {
         groupUser: state.groupUser        

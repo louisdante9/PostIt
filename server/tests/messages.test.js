@@ -83,10 +83,10 @@ describe('Messages suite', () => {
     it('should return 201 to add a user to a group', (done) => {
       token;
       request
-        .post(`/api/group/1/user`)
+        .post(`/api/group/2/user`)
         .set('authorization', token)
         .send({
-          userId: 2
+          userId: 3
         })
         .end((err, res) => {
           if (err) {
@@ -139,7 +139,7 @@ describe('Messages suite', () => {
           })
           .end((err, res) => {
             if (err) {
-              return done(err)
+              return done(err);
             }
             expect(res.status).to.equal(201);
             done();

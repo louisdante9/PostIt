@@ -9,13 +9,11 @@ export const UserSearchResult =
       ...user,
       isGroup: groupUser.some(gUser => gUser.userId === user.id)
     }));
-    console.log(rUsers, groupUser)
   return (
     <div>
       {rUsers.map((user, index) => {
-        console.log(user);
-        return user.isGroup ? <p key={index}>{user.username}</p> : (
-          <p key={index}>
+        return user.isGroup ? <p key={user.id}>{user.username}</p> : (
+          <p key={user.id}>
             <input type="checkbox" id={user.id} />
             <label htmlFor={user.id} 
             onClick={()=>handleSelect(user)}>
