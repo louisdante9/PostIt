@@ -3,15 +3,16 @@ import http from 'http';
 import bodyParser from 'body-parser';
 import path from 'path';
 import Logger from 'js-logger';
-import authenticate from './middleware/auth';
 import dotenv from 'dotenv';
 import debug from 'debug';
-import db from './models/';
 import open from 'open';
-import config from '../webpack.config.dev';
 import webpack from 'webpack';
 import morgan from 'morgan';
 import socket from 'socket.io';
+import validator from 'express-validator';
+import config from '../webpack.config.dev';
+import authenticate from './middleware/auth';
+import db from './models/';
 
 const app = express();
 dotenv.config();
@@ -73,6 +74,7 @@ const onListening = () => {
 app.use(express.static(path.join(__dirname, '../client/public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(validator());
 
 if (process.env.NODE_ENV != 'test') {
   const compiler = webpack(config);

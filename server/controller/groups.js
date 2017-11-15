@@ -1,4 +1,7 @@
+// import Validator from 'validator';
 import models from "../models";
+import validateInput from "../middleware/validate";
+// import validateInput from "../shared/validations/signin";
 
 export default {
 
@@ -10,6 +13,10 @@ export default {
    * @returns {void}
    */
   create(req, res) {
+    const {errors, isValid} = validateInput(req.body);
+    if(!isValid) {
+      res.status(400).json(errors);
+    }else{
     models.Group.findOne({
       where:{
         name: req.body.name
@@ -52,6 +59,7 @@ export default {
       });
     })
       .catch(error => res.status(500).json(error));
+    }
   },
     
   /**
