@@ -1,6 +1,7 @@
 # PostIt
 
  [![Code Climate](https://codeclimate.com/github/louisdante9/PostIt/badges/gpa.svg)](https://codeclimate.com/github/louisdante9/PostIt) [![Coverage Status](https://coveralls.io/repos/github/louisdante9/PostIt/badge.svg)](https://coveralls.io/github/louisdante9/PostIt) [![Build Status](https://travis-ci.org/louisdante9/PostIt.svg?branch=master)](https://travis-ci.org/louisdante9/PostIt)
+ [Heroku hosted](https://collab-postit.herokuapp.com/)
 ## Introduction
 **`PostIt`** is a simple application that allows friends and colleagues create groups for notifications. It allows a person post notifications to everyone in his group by sending a message once.
   It has the following features;
@@ -12,17 +13,6 @@
   *  Edit and update group details
   *  Delete a group
 
-## Dependencies
-
-### Back End Dependencies
-This app's functionality depends on multiple NPM packages including;
-  *  **[Express](https://www.npmjs.com/package/express)** - This framework enables robust routing and building web Applications and API's with focus on high performance
-  *  **[Sequelize](https://www.npmjs.com/package/sequelize)** - A a promise-based ORM for Node.js and io.js. Used in this project as ORM for postgres
-  *  **[Sequelize-cli](https://github.com/sequelize/cli)** - The Sequelize Command Line Interface (CLI)
-  *  **[Postgres](https://www.postgresql.org/)** - A a promise-based ORM for Node.js and io.js. Used in this project as ORM for postgres
-  *  **[Body-Parser](https://www.npmjs.com/package/body-parser)** - This package parse incoming request bodies in a middleware and makes it available under *req.body* property
-  *  **[JsonWebToken](https://jwt.io/)** - The module is a middleware for authenticating node.js applications
-  *  **[dotenv](https://github.com/kennethreitz/autoenv)** - Enables loading environment variables from a .env file into process.env.
 
 ## Installation and Setup
 *  Navigate to a directory of choice on `terminal`.
@@ -50,62 +40,9 @@ This app's functionality depends on multiple NPM packages including;
   *  `npm start`
   *  Running the command above will run the app at localhost://3002.
 
-## Endpoints Summary
+## Dependencies
+* See Package.json for reference 
 
-name   |     url       |      verb      |     description
------- | ------------- | -------------- | -------------------
-**AUTH**    |               |                 |
-REGISTER     |  /api/user/signup     |     POST     |     Allows users to register an account on PostIt
-LOGIN     |    /api/user/signin   |    POST      |    Allows a registered user to login
-**GROUP** |
-GET ALL     |    /api/groups   |    GET      |    Allows a registered user to retrieve all groups he belongs to
-CREATE     |  /api/group     |     POST     |     Allows a registered user to create a new group
-**ADD USERS TO A GROUP**|
-CREATE     |    /api/group/:id/user   |    POST      |    Adds one member to a group
-**MESSAGES** |
-GET     |    /api/group/:id/messages   |    GET      |    Retrieves one member-group and all it's messages
-CREATE     |  /api/group/:id/message     |     POST     |     Allows group members to post messages in memeber groups
-
-## Payload Examples for POST and PUT Requests
-
-#### Register New User: `/api/user/register`
-To register a new user, send the following parameters `(example below)`:
-```
-{
-  "username": "louis",
-  "password": "louis1223",
-  "email": "louisdante9@gmail.com"
-  "phone": "234000000000"
-}
-```
-
-#### Create New Group: `/api/group`
-To create a new group, send the following parameters `(Name cannot be empty. Example below)`:
-```
-{
-  "name": "Collaborate more",
-  "description": "Learn how to collaborate more"
-}
-```
-N:B: You can only edit details of groups you created
-
-#### Add New Users to a Group: `/api/group/:id/user`
-To add new users to a group, send the following parameter `(Example below)`:
-```
-{
-  "idToAdd": 1
-}
-```
-N:B: You can only add users to a group you create
-
-#### Post messages in Groups you belong: `/api/group/:groupid/message`
-To post messages in group, you need to send the following parameters `(Example below)`:
-```
-{
-  "message": "I enjoyed every bit of learning today"
-}
-```
-N:B: You can only post message in groups you have created or have been added to
 
 ## Tests
 *  The tests have been written using **[Mocha](https://www.npmjs.com/package/mocha)** , **[Chai](https://www.npmjs.com/package/chai)** as it's assertion library and **[Supertest](https://www.npmjs.com/package/supertest)** class.
@@ -113,6 +50,43 @@ N:B: You can only post message in groups you have created or have been added to
 *  Issue the following command on terminal.
   *  `npm run test`
 *  If the tests are successful, they will complete without failures or errors.
+## Technologies
+ * [ECMAScript 6](http://es6-features.org/): This is the newest version of JavsScript with new features such as arrow functions, spread and rest operators and many more.
+ * [REACT](https://facebook.github.io/react/): REACT is a JavaScript framework developed by Facebook and it is used for developing web application. REACT is the 'VIEW' in the MVC architecture.
+ * [FLUX](http://facebook.github.io/flux/): Flux is an architecture used for building stable and efficient web applications. Flux design is a unidirectional flow of data.
+ * [Babel:](https://babeljs.io/)  Babel is used to transpile es6 down to es5.
+ * [Webpack:](https://webpack.github.io/docs/what-is-webpack.html)  Webpack is used to bundle modules with dependencies and run mundane tasks.
+ * [Axios:](https://www.npmjs.com/package/axios)  Axios is an http client library used in making API calls.
+ * [Jest:](https://facebook.github.io/jest/) Jest is used to run tests.
 
-###### Louis Nwamadi
+# Coding Style
+- Airbnb 
+
+# Language
+- Javascript
+
+
+## Limitations
++ Users cannot choose to accept invitation request
++ Users cannot leave a group
++ Users cannot delete a message when sent
++ Users cannot see notification of new messages 
++ USers cannot see notification messages in real time 
+
+## Contributions
+ Contributions are always welcome. If you are interested in enhancing the features in the project, follow these steps below:
+ + Fork the project to your repository then clone it to your local machine.
+ + Create a new branch and make features that will enhance it.
+ + If the you wish to update an existing enhancement submit a pull request.
+ + If you find bugs in the application, create a `New Issue` and let me know about it.
+ + If you need clarification on what is not clear, contact me via mail [chukwuebuka.nwamadi@andela.com](mailto:chukwuebuka.nwamadi@andela.com)
+
+## Author
+    Chukwuebuka Nwamadi
+
+## License & Copyright
+MIT © [Daniel Atebije](https://github.com/louisdante9)
+
+Licensed under the [MIT License](LICENSE).
+
 

@@ -19,12 +19,26 @@ const UserHelper = {
 
     return attributes;
   },
-}
+};
 
+/**
+ * 
+ * 
+ * @export
+ * @param {any} errors 
+ * @returns {array} error
+ */
 export function handleErrors(errors) {
   errors.map(error => error.message);
 }
 
+/**
+ * 
+ * 
+ * @export
+ * @param {any} errors 
+ * @returns {array} error 
+ */
 export function handleError(errors) {
   const result = {}; 
   errors.forEach(error => {

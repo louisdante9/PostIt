@@ -7,7 +7,7 @@ const fakerObj = {
     username: faker.internet.userName(),
     email: faker.internet.email(),
     password: faker.internet.password(),
-    phone: faker.phone.phoneNumber() 
+    phone: faker.phone.phoneNumber(), 
   },
   firstUser: {
     username: 'faker',
@@ -19,10 +19,25 @@ const fakerObj = {
     email: faker.internet.email(),
     password: faker.internet.password(6),  
   },
+  thirdUser: {
+    username: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(6),  
+  },
+  fourthUser: {
+    username: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(6),  
+  },
   wrongUser: {
     username: undefined,
     email: 'factory@email.com',
     password: 'password',
+  },
+  wrongUser2: {
+    username: faker.internet.userName(),
+    email: 'factory@email.com',
+    password: undefined,
   },
 };
 

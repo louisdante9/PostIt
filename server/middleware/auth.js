@@ -1,13 +1,10 @@
 /* eslint import/no-unresolved: 0 */
 import jwt from 'jsonwebtoken';
 import db from '../models';
-import * as dotenv from 'dotenv';
 
-dotenv.config();
 const secretKey = process.env.JWT_SECRET_KEY;
-//const secretKey = 'louisdante9'
 const Authenticate = {
-  /**
+  /*
    * Verify auth middleware
    *
    * @param {Object} req request object payload
@@ -15,7 +12,6 @@ const Authenticate = {
    * @param {Function} next callback function
    */
   verifyToken(req, res, next) {
-    // console.log(secretKey);
     const token = req.headers.authorization || req.headers['x-access-token'];
 
     if (!token) {
@@ -30,5 +26,6 @@ const Authenticate = {
       next();
     });
   },
-}
+};
+
 export default Authenticate;

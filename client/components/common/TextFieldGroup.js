@@ -1,8 +1,10 @@
 import React from 'react';
+import {PropTypes} from 'prop-types';
 
-const TextFieldGroup = ({ field, value, placeholder, error, type, onChange }) => {
+const TextFieldGroup = ({ field, value, 
+    placeholder, error, type, onChange }) => {
     return(
-        <div className="input-field col s12">
+        <div className="input-field">
             <input value={value} onChange={onChange} type={type}
             name={field}  placeholder={placeholder}/>
             {error && <span className="badge">{error}</span>}
@@ -11,12 +13,12 @@ const TextFieldGroup = ({ field, value, placeholder, error, type, onChange }) =>
 };
 
 TextFieldGroup.propTypes = {
-    field: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired,
-    placeholder: React.PropTypes.string.isRequired,
-    error: React.PropTypes.string,
-    type: React.PropTypes.string.isRequired,
-    onChange: React.PropTypes.func.isRequired
+    field: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    error: PropTypes.string,
+    type: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired
 };
 
 TextFieldGroup.defaultProps = {

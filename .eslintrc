@@ -2,7 +2,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:import/errors",
-    "plugin:import/warnings"
+    "plugin:import/warnings",
   ],
   "plugins": [
     "react"
@@ -22,10 +22,11 @@
     "mocha": true,
     "browser": true
   },
-  "max-len": [1, 80, 2],
   "rules": {
+    "max-len": [1, 80, 2],
     "quotes": 0,
     "no-console": 1,
+    "no-empty": 0,
     "no-debugger": 1,
     "no-var": 1,
     "semi": [1, "always"],
@@ -57,7 +58,7 @@
     "react/no-did-mount-set-state": 1,
     "react/no-did-update-set-state": 1,
     "react/no-direct-mutation-state": 1,
-    "react/no-multi-comp": 1,
+    // "react/no-multi-comp": 1,
     "react/no-set-state": 0,
     "react/no-unknown-property": 1,
     "react/prefer-es6-class": 1,
@@ -81,7 +82,13 @@
       "requireReturnType": true,
       "requireParamDescription": false,
       "requireReturnDescription": true
-    }]
-    
+    }],
+    "require-jsdoc": ["error", {
+      "require": {
+          "FunctionDeclaration": true,
+          "MethodDefinition": true,
+          "ClassDeclaration": true
+      }
+  }] 
   }
 }

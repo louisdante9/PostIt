@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt-nodejs';
 
 module.exports = (sequelize, DataTypes) =>{
   const User = sequelize.define('User', {
-
     username: {
       type: DataTypes.STRING,
       required: true,
@@ -14,7 +13,6 @@ module.exports = (sequelize, DataTypes) =>{
       //   is: /^[a-z0-9\_\-]+$/i,
       // }
   },
-
   email: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -89,7 +87,8 @@ module.exports = (sequelize, DataTypes) =>{
        * @returns {void} no return
        */
       hashPassword() {
-        this.password = bcrypt.hashSync(this.password.trim(), bcrypt.genSaltSync(10));
+        this.password = bcrypt.hashSync(this.password.trim(), 
+        bcrypt.genSaltSync(10));
       }
     },
     hooks: {

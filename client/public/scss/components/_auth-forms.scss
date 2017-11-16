@@ -1,0 +1,26 @@
+.auth-form {
+  padding-top: 5rem;
+  max-width: 400px;
+
+  .input-field input {
+    margin: 0;
+  }
+}
+
+.form-cta {
+  margin-top: 4rem;
+
+  .btn {
+    height: unset;
+    padding: .5rem 2rem;
+    width: 100%
+  }
+}
+
+.authlinks {
+  line-height: 1.5;
+  
+  a {
+    color: $color-link-normal;
+  }
+}

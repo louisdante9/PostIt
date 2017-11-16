@@ -1,8 +1,34 @@
+// import Validator from 'validator';
 import models from "../models";
+import validateInput from "../middleware/validate";
+// import validateInput from "../shared/validations/signin";
 
 export default {
+
+  /**
+   * 
+   * 
+   * @param {any} req 
+   * @param {any} res 
+   * @returns {void}
+   */
   create(req, res) {
-    return models.Group
+    const {errors, isValid} = validateInput(req.body);
+    if(!isValid) {
+      res.status(400).json(errors);
+    }else{
+    models.Group.findOne({
+      where:{
+        name: req.body.name
+      }
+    }).then((found)=>{
+      if(found){
+        return  res.status(409).json({
+          status: 409,
+          err: 'Group name already taken'
+        });
+      }
+      return models.Group
       .create({
         name: req.body.name,
         userId: req.decoded.userId,
@@ -15,14 +41,12 @@ export default {
             userId: req.decoded.userId,
             isAdmin: true
           };
-          
           models.GroupUser.create(groupUser).then(createdGroup => {
             if (createdGroup) {
               return res.status(201).json({
                 data: group
               });
             }
-
             return res.status(404).json({
               message: "Could not add user to group"
             });
@@ -32,11 +56,19 @@ export default {
             message: "Could not create group"
           });
         }
-      })
+      });
+    })
       .catch(error => res.status(500).json(error));
+    }
   },
     
-
+  /**
+   * 
+   * 
+   * @param {any} req 
+   * @param {any} res 
+   * @return {void}
+   */
   list(req, res) {
     models.Group
       .findAll({
@@ -51,7 +83,13 @@ export default {
       .catch(error => res.status(400).send(error));
   },
  
-
+  /**
+   * 
+   * 
+   * @param {any} req 
+   * @param {any} res 
+   * @returns {void}
+   */
   retrieveOneGroup(req, res) {
     return models.Group
       .findById(req.params.groupId)
@@ -61,72 +99,8 @@ export default {
             message: "Group Not Found",
           });
         }
-
         return res.status(200).send(group);
       })
       .catch(error => res.status(400).send(error));
   },
-
-
-  updateOneGroup(req, res) {
-    if (!req.body.name) {
-      res.status(400).json({
-        error: "A group needs to given a name"
-      });
-    } else {
-      models.Group.findOne({
-        where: { id: req.params.id }
-      }).then(group => {
-        if (group.UserId === req.user.id) {
-          group.update(req.body).then(() => {
-            res.status(200).json({
-              success: "Group details updated successfully."
-            });
-          }).catch(err => {
-            res.status(500).json({
-              message: err
-            });
-          });
-        } else {
-          res.status(401).json({
-            error: "You do not have permission to edit this group\"s details"
-          });
-        }
-      }).catch(error => {
-        res.status(500).json(error);
-      });
-    }
-  },
-
-/**
- * This method handles deleting a group
- * @param {object} req
- * @param {object} res
- * @returns {void}
- */
-  deleteOneGroup(req, res) {
-    models.Group.findOne({
-      where: {
-        id: req.params.id
-      }
-    }).then(group => {
-      if (group.UserId === req.user.id) {
-        group.destroy().then(() => {
-          res.status(200).json({
-            success: "Group deleted successfully."
-          });
-        }).catch(err => {
-          res.status(500).json({
-            message: err
-          });
-        });
-      } else {
-        res.status(401).json({
-          error: "You do not have permission to delete this group"
-        });
-      }
-    }).catch(error => {
-      res.status(500).json(error);
-    });
-  }
 };

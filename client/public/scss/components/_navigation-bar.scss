@@ -1,0 +1,39 @@
+
+.navbar-main {
+  i,
+  [class^="mdi-"],
+  [class*="mdi-"],
+  i.material-icons,
+  .button-collapse i {
+    line-height: 40px;
+  }
+  ul{
+    height: 100%;
+  }
+  li{
+    height: 100%;
+  }
+  li a{
+    padding-top: 10px;
+  }
+  li a:hover{
+    height: 100%;
+    background-color: $color-white;
+    color: #000000;
+  }
+  nav {
+    line-height: 40px;
+    background-color: $color-brand-black;
+    color: $color-white;
+  }
+  .nav-wrapper {
+    padding: 0 50px;
+  }
+  .brand-logo {
+      font-size: 1rem;
+      display: inline-block;
+      height: 100%;
+      padding-left: 40px;
+      padding-top: 10px;
+    }
+}

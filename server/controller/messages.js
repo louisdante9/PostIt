@@ -5,21 +5,25 @@ import smsSender from './helpers/smsHelper';
 import pry from 'pryjs';
 import { io } from '../app';
 
- function sendMessage(data, flag) {
+/**
+ * sendMessage, this is a helper method for sending messages 
+ * @param {object} data
+ * @param {object} flag
+ * @returns {void}
+ */
+function sendMessage(data, flag) {
   switch (flag) {
     case 'urgent':
-    priorityMail(data);
+      priorityMail(data);
       break;
     case 'critical':
-    priorityMail(data);
+      priorityMail(data);
       smsSender(data);
       break;
     default:
       break;
   }
 }
-
-
 
 const Messages = {
 
@@ -29,7 +33,6 @@ const Messages = {
    * @param {object} res
    * @returns {void}
    */
-
   getGroupMessage(req, res) {
     const userId = req.decoded.userId;
     const groupId = req.params.groupId;
@@ -46,7 +49,6 @@ const Messages = {
             error: 'bad request'
           });
         }
-
         db.Message.findAll({
           where: { groupId: req.params.groupId },
           include: [{
@@ -54,12 +56,11 @@ const Messages = {
             attributes: { exclude: ['password'] },
             order: [['createdAt', 'DESC']]
           },
-        ],
+          ],
           order: [['createdAt', 'ASC']]
         }).then((messages) => {
           res.status(200).json({
             messages,
-            UserMessages: messages[0].User.UserMessages
           });
         });
       })
@@ -69,14 +70,13 @@ const Messages = {
     }
   },
 
-
   /**
    * This method handles posting messages to member groups
    * @param {object} req
    * @param {object} res
+   * @param {function} Mailer
    * @returns {void}
    */
-
   createNewMessage(req, res, Mailer) {
     db.Group.findById(req.params.groupId).then((group) => {
       if (group) {
@@ -86,20 +86,23 @@ const Messages = {
           flag: req.body.flag,
           groupId: group.id
         };
-        
         db.Message.create(newMessage).then((addedMessage) => {
           res.status(201).json(addedMessage);
           db.GroupUser.findAll({
             where: { groupId: req.params.groupId },
             include: [
               { model: db.Group, required: true, attributes: ['name'] },
-              { model: db.User, required: true, attributes: ['username', 'phone', 'email'] }
+              {
+                model: db.User, required: true,
+                attributes: ['username', 'phone', 'email']
+              }
             ],
             raw: true
           }).then((data) => {
             sendMessage(data, addedMessage.flag);
-            const msgData = generateUserMessageData(data, req.decoded.userId, addedMessage.id);   
-            createUnreadMessages(msgData).then(e => {}).catch(() => {})      
+            const msgData = generateUserMessageData(data,
+              req.decoded.userId, addedMessage.id);
+            createUnreadMessages(msgData).then(e => { }).catch(() => { });
           });
         }).catch((err) => {
           return res.status(400).json({
@@ -121,27 +124,43 @@ const Messages = {
 
 export default Messages;
 
+/**
+  * generateUserMessageData
+  * @param {integer} data
+  * @param {integer} userId
+  * @returns {Object} - Returns an object
+  */
 function generateUserMessageData(data, userId) {
   return data.map(metadata => {
-    const value =  {
+    const value = {
       read: false,
       userId: metadata.userId,
       groupId: metadata.groupId,
-      // messageId
     };
-    if(value.userId !== userId) {
+    if (value.userId !== userId) {
       return value;
     }
-    return Object.assign({}, value, { read: true});
+    // return Object.assign({}, value, { read: true });
+    return {...value, read: true};
   });
 }
 
-
+/**
+  * createUnreadMessages
+  * @param {integer} data
+  * @returns {Object} - Returns an object
+  */
 function createUnreadMessages(data) {
-  console.log(data);
   return db.UserMessages.bulkCreate(data);
 }
 
+/**
+  * getAllUnreadMessage
+  * @function
+  * @param {integer} userId, 
+  * @param {integer} groupId
+  * @returns {Object} - Returns an object
+  */
 function getAllUnreadMessage(userId, groupId) {
   return db.GroupUser.findAll({
     where: { userId },
@@ -152,6 +171,6 @@ function getAllUnreadMessage(userId, groupId) {
           model: db.UserMessages,
           where: { userId: userId, read: false }
         }]
-     }]
+      }]
   });
 }

@@ -1,10 +1,22 @@
-import React, {PropTypes}from 'react';
+import React from 'react';
 import NavigationBar from './NavigationBar';
-import FlashMessagesList from './flash/FlashMessagesList';
 import { connect } from 'react-redux';
+import {PropTypes} from 'prop-types';
 
+
+/**
+ * 
+ * 
+ * @class App
+ * @extends {React.Component}
+ */
 class App extends React.Component {
 
+    /**
+     * Creates an instance of App.
+     * @param {any} props 
+     * @memberof App
+     */
     constructor(props) {
       super(props);
       this.state = {
@@ -12,11 +24,23 @@ class App extends React.Component {
       };
     }
 
+    /**
+     * 
+     * 
+     * @returns {void}
+     * @memberof App
+     */
     render() {
+        let imgUrl = '/img/background.jpg';
+        const divStyle = {
+            color: 'white',
+            backgroundImage: 'url(' + imgUrl + ')',
+            backgroundSize: '100%',
+            height: '100%'
+          };
         return(
-            <div>
+            <div style={ divStyle }>
                 <NavigationBar auth={this.props.auth}/>
-                <FlashMessagesList />
                 {this.props.children}
             </div>
         );

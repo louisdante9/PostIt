@@ -9,12 +9,12 @@ import db from '../models';
 
 const expect = chai.expect;
 const request = supertest(app);
-
 let token;
 
-describe('Auth Suite', () => {  
+describe('Auth Suite', () => {
   describe('Create User POST: /api/user/signup', () => {
-    it('should successfully create a new user on successful registration', (done) => {
+    it('should successfully create a new user on successful registration', 
+    (done) => {
       request
         .post('/api/user/signup')
         .send(fakerObj.users)
@@ -29,14 +29,13 @@ describe('Auth Suite', () => {
       request
         .post('/api/user/signup')
         .send(fakerObj.users)
-        .expect('Content-Type', /json/)
-        .expect(409)
         .end((err, res) => {
-          expect(res.body.user.email).to.equal(fakerObj.users.email);
+          expect(res.status).to.equal(409);
           done();
         });
     });
-    it('should return an error when the signup form is missing a field', (done) => {
+    it('should return an error when the signup form is missing a field', 
+    (done) => {
       request
         .post('/api/user/signup')
         .send(fakerObj.wrongUser)
@@ -56,26 +55,23 @@ describe('Auth Suite', () => {
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(200);
-          // expect(res.token).to.be.defined;
           done();
         });
     });
-
     it('should return an error if the password field is empty', (done) => {
       request
         .post('/api/user/signin')
-        .send({ email: userParams.email, password: '' })
+        .send(fakerObj.wrongUser2)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(401);
           done();
         });
     });
-
     it('should return an error if the email field is empty', (done) => {
       request
         .post('/api/user/signin')
-        .send({ email: '', password: userParams.password })
+        .send(fakerObj.wrongUser)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(401);
@@ -96,6 +92,6 @@ describe('Auth Suite', () => {
           expect(res.status).to.equal(400);
           done();
         });
-   });
- });
- });
+    });
+  });
+});
