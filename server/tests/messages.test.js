@@ -1,6 +1,5 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint import/no-unresolved: 0 */
-//import 'babel-polyfill';
 import chai from 'chai';
 import supertest from 'supertest';
 import app from '../app';

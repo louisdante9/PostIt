@@ -97,28 +97,24 @@ export class SignupForm extends React.Component {
    */
   render() {
     return (
-      <div className="container align">
+      <div className="container auth-form align">
         <h2>Join Our Community!</h2>
-        <form className="col s12" onSubmit={this.onSubmit}>
-        <div className="row">
-          <TextFieldGroup
-            error={this.state.errors.username}
-            onChange={this.onChange}
-            value={this.state.username}
-            field="username"
-            placeholder="Enter Username"
-          />
-        </div>
-        <div className="row">
-          <TextFieldGroup
-            error={this.state.errors.email}
-            onChange={this.onChange}
-            value={this.state.email}
-            field="email"
-            placeholder="Enter Email"
-          />
-        </div>
-          <div className="row">
+        <form className="row" onSubmit={this.onSubmit}>
+          <div className="col s12">
+            <TextFieldGroup
+              error={this.state.errors.username}
+              onChange={this.onChange}
+              value={this.state.username}
+              field="username"
+              placeholder="Enter Username"
+            />
+            <TextFieldGroup
+              error={this.state.errors.email}
+              onChange={this.onChange}
+              value={this.state.email}
+              field="email"
+              placeholder="Enter Email"
+            />
             <TextFieldGroup
               error={this.state.errors.password}
               onChange={this.onChange}
@@ -127,8 +123,6 @@ export class SignupForm extends React.Component {
               field="password"
               placeholder="Enter Password"
             />
-          </div>
-          <div className="row">
             <TextFieldGroup
               error={this.state.errors.phone}
               onChange={this.onChange}
@@ -137,16 +131,23 @@ export class SignupForm extends React.Component {
               field="phone"
               placeholder="Enter Phone number"
             />
+            <div className="form-cta">
+              <button className="btn waves-effect waves-light black shadow-effect" 
+              type="submit" name="action">Sign Up</button>
+            </div>
           </div>
-          <button className="btn waves-effect waves-light black card-1">
-            Sign Up
-              </button>
         </form>
-        <p className="authlink">
-          Already have an account &nbsp;
-        <a href="/signin"> Sign In</a>
-        </p>
+
+        <div className="row">
+          <div className="col s12">
+            <p className="authlinks">
+              Already have an account &nbsp;<a href="/signin">Sign In</a><br/>
+            </p>
+          </div>
+        </div>
+
         <Footer />
+        
       </div>
     );
   }

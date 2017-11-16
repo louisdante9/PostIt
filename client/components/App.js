@@ -31,8 +31,15 @@ class App extends React.Component {
      * @memberof App
      */
     render() {
+        let imgUrl = '/img/background.jpg';
+        const divStyle = {
+            color: 'white',
+            backgroundImage: 'url(' + imgUrl + ')',
+            backgroundSize: '100%',
+            height: '100%'
+          };
         return(
-            <div>
+            <div style={ divStyle }>
                 <NavigationBar auth={this.props.auth}/>
                 {this.props.children}
             </div>
