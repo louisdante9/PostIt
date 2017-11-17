@@ -7,6 +7,7 @@ import { login } from '../../actions/authActions';
 import validateInput from '../../../server/shared/validations/signin';
 import TextFieldGroup from '../common/TextFieldGroup';
 import Footer from '../common/footer.jsx';
+import NavigationBar from '../NavigationBar';
 
 /**
  * 
@@ -93,7 +94,7 @@ export class SigninForm extends React.Component {
   render() {
     const { email, password, errors, isLoading } = this.state;
     return (
-      <div className="container auth-form align">
+      <div className="container auth-form align">        
         <h2>Sign In Here</h2>
         <form className="row" onSubmit={this.onSubmit}>
           <div className="col s12">

@@ -15,6 +15,7 @@
   }
   li a{
     padding-top: 10px;
+    padding-bottom: 12px;
   }
   li a:hover{
     height: 100%;
@@ -36,4 +37,11 @@
       padding-left: 40px;
       padding-top: 10px;
     }
+}
+@media screen and (max-height: 768px) {
+  .navbar-main {
+    li {
+      height: unset;
+    }
+  }
 }

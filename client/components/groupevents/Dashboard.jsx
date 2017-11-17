@@ -116,85 +116,86 @@ class Dashboard extends Component {
     const messages = allMsgs[this.state.groupId] || [];
     const GroupName = groups.find(group => group.id === this.state.groupId);
     return (
-      <div>
         <section id="content">
-          <div>
-            <div id="mail-app" className="section">
-              <div className="row">
-                <div className="col s12">
-                  {/** aside **/}
-                  <Aside
-                    
-                    groups={groups}
-                    setGroupMessages={this.setGroupMessages}
-                  />
-                  <div id="email-details"
-                    className="col s12 m8 l8 card-panel card-1">
-                    {this.state.groupId ?
-                      (
-                        <div>
-                          <hr className="grey-text text-lighten-2" />
-                          <div className="collection-item avatar">
-                            <p className="email-subject truncate">
-                              <span className="email-tag grey lighten-3">
-                                {GroupName && GroupName.name}
+          <ul id="slide-out" className="side-nav fixed">
+          <li><a href="#!">First Sidebar Link</a></li>
+          <li><a href="#!">Second Sidebar Link</a></li>
+        </ul>
+        <a href="#" data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
+        <div id="mail-app" className="section">
+          <div className="row">
+            <div className="col s12">
+              {/** aside **/}
+              <Aside
+                
+                groups={groups}
+                setGroupMessages={this.setGroupMessages}
+              />
+              <div id="email-details"
+                className="col s12 m8 l8 card-panel card-1">
+                {this.state.groupId ?
+                  (
+                    <div>
+                      <hr className="grey-text text-lighten-2" />
+                      <div className="collection-item avatar">
+                        <p className="email-subject truncate">
+                          <span className="email-tag grey lighten-3">
+                            {GroupName && GroupName.name}
+                          </span>
+                          <a href="#modal2" className=" modal-trigger"
+                          >
+
+                            <span className="send"
+                              data-intro="Add users here">
+                              Add User
+                        </span>
+                          </a>
+                        </p>
+                        <hr />
+                      </div>
+                      <div id="message-board" 
+                      className="email-content-wrap">
+                        <div className="row">
+                          <div className="col s10 m10 l10">
+                            <ul className="collection">
+                              {/** single message **/}
+                              <Message messages={messages}
+                                groups={groups} />
+                            </ul>
+                          </div>
+                          <div className="col s2 m2 l2 email-actions">
+                            <a href="#!">
+                              <span>
+                                <i className="mdi-content-reply">
+                                </i>
                               </span>
-                              <a href="#modal2" className=" modal-trigger"
-                              >
-
-                                <span className="send"
-                                  data-intro="Add users here">
-                                  Add User
-                            </span>
-                              </a>
-                            </p>
-                            <hr />
+                            </a>
+                            <a href="#!">
+                              <span><i className="mdi-navigation-more-vert">
+                              </i>
+                              </span>
+                            </a>
                           </div>
-                          <div id="message-board" 
-                          className="email-content-wrap">
-                            <div className="row">
-                              <div className="col s10 m10 l10">
-                                <ul className="collection">
-                                  {/** single message **/}
-                                  <Message messages={messages}
-                                    groups={groups} />
-                                </ul>
-                              </div>
-                              <div className="col s2 m2 l2 email-actions">
-                                <a href="#!">
-                                  <span>
-                                    <i className="mdi-content-reply">
-                                    </i>
-                                  </span>
-                                </a>
-                                <a href="#!">
-                                  <span><i className="mdi-navigation-more-vert">
-                                  </i>
-                                  </span>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                          <hr />
-                          {/**  message box */}
-                          <MessageBox message={this.state.message}
-                            flag={this.state.flag} onChange={this.onChange}
-                            onSubmit={this.onSubmit} groups={groups}
-                            onClick={this.onClickTour} />
                         </div>
-                      )
-                      : <Welcome />}
-
-                  </div>
-                </div>
+                      </div>
+                      <hr />
+                      {/**  message box */}
+                      <MessageBox message={this.state.message}
+                        flag={this.state.flag} onChange={this.onChange}
+                        onSubmit={this.onSubmit} groups={groups}
+                        onClick={this.onClickTour} />
+                    </div>
+                  )
+                  : <Welcome />}
 
               </div>
-              <Modal createGroup={this.props.createGroup} />
             </div>
-            <UserModal  group={this.state.groupId} />
+
           </div>
-        </section>
-      </div>
+          <Modal createGroup={this.props.createGroup} />
+        </div>
+        <UserModal  group={this.state.groupId} />
+      </section>
     );
   }
 }

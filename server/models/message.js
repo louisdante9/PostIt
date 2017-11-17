@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes)=> {
        validate: {
         notEmpty: {
           args: true,
-          msg: 'Message field cannot be empty'
+          msg: 'Message can not be empty'
         }
       }
     },

@@ -1,6 +1,17 @@
 
 
-.mastfoot p{
-  color: $color-white;
-  padding-bottom: 10px;
+.mastfoot {
+  color: #999;
+  /* IE8 proofing */
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  height: 40px;
+  width: 100%;
+  background: $color-brand-black;
+  p {
+    font-size: 15px;
+    color: $color-white;
+    padding-bottom: 10px;
+  }
 }
