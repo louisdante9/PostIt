@@ -41,10 +41,10 @@ class Component extends React.Component {
             });
         };
         return (
-            <div>
-                <div id="group-list"
-                    className="col s10 m3 l3 card-panel z-depth-1 card-1">
-                    <ul>
+            <header>
+                
+                    <ul id="slide-out" className="side-nav fixed">                    
+                    <li><a onClick={this.logout}>Logout</a></li>
                         <li>
                             <span className="group-title group-span">
                                 Click Icon to create group
@@ -55,16 +55,18 @@ class Component extends React.Component {
                                     > group_add</span></a>
                         </li>
                         <li className="collection-item avatar email-unread group-collection aside-font-size "
-                            data-intro="Here are the list of groups you belong to">
-                            <span className="email-title">
-                                <span className="material-icons">
-                                    group
-                            </span> Channels</span>
+                        data-intro="Here are the list of groups you belong to">
+                        <span className="email-title">
+                        <span className="material-icons">
+                        group
+                        </span> Channels</span>
                         </li>
                         {renderGroups()}
-                    </ul>
-                </div>
-            </div>
+                        </ul>
+                        <a href="#" data-activates="slide-out" className="button-collapse">
+                          <i className="material-icons">menu</i>
+                        </a>
+            </header>
         );
     }
 }

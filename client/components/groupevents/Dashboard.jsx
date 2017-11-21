@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {PropTypes} from 'prop-types';
 import Aside from './Aside.jsx';
+import { logout } from '../../actions/authActions';
 import Message from './Message.jsx';
 import MessageBox from './MessageBox.jsx';
 import Modal from './modal.jsx';
@@ -29,11 +30,11 @@ class Dashboard extends Component {
       groupId: '',
       message: '',
       flag: 'normal',
-      msg: {},
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.setGroupMessages = this.setGroupMessages.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   /**
@@ -45,6 +46,17 @@ class Dashboard extends Component {
   componentDidMount() {
     this.props.getGroups();
     $('.modal').modal({ dismissible: false});
+  }
+
+  /**
+   * 
+   * @param {any} event
+   * @memberof NavigationBar
+   * @returns {void}
+   */
+  logout(event) {
+    event.preventDefault();
+    this.props.logout();
   }
 
   /**
@@ -73,7 +85,6 @@ class Dashboard extends Component {
   onSubmit(event) {
     event.preventDefault();
     const { userId, username } = this.props.user;
-    // const data = Object.assign({}, this.state, { userId, username });
     const data = {...this.state, userId, username}
     this.props.createMessage(this.state.groupId, data);
     this.setState({ message: '' });
@@ -117,22 +128,17 @@ class Dashboard extends Component {
     const GroupName = groups.find(group => group.id === this.state.groupId);
     return (
         <section id="content">
-          <ul id="slide-out" className="side-nav fixed">
-          <li><a href="#!">First Sidebar Link</a></li>
-          <li><a href="#!">Second Sidebar Link</a></li>
-        </ul>
-        <a href="#" data-activates="slide-out" className="button-collapse"><i className="material-icons">menu</i></a>
+          
         <div id="mail-app" className="section">
           <div className="row">
             <div className="col s12">
               {/** aside **/}
               <Aside
-                
                 groups={groups}
                 setGroupMessages={this.setGroupMessages}
               />
               <div id="email-details"
-                className="col s12 m8 l8 card-panel card-1">
+                className="col s12 m8 l8">
                 {this.state.groupId ?
                   (
                     <div>
@@ -222,4 +228,4 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps,
   { getGroups, createGroup, getMessages, 
-    createMessage,loadGroupUsers })(Dashboard);
+    createMessage,loadGroupUsers, logout })(Dashboard);

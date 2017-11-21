@@ -16,14 +16,14 @@ import BaseNavbarPage from './components/auth/BaseNavbarPage';
 
 export default(
     <Route component={App}>
+        <Route path="/dashboard" component={requireAuth(Dashboard)}/>
         <Route component={requireAuth(BaseNavbarPage)} >
           <Route path="/" component={Home} />
-          <Route path="signup" component={SignupPage} />
-          <Route path="signin" component={SigninPage} />
-          <Route path="forgotpassword" component={ForgotPasswordForm} />
-          <Route path="resetpassword/:token" component={ChangePassword} />
+          <Route path="/signup" component={SignupPage} />
+          <Route path="/signin" component={SigninPage} />
+          <Route path="/forgotpassword" component={ForgotPasswordForm} />
+          <Route path="/resetpassword/:token" component={ChangePassword} />
         </Route>
-        <Route path="/dashboard" component={requireAuth(Dashboard)}/>
         <Route path="*" component={NotFound} />
     </Route>  
 );

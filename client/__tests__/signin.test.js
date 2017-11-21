@@ -1,12 +1,14 @@
 import React from 'react';
 import configureMockStore  from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { shallow, mount } from 'enzyme';
+import { shallow, mount, configure } from 'enzyme';
 import { Provider } from 'react-redux';
 import sinon from 'sinon';
 import expect from 'expect';
 import { SigninForm } from '../components/auth/SigninForm.jsx';
+import Adapter from 'enzyme-adapter-react-15';
 
+configure({ adapter: new Adapter() });
 // jest.dontMock();
 /* global expect */
 const mockStore = configureMockStore([thunk]);

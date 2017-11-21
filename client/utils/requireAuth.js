@@ -44,7 +44,7 @@ export default function (ComposedComponent) {
          * @memberof Autheticate
          */
         componentWillUpdate(nextProps){
-           if(!nextProps.active){
+           if(!nextProps.active && this.props.active !== nextProps.active){
               this.context.router.push('/');
            }
         }

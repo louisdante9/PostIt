@@ -14,7 +14,7 @@ const server = supertest.agent(app);
 let token;
 before((done) => {
   request
-    .post('/api/user/signup')
+    .post('/api/v1/user/signup')
     .send(fakerObj.thirdUser)
     .end((err, res) => {
       if (err) {
@@ -27,7 +27,7 @@ before((done) => {
 describe('groups suite', () => {
   it('returns 201 response', (done) => {
     request
-      .post('/api/group/')
+      .post('/api/v1/group/')
       .set('authorization', token)
       .send({ name: 'Test Group', description: 'A simple test group' })
       .end((err, res) => {

@@ -2,11 +2,9 @@ import webpack from 'webpack';
 import path from 'path';
 
 export default {
-  // debug: true,
   devtool: 'inline-source-map',
-  // noInfo: false,
   entry: [
-    'eventsource-polyfill', // necessary for hot reloading with IE
+    'eventsource-polyfill', 
     'webpack-hot-middleware/client?reload=true', //note that it reloads the page if hot module reloading fails.
     path.resolve(__dirname, 'client/index')
   ],
@@ -22,7 +20,6 @@ export default {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    // new webpack.NoErrorsPlugin()
   ],
   module: {
     loaders: [

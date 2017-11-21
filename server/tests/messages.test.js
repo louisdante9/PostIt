@@ -12,15 +12,17 @@ let token, group;
 
 before((done) => {
   request
-    .post('/api/user/signup')
+    .post('/api/v1/user/signup')
     .send(fakerObj.fourthUser)
     .end((err, res) => {
       if (err) {
         return done(err);
       }
+      console.log(res.body)
       token = res.body.token;
+      console.log(token, ';khfhsdkjhfkjh')
       request
-        .post('/api/group')
+        .post('/api/v1/group')
         .set('authorization', token)
         .send({ name: 'group1', description: 'New group' })
         .end((err, res) => {

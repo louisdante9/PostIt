@@ -96,27 +96,27 @@ export default {
  */
 
   //remmeber to work on this
-  search(req, res) {
-    const match = req.query.name;
-    const groupId = Number(req.query.groupId);
-    const { offset, limit } = req.query;
+  // search(req, res) {
+  //   const match = req.query.name;
+  //   const groupId = Number(req.query.groupId);
+  //   const { offset, limit } = req.query;
 
-    let query = {
-      where: {
-        $or: [{ username: { $iLike: `%${match}%` } },
-        { email: { $iLike: `%${match}%` } }],
-      },
-      attributes: ['id', 'username', 'email',
-        'createdAt', 'updatedAt'],
-      include: [{
-        model: db.Group,
-        attributes: ['id'],
-        through: { attributes: [] }
-      }]
-    };
-    if (offset && limit) {
-      query = { ...query, offset, limit };
-    }
+  //   let query = {
+  //     where: {
+  //       $or: [{ username: { $iLike: `%${match}%` } },
+  //       { email: { $iLike: `%${match}%` } }],
+  //     },
+  //     attributes: ['id', 'username', 'email',
+  //       'createdAt', 'updatedAt'],
+  //     include: [{
+  //       model: db.Group,
+  //       attributes: ['id'],
+  //       through: { attributes: [] }
+  //     }]
+  //   };
+  //   if (offset && limit) {
+  //     query = { ...query, offset, limit };
+  //   }
     // db.User.find
     // db.Group.find({
     //   where: { id: groupId },
@@ -135,14 +135,14 @@ export default {
     //flags an error if the group is null...also return password.
     // const omitUsers = group.toJSON().Users.map(user => user.id);
     // query.where.id = { $notIn: omitUsers };
-    db.User.findAndCountAll(query).then((result) => {
-      return res.status(200)
-        .json({
-          users: result,
-          pageCount: Math.ceil(result.count / 5)
-        });
-    });
-  },
+  //   db.User.findAndCountAll(query).then((result) => {
+  //     return res.status(200)
+  //       .json({
+  //         users: result,
+  //         pageCount: Math.ceil(result.count / 5)
+  //       });
+  //   });
+  // },
 
   searchUsers(req, res) {
     const{ offset, limit } = req.query;
@@ -160,7 +160,7 @@ export default {
       offset:offset * limit,
       limit: limit,
       where: {
-        username: { $like: `%${req.query.name}%` }
+        username: { $ilike: `%${req.query.name}%` }
       },
       attributes: ['id', 'username']
     })

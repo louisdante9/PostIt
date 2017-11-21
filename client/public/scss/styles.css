@@ -316,9 +316,7 @@ nav .brand-logo {
     max-width: 100% !important;
     width: 98% !important;
 }
-#email-details {
-    margin-left: 10px;
-}
+
 .collection .collection-item.avatar {
     min-height: 0px !important;
 }
@@ -389,6 +387,7 @@ padding: 24px;
     display: flex;
     flex-direction: column;
     position: relative;
+    margin-left: 355px;
 }
 #message-board {
     overflow: auto;

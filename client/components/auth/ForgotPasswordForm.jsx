@@ -54,7 +54,7 @@ export class ForgotPasswordForm extends React.Component {
     if (isValid) {
       axios({
         method: 'POST',
-        url: '/api/user/reqpass',
+        url: '/api/v1/user/reqpass',
         data: {
           email: email
         }

@@ -74,12 +74,12 @@ class NavigationBar extends React.Component {
        </i>
         </a>
         <ul className="side-nav" id="mobile-demo">
-          <li><Link to="/signup">Sign up</Link></li>
-          <li><Link to="/signin">Sign in</Link></li>
+          <li><Link to="signup">Sign up</Link></li>
+          <li><Link to="signin">Sign in</Link></li>
         </ul>
         <ul className="right hide-on-med-and-down">
-          <li><Link to="/signup">Sign up</Link></li>
-          <li><Link to="/signin">Sign in</Link></li>
+          <li><Link to="signup">Sign up</Link></li>
+          <li><Link to="signin">Sign in</Link></li>
         </ul>
       </span>
     );
@@ -89,7 +89,7 @@ class NavigationBar extends React.Component {
           <div className="nav-wrapper">
             <Link to="/" className="brand-logo" style={navLogo}>POST-IT</Link>
             <img src="/img/logo.png" alt="test"/>
-            {active ? userLinks : guestLink}
+            {guestLink}
           </div>
         </nav>
       </div>

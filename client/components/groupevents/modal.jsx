@@ -33,7 +33,9 @@ export default class Modal extends React.Component {
      */
     handleChange(event) {
         event.preventDefault();
-        this.setState({ [event.target.name]: event.target.value });
+        this.setState({ [
+            event.target.name]: event.target.value 
+        });
     }
 
     /**
@@ -57,7 +59,7 @@ export default class Modal extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         this.props.createGroup(this.state).then(() => {
-            $('.modal').modal('close');
+            $('.modal1').modal('close');
         });
         this.setState({
             name: '',
@@ -127,7 +129,7 @@ export default class Modal extends React.Component {
                         <button className="btn waves-effect waves-light black card-1 createGroup modal-close" 
                         type="button" onClick={this.resetForm}>cancel</button>                          
                         
-                        <button className="btn waves-effect waves-light black card-1 createGroup" 
+                        <button className="btn waves-effect waves-light black card-1 createGroup modal-close" 
                         type="submit" onClick={this.handleSubmit}>
                         create</button>                          
                     </div>

@@ -5,7 +5,7 @@ import {
   CREATE_GROUP_MESSAGE, GET_ALL_USERS,
   ADD_USER_TO_GROUP, INCREASE_UNREAD_MESSAGE, GET_USER_IN_A_GROUP
 } from './types';
-import socket from './../utils/socket';
+// import socket from './../utils/socket';
 
 /**
  * 
@@ -15,7 +15,7 @@ import socket from './../utils/socket';
  */
 export function getGroups() {
   return dispatch => {
-    axios().get('/api/group')
+    return axios().get('/api/v1/group')
       .then(res => {
         dispatch({
           type: GET_USER_GROUP,
@@ -37,7 +37,7 @@ export function getGroups() {
  */
 export function createGroup(groupData) {
   return dispatch => {
-    return axios().post('/api/group', groupData)
+    return axios().post('/api/v1/group', groupData)
       .then(res => {
         dispatch({
           type: CREATE_USER_GROUP,
