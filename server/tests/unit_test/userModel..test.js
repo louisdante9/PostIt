@@ -1,22 +1,38 @@
-// import db from '../../models/user';
+import chai from 'chai';
+import models from '../../models';
+import userData from '../helpers/user.helper';
 
-// describe('Document Management System', function() {
-//   describe('Sequelize', function() {
-//     describe('Case for User', function() {
-//       beforeEach(function() {
-//         db.destroy({ 
-//           where : {} 
-//         }).then(function() {
-//         });
-//       });
+const should = chai.should();
 
-//       afterEach(function() {
-//         db.destroy({
-//           where: {}
-//         }).then(function() {
-//         });
-//       });
-     
-//       });
-//     });
-//   });
+const { user } = userData;
+
+describe('User model', () => {
+  it('should create a user', (done) => {
+    models.User.create(user.demoUser).then((createdUser) => {
+      createdUser.username.should.equal(user.demoUser.username);
+      createdUser.email.should.equal(user.demoUser.email);
+      createdUser.phone.should.equal(user.demoUser.phone);
+      done();
+    });
+  });
+  it('should not create a user if username is empty', (done) => {
+    models.User.create(user.demoUser2).then().catch((error) => {
+      error.errors[0].message.should.equal('Username can not be empty');
+    done();
+    });
+  });
+
+  it('should not create a user if email is wrong', (done) => {
+    models.User.create(user.demoUser3).then().catch((error) => {
+      error.errors[0].message.should.equal('Email address must be valid');
+    done();
+    });
+  });
+  it('should not create a user if user password is shorter than 5 character', (done) => {
+    models.User.create(user.demoUser4).then().catch((error) => {
+      error.errors[0].message.should.equal('Your password is too short');
+      done();
+    });
+  });
+
+});

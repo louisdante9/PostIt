@@ -13,8 +13,8 @@ describe('Message model', () => {
       newMessage.flag.should.equal(message.demoMessage.flag);
       newMessage.groupId.should.equal(message.demoMessage.groupId);
       newMessage.userId.should.equal(message.demoMessage.userId);
+      done();
     });
-    done();
   });
   it('should not create a message if message body is empty', (done) => {
     models.Message.create(message.demoMessage3).then().catch((error) => {
@@ -29,10 +29,5 @@ describe('Message model', () => {
     });
     done();
   });
-  it('should not create a message if message readby is null', (done) => {
-    models.Message.create(message.demoMessage5).then().catch((error) => {
-      error.errors[0].message.should.equal('readby cannot be null');
-    });
-    done();
-  });
+ 
 });

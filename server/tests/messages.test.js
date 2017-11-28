@@ -208,7 +208,7 @@ describe('Messages suite', () => {
                 done();
               });
           });
-        it('should send send an email if params is empty',
+        it('should not send request if email is empty',
           (done) => {
             request
               .post('/api/v1/user/reqpass')
@@ -228,7 +228,6 @@ describe('Messages suite', () => {
               })
               .end((err, res) => {
                 token = res.body.token
-                console.log(token, ">>>>>>>>>>>")
                 if (err) return done(err);
                 expect(res.status).to.equal(200);
                 done();

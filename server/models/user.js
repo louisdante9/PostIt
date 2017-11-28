@@ -9,9 +9,12 @@ module.exports = (sequelize, DataTypes) =>{
       required: true,
       allowNull: false,
       unique: true,
-      // validate: {
+       validate: {
+        notEmpty: {
+          msg: 'Username can not be empty'
+        }
       //   is: /^[a-z0-9\_\-]+$/i,
-      // }
+       }
   },
   email: {
     type: DataTypes.STRING,
