@@ -2,7 +2,7 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import jwtDecode from 'jwt-decode';
 import { USER_AUTHENTICATED, RESET_PASSWORD_SUCCESS } from './types';
-
+/*global Materialize */
 /**
  * 
  * 
@@ -42,7 +42,7 @@ export function login(data) {
  */
 export function userSignupRequest(userData) {
     return dispatch => {
-        return axios.post('/api/user/signup', userData).then(res => {
+        return axios.post('/api/v1/user/signup', userData).then(res => {
             const token = res.data.token;
             localStorage.setItem('jwtToken', token);
             setAuthToken(token);
@@ -66,20 +66,17 @@ export function logout() {
 }
 
 /**
- * 
- * 
+ *  
  * @export
- * @param {any} payload 
+ * @param {any} emailData 
  * @returns {void}
  */
-export function authenticate(payload) {
-    return dispatch => {
-        dispatch({
-            type: 'USER_AUTHENTICATED',
-            payload
-        });
+export function resetPassword(emailData) {
+    return () => {
+        return axios.post('/api/v1/user/reqpass', emailData);
     };
 }
+
 
 /**
  * 
@@ -103,7 +100,7 @@ const confirmPasswordResetFailed = password => ({
 
 export const confirmPasswordResetRequest = (token, newPassword) => 
 dispatch =>
-    axios.post(`/api/user/resetpassword/${token}`, newPassword)
+    axios.post(`/api/v1/user/resetpassword/${token}`, newPassword)
         .then((response) => {
             dispatch(confirmPasswordResetSuccess(response));
             Materialize.toast('Password reset successful', 6000, 'green');

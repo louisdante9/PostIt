@@ -1,14 +1,18 @@
 import React from 'react';
 
 export const Welcome = (props) => {
-    return(
-        <div>
-      `      <div className="email-content-wrap align">
-                <div className="row welcome">
-                   <h2>Welcome to post it </h2>
-                </div>
-                <p>To view your messages click on the groups on the side nav</p>
-                </div>
+    return (
+        <div className="welcome-content">
+            <div className="illustration">
+                <img src="/img/welcome-illustration.png"/>
+            </div>
+            <h2>Welcome</h2>
+            <p>
+                To view your messages select a 
+                channel from the sidebar or 
+                click on the plus '+' to create 
+                a new channel.
+            </p>
         </div>
     );
 };

@@ -1,0 +1,15 @@
+.brand.logo{
+  font-size: 1rem;
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  img {
+    height: 50px;
+    width: auto;
+    margin-right: 10px;
+  }
+
+  &.alt {
+    color: $color-brand-black;
+  }
+}

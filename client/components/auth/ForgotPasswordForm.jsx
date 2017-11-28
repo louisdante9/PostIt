@@ -1,10 +1,12 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import validateInput from '../../../server/shared/validations/forgotpass';
 import TextFieldGroup from '../common/TextFieldGroup';
 import Footer from '../common/footer.jsx';
-
+import { resetPassword } from '../../actions/authActions';
+/*global Materialize */
 /**
  * 
  * 
@@ -52,19 +54,13 @@ export class ForgotPasswordForm extends React.Component {
     const { errors, isValid } = validateInput(this.state);
     const { email } = this.state;
     if (isValid) {
-      axios({
-        method: 'POST',
-        url: '/api/v1/user/reqpass',
-        data: {
-          email: email
-        }
-      })
+      this.props.resetPassword({email})
         .then(res => {
           if (res && res.status == '200') {
             Materialize.toast('password updated, pls check your mail', 3000, 'blue');
+          }else{
+            Materialize.toast('error updating your password', 3000, 'red');
           }
-
-          Materialize.toast('error updating your password', 3000, 'red');
         })
         .catch(error => {
           if (error.response) {
@@ -109,3 +105,4 @@ export class ForgotPasswordForm extends React.Component {
     );
   }
 }
+export default connect(null, { resetPassword })(ForgotPasswordForm);

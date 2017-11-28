@@ -14,7 +14,7 @@ import Footer from '../common/footer.jsx';
  * @class ChangePasswordForm
  * @extends {React.Component}
  */
-class ChangePasswordForm extends React.Component {
+export class ChangePasswordForm extends React.Component {
 
   /**
    * Creates an instance of ChangePasswordForm.

@@ -7,8 +7,7 @@ import { login } from '../../actions/authActions';
 import validateInput from '../../../server/shared/validations/signin';
 import TextFieldGroup from '../common/TextFieldGroup';
 import Footer from '../common/footer.jsx';
-import NavigationBar from '../NavigationBar';
-
+/* global Materialize */
 /**
  * 
  * 
@@ -47,15 +46,15 @@ export class SigninForm extends React.Component {
     if (isValid) {
       this.setState({ isLoading: true });
       this.props.login(this.state)
-        .then(() => {
-          Materialize.toast('Welcome!', 3000, 'green');
-          this.context.router.push('/dashboard');
-        })
-        .catch((err) => {
-          const error = err.response.data.errors;
-          this.handleErrors(error);
-          this.setState({ isLoading: false });
-        });
+      .then(() => {
+        Materialize.toast('Welcome!', 3000, 'green');
+        this.context.router.push('/dashboard');
+      })
+      .catch((err) => {
+        const error = err.response.data.errors;
+        this.handleErrors(error);
+        this.setState({ isLoading: false });
+      });
     } else {
       this.handleErrors(errors);
     }
@@ -75,8 +74,7 @@ export class SigninForm extends React.Component {
   }
 
   /**
-   * 
-   * 
+   *  
    * @param {any} event 
    * @memberof SigninForm
    * @returns {void}
@@ -86,7 +84,6 @@ export class SigninForm extends React.Component {
   }
 
   /**
-   * 
    * 
    * @returns  {void}
    * @memberof SigninForm

@@ -1,5 +1,5 @@
 import React from 'react';
-import NavigationBar from './NavigationBar';
+import NavigationBar from './NavigationBar.jsx';
 import { connect } from 'react-redux';
 import {PropTypes} from 'prop-types';
 

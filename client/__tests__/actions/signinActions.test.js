@@ -5,14 +5,12 @@ import moxios from 'moxios';
 import expect from 'expect';
 import * as actions from '../../actions/authActions';
 import * as types from '../../actions/types';
-import mockLocalStorage from '../../_mocks_/mockLocalStorage';
-// import mockSessionStorage from '../../__mocks__/mockSessionStorage';
+import mockLocalStorage from '../../../__mocks__/mockLocalStorage';
 
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 window.localStorage = mockLocalStorage;
-// window.sessionStorage = mockSessionStorage;
 
 describe('Sign in action', () => {
   beforeEach(() => moxios.install());

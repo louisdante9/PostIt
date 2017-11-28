@@ -94,58 +94,9 @@ export default {
  * @param {Object} res Response object
  * @returns {Object} - Returns response object
  */
-
-  //remmeber to work on this
-  // search(req, res) {
-  //   const match = req.query.name;
-  //   const groupId = Number(req.query.groupId);
-  //   const { offset, limit } = req.query;
-
-  //   let query = {
-  //     where: {
-  //       $or: [{ username: { $iLike: `%${match}%` } },
-  //       { email: { $iLike: `%${match}%` } }],
-  //     },
-  //     attributes: ['id', 'username', 'email',
-  //       'createdAt', 'updatedAt'],
-  //     include: [{
-  //       model: db.Group,
-  //       attributes: ['id'],
-  //       through: { attributes: [] }
-  //     }]
-  //   };
-  //   if (offset && limit) {
-  //     query = { ...query, offset, limit };
-  //   }
-    // db.User.find
-    // db.Group.find({
-    //   where: { id: groupId },
-    //   include: [{
-    //     model: db.User,
-    //     attributes: ['id'],
-    //     raw: true,
-    //     through: { attributes: [] }
-    //   }]
-    // }).then((group) => {
-    //   if(!group){
-    //     return res.status(400).json({
-    //       message: "group doesn't exist"
-    //     });
-    //   }
-    //flags an error if the group is null...also return password.
-    // const omitUsers = group.toJSON().Users.map(user => user.id);
-    // query.where.id = { $notIn: omitUsers };
-  //   db.User.findAndCountAll(query).then((result) => {
-  //     return res.status(200)
-  //       .json({
-  //         users: result,
-  //         pageCount: Math.ceil(result.count / 5)
-  //       });
-  //   });
-  // },
-
   searchUsers(req, res) {
     const{ offset, limit } = req.query;
+    console.log(req.query)
     // validate request object
     if (!req.query.name || !req.query.limit) {
       return res.status(400).send({
@@ -156,7 +107,6 @@ export default {
     }
     return db.User
     .findAndCountAll({
-      // offset: req.params.offset * req.body.limit,
       offset:offset * limit,
       limit: limit,
       where: {
@@ -179,29 +129,7 @@ export default {
       });
     });
   },
-  /**
-  * Update a user
-  * @param {Object} req Request object
-  * @param {Object} res Response object
-  * @returns {Object} - Returns response object
-  */
-  updateOne(req, res) {
-    const userId = req.params.id;
-    db.User.findById(userId).then((user) => {
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      user.update(req.body).then((result) => {
-        const updatedUser = UserHelper.transformUser(result);
-        return res.status(200)
-          .json({
-            user: updatedUser,
-            message: 'user updated successfully'
-          });
-      });
-    });
-  },
-
+  
   /**
   * request reset password
   * @param {Object} req Request object
@@ -239,7 +167,10 @@ export default {
               .then(() => {
                 passwordResetMail(email, token, req.headers.host);
                 return res.status(200).send(
-                  { message: "password updated succesfully" }
+                  { 
+                    message: "password updated succesfully",
+                    token
+                }
                 );
 
               }, (err) => {
@@ -273,7 +204,7 @@ export default {
       })
       .then((user) => {
         if (!user) {
-          res.status(400).send({
+          res.status(401).send({
             success: false,
             err: 'failed token authentication'
           });

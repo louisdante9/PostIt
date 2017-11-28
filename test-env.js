@@ -17,6 +17,7 @@ global.event = {
     name: 'input',
     value: 'input'
   }
+
 };
 let jsdom = require('jsdom').jsdom;
 
@@ -37,7 +38,9 @@ global.navigator = {
 global.Materialize = {
   toast: sinon.spy()
 };
-global.io = ()=>({
+global.io = () => {
+  return {
     emit: () => null,
     on: () => null,
-});
+  };
+}

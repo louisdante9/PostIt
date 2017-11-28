@@ -1,4 +1,4 @@
-import { store } from './../index';
+import { store } from '../utils/store';
 import { CREATE_USER_GROUP, GET_USER_GROUP, 
   INCREASE_UNREAD_MESSAGE, GET_GROUP_MESSAGES, 
   CREATE_GROUP_MESSAGE, GET_ALL_USERS, 

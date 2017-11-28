@@ -13,12 +13,15 @@ let token, group;
 before((done) => {
   request
     .post('/api/v1/user/signup')
-    .send(fakerObj.fourthUser)
+    .send({
+      username: 'louis',
+      email: 'louisdante9@gmail.com',
+      password: 'biology1'
+    })
     .end((err, res) => {
       if (err) {
         return done(err);
       }
-      console.log(res.body)
       token = res.body.token;
       console.log(token, ';khfhsdkjhfkjh')
       request
@@ -160,6 +163,105 @@ describe('Messages suite', () => {
               done();
             });
         });
+        
+      });
+      describe('Search Users Route \'POST: /api/v1/user\'', () => {
+        it('should successfully search for other users', (done) => {
+          let query = 'G',
+            limit = 5,
+            offset = 0;
+          request
+            .get(`/api/v1/user/searchuser`)
+            .set('authorization', token)
+            .query({ name: query, limit, offset })
+            .end((err, res) => {
+              if (err) return done(err);
+              expect(res.status).to.equal(200);
+              done();
+            });
+        });
+
+        it('should not search when no search or limit parameter is sent', (done) => {
+          let query = '',
+            limit,
+            offset = 0;
+          request
+            .get(`/api/v1/user/searchuser`)
+            .set('authorization', token)
+            .query({ name: query, limit, offset })
+            .end((err, res) => {
+              if (err) return done(err);
+              expect(res.status).to.equal(400);
+              done();
+            });
+        });
+        it('should not send an email if user email doesn\'t exist',
+          (done) => {
+            request
+              .post('/api/v1/user/reqpass')
+              .send({
+                email: 'tony@test.com'
+              })
+              .end((err, res) => {
+                if (err) return done(err);
+                expect(res.status).to.equal(404);
+                done();
+              });
+          });
+        it('should send send an email if params is empty',
+          (done) => {
+            request
+              .post('/api/v1/user/reqpass')
+              .send()
+              .end((err, res) => {
+                if (err) return done(err);
+                expect(res.status).to.equal(401);
+                done();
+              });
+          });
+        it('should send an email to the  user with reset link',
+          (done) => {
+            request
+              .post('/api/v1/user/reqpass')
+              .send({
+                email: 'louisdante9@gmail.com'
+              })
+              .end((err, res) => {
+                token = res.body.token
+                console.log(token, ">>>>>>>>>>>")
+                if (err) return done(err);
+                expect(res.status).to.equal(200);
+                done();
+              });
+          });
+          it('should reset password successfully', (done) => {
+            request
+              .post(`/api/v1/user/resetpassword/${token}`)
+              .send({
+                newPassword: 'biology@1',
+                confirmPassword: 'biology@1'
+              })
+              .end((err, res) => {
+                if (err) return done(err);
+                expect(res.status).to.equal(201);
+                // expect(res.body).should.equal('biology')
+                done();
+              });
+          });
+          it('should fail password rest', (done) => {
+            request
+              .post('/api/v1/user/resetpassword/jjhhhh')
+              .send({
+                newPassword: 'biology@1',
+                confirmPassword: 'biology@1'
+              })
+              .end((err, res) => {
+                if (err) return done(err);
+                expect(res.status).to.equal(401);
+                // expect(res.body).should.equal('biology')
+                done();
+              });
+          });
       });
     });
   });

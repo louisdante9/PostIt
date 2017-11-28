@@ -4,31 +4,36 @@ import moxios from 'moxios';
 import expect from 'expect';
 import * as actions from '../../actions/groupAction';
 import * as types from '../../actions/types';
-import mockLocalStorage from '../../_mocks_/mockLocalStorage';
+import mockLocalStorage from '../../../__mocks__/mockLocalStorage';
+
+/* global jest Materialize */
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 window.localStorage = mockLocalStorage;
+window.Materialize = {
+  toast: () => (jest.fn())
+};
+
 
 describe('Add User Action', () => {
   beforeEach(() => moxios.install());
   afterEach(() => moxios.uninstall());
-
   it('should contain addUsers function', () => {
     expect(actions.addUsers()).toBeA('function');
   });
 
   it('should dispatch ADD_USER_TO_GROUP action creator', (done) => {
     const store = mockStore({});
-    moxios.stubRequest('/api/v1/group/1/user', {
-      status: 201,
-      response: {}
-    });
-   const data = {
-    success: true, 
-    message: "successfully added to group", 
-    id: 53
+    const data = {
+      success: true,
+      message: "successfully added to group",
+      id: 53
     };
+    moxios.stubRequest('/api/group/1/user', {
+      status: 201,
+      response: data
+    });
     const userId = 1;
     const groupId = 1;
     const expectedActions = [
@@ -37,7 +42,6 @@ describe('Add User Action', () => {
         payload: data
       }
     ];
-
     store.dispatch(actions.addUsers(groupId, userId)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
@@ -55,19 +59,19 @@ describe('Get User in group Action', () => {
 
   it('should dispatch GET_USER_IN_A_GROUP action creator', (done) => {
     const store = mockStore({});
-    moxios.stubRequest('/api/v1/group/1/user/list', {
-      status: 201,
-      response: {}
-    });
     const data = {
       id: 1,
       userId: 1,
       groupId: 1,
-      User:{
+      User: {
         id: 1,
         username: 'louisdante'
       }
-      };
+    };
+    moxios.stubRequest('/api/v1/group/1/user/list', {
+      status: 201,
+      response: data
+    });
     const groupId = 1;
     const expectedActions = [
       {
@@ -84,25 +88,23 @@ describe('Get User in group Action', () => {
 });
 
 describe('Get Group Action', () => {
-  it('should contain loadGroupUsers function', () => {
+  beforeEach(() => moxios.install());
+  afterEach(() => moxios.uninstall());
+
+  it('should contain getGroups function', () => {
     expect(actions.getGroups()).toBeA('function');
   });
   it('should dispatch GET_USER_GROUP action creator', (done) => {
     const store = mockStore({});
-    moxios.stubRequest('/api/v1/group', {
-      status: 200,
-      response: {
-        id: 1,
-        name: "javascript",
-        description: "this is a test"
-
-      }
-    });
-    const data = {
+    const data = [{
       id: 1,
       name: "javascript",
       description: "this is a test"
-      };
+    }];
+    moxios.stubRequest('/api/v1/group', {
+      status: 200,
+      response: data
+    });
     const expectedActions = [
       {
         type: types.GET_USER_GROUP,
@@ -118,24 +120,25 @@ describe('Get Group Action', () => {
 });
 
 describe('Create Group Action', () => {
+  beforeEach(() => moxios.install());
+  afterEach(() => moxios.uninstall());
+
   it('should contain loadGroupUsers function', () => {
     expect(actions.createGroup()).toBeA('function');
   });
   it('should dispatch CREATE_USER_GROUP action creator', (done) => {
     const store = mockStore({});
-    moxios.stubRequest('/api/v1/group', {
-      status: 200,
-      response: {
+    const data = [{
+      data: {
         id: 1,
         name: "javascript",
         description: "this is a test"
       }
+    }];
+    moxios.stubRequest('/api/v1/group', {
+      status: 200,
+      response: data
     });
-    const data = {
-      id: 1,
-      name: "javascript",
-      description: "this is a test"
-      };
     const groupData = {
       name: 'javascript',
       description: 'this is a dev group'
@@ -143,7 +146,7 @@ describe('Create Group Action', () => {
     const expectedActions = [
       {
         type: types.CREATE_USER_GROUP,
-        payload: data
+        payload: data.data
       }
     ];
 

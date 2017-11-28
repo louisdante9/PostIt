@@ -10,9 +10,6 @@
   ul{
     height: 100%;
   }
-  li{
-    height: 100%;
-  }
   li a{
     padding-top: 10px;
     padding-bottom: 12px;
@@ -29,14 +26,10 @@
   }
   .nav-wrapper {
     padding: 0 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-  .brand-logo {
-      font-size: 1rem;
-      display: inline-block;
-      height: 100%;
-      padding-left: 40px;
-      padding-top: 10px;
-    }
 }
 @media screen and (max-height: 768px) {
   .navbar-main {

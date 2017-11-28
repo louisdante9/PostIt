@@ -4,13 +4,13 @@ import App from './components/App';
 import { Home } from './components/auth/Home.jsx';
 import SignupPage from './components/auth/SignupForm.jsx';
 import SigninPage from './components/auth/SigninForm.jsx';
-import {ForgotPasswordForm} from './components/auth/ForgotPasswordForm.jsx';
+import ForgotPasswordForm from './components/auth/ForgotPasswordForm.jsx';
 import ChangePassword from './components/auth/ChangePasswordForm.jsx';
 import Dashboard from './components/groupevents/Dashboard.jsx';
 import { NotFound } from './components/auth/NotFound.jsx';
 import requireAuth from './utils/requireAuth';
-import NavigationBar from './components/NavigationBar';
-import BaseNavbarPage from './components/auth/BaseNavbarPage';
+import NavigationBar from './components/NavigationBar.jsx';
+import BaseNavbarPage from './components/auth/BaseNavbarPage.jsx';
 
 
 
