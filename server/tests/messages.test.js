@@ -41,7 +41,7 @@ describe('Messages suite', () => {
   describe('Create Messages', () => {
     it('allows a user create a message successfully', (done) => {
       request
-        .post(`/api/group/${group.id}/messages`)
+        .post(`/api/v1/group/${group.id}/messages`)
         .set('authorization', token)
         .send({ message: 'A new new message', flag: 'critical' })
         .end((err, res) => {
@@ -56,7 +56,7 @@ describe('Messages suite', () => {
 
     it('should not create a message if the group does not exist', (done) => {
       request
-        .post(`/api/group/${group.id * 5}/messages`)
+        .post(`/api/v1/group/${group.id * 5}/messages`)
         .set('authorization', token)
         .send({ message: 'A new new message', flag: 'critical' })
         .end((err, res) => {
@@ -71,7 +71,7 @@ describe('Messages suite', () => {
 
   it('should not get messages from a group that does not exist', (done) => {
     request
-      .get(`/api/group/${group.id * 5}/messages`)
+      .get(`/api/v1/group/${group.id * 5}/messages`)
       .set('authorization', token)
       .send({ message: 'A new new message', flag: 'critical' })
       .end((err, res) => {
@@ -87,7 +87,7 @@ describe('Messages suite', () => {
     it('should return 201 to add a user to a group', (done) => {
       token;
       request
-        .post(`/api/group/2/user`)
+        .post(`/api/v1/group/2/user`)
         .set('authorization', token)
         .send({
           userId: 3
@@ -104,7 +104,7 @@ describe('Messages suite', () => {
     describe('Send message to a group', () => {
       it('returns 201 response', (done) => {
         request
-          .post(`/api/group/${group.id}/messages`)
+          .post(`/api/v1/group/${group.id}/messages`)
           .set('authorization', token)
           .send({
             message: 'test message'
@@ -119,7 +119,7 @@ describe('Messages suite', () => {
       });
       it('should work with priority level critical', (done) => {
         request
-          .post(`/api/group/${group.id}/messages`)
+          .post(`/api/v1/group/${group.id}/messages`)
           .set('authorization', token)
           .send({
             message: 'test message',
@@ -135,7 +135,7 @@ describe('Messages suite', () => {
       });
       it('should work with priority level urgent', (done) => {
         request
-          .post(`/api/group/${group.id}/messages`)
+          .post(`/api/v1/group/${group.id}/messages`)
           .set('authorization', token)
           .send({
             message: 'test message',
@@ -152,7 +152,7 @@ describe('Messages suite', () => {
       describe('View all messages in a group', () => {
         it('returns 200 response', (done) => {
           request
-            .get(`/api/group/${group.id}/messages`)
+            .get(`/api/v1/group/${group.id}/messages`)
             .set('authorization', token)
             .send()
             .end((err, res) => {

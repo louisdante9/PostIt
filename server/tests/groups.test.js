@@ -71,7 +71,7 @@ describe('groups suite', () => {
   describe('Add user to a new group', () => {
     it('should return 200 to add a user to a group', (done) => {
       request
-        .post(`/api/group/1/user`)
+        .post(`/api/v1/group/1/user`)
         .set('authorization', token)
         .send({
           userId: 1
@@ -84,7 +84,7 @@ describe('groups suite', () => {
     });
     it('should return 200 to add a user to a group', (done) => {
       request
-        .post(`/api/group/100/user`)
+        .post(`/api/v1/group/100/user`)
         .set('authorization', token)
         .send({
           userId: 1
@@ -97,7 +97,7 @@ describe('groups suite', () => {
     });
     it('should return 200 to add a user to a group', (done) => {
       request
-        .post(`/api/group/1/user`)
+        .post(`/api/v1/group/1/user`)
         .set('authorization', token)
         .send({
           userId: 1
