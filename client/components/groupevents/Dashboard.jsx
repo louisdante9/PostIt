@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {PropTypes} from 'prop-types';
-import Aside from './Aside.jsx';
-import Message from './Message.jsx';
+import { PropTypes } from 'prop-types';
+import DashboardHeader from './DashboardHeader.jsx';
+import { logout } from '../../actions/authActions';
+import Messages from './Messages.jsx';
 import MessageBox from './MessageBox.jsx';
 import Modal from './modal.jsx';
 import UserModal from './userModal.jsx';
 import { Welcome } from './welcome.jsx';
-import { getGroups, createGroup, getMessages, createMessage,loadGroupUsers }
+import { getGroups, createGroup, getMessages, createMessage, loadGroupUsers }
   from '../../actions/groupAction';
 
 /**
@@ -17,7 +18,7 @@ import { getGroups, createGroup, getMessages, createMessage,loadGroupUsers }
  * @class Dashboard
  * @extends {Component}
  */
-class Dashboard extends Component {
+export class Dashboard extends Component {
   /**
    * Creates an instance of Dashboard.
    * @param {any} props 
@@ -29,11 +30,11 @@ class Dashboard extends Component {
       groupId: '',
       message: '',
       flag: 'normal',
-      msg: {},
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.setGroupMessages = this.setGroupMessages.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   /**
@@ -44,23 +45,35 @@ class Dashboard extends Component {
    */
   componentDidMount() {
     this.props.getGroups();
-    $('.modal').modal({ dismissible: false});
+    $('.modal').modal({ dismissible: false });
+    $(document).ready(function () {
+      $(".button-collapse").sideNav();
+    });
   }
 
   /**
    * 
+   * @param {any} event
+   * @memberof NavigationBar
+   * @returns {void}
+   */
+  logout(event) {
+    event.preventDefault();
+    this.props.logout();
+  }
+
+  /**
    * 
+   * @param {any} event 
    * @param {any} id 
    * @memberof Dashboard
    * @returns {void}
    */
-  setGroupMessages(id) {
-    return (evt) => {
-      evt.preventDefault();
-      this.props.getMessages(id);
-      this.props.loadGroupUsers(id);
-      this.setState({ groupId: id });
-    };
+  setGroupMessages(event, id) {
+    event.preventDefault();
+    this.props.getMessages(id);
+    this.props.loadGroupUsers(id);
+    this.setState({ groupId: id });
   }
 
   /**
@@ -73,12 +86,11 @@ class Dashboard extends Component {
   onSubmit(event) {
     event.preventDefault();
     const { userId, username } = this.props.user;
-    // const data = Object.assign({}, this.state, { userId, username });
-    const data = {...this.state, userId, username}
+    const data = { ...this.state, userId, username };
     this.props.createMessage(this.state.groupId, data);
     this.setState({ message: '' });
   }
-
+  
   /**
    * 
    * 
@@ -99,11 +111,11 @@ class Dashboard extends Component {
    * @returns {void}
    * @memberof Dashboard
    */
-  getGroupName(evn) {
-    return (evt) => {
-      return evn;
-    };
-  }
+  // getGroupName(evn) {
+  //   return (evt) => {
+  //     return evn;
+  //   };
+  // }
 
   /**
    * 
@@ -116,84 +128,44 @@ class Dashboard extends Component {
     const messages = allMsgs[this.state.groupId] || [];
     const GroupName = groups.find(group => group.id === this.state.groupId);
     return (
-      <div>
-        <section id="content">
-          <div>
-            <div id="mail-app" className="section">
-              <div className="row">
-                <div className="col s12">
-                  {/** aside **/}
-                  <Aside
-                    
-                    groups={groups}
-                    setGroupMessages={this.setGroupMessages}
-                  />
-                  <div id="email-details"
-                    className="col s12 m8 l8 card-panel card-1">
-                    {this.state.groupId ?
-                      (
-                        <div>
-                          <hr className="grey-text text-lighten-2" />
-                          <div className="collection-item avatar">
-                            <p className="email-subject truncate">
-                              <span className="email-tag grey lighten-3">
-                                {GroupName && GroupName.name}
-                              </span>
-                              <a href="#modal2" className=" modal-trigger"
-                              >
-
-                                <span className="send"
-                                  data-intro="Add users here">
-                                  Add User
-                            </span>
-                              </a>
-                            </p>
-                            <hr />
-                          </div>
-                          <div id="message-board" 
-                          className="email-content-wrap">
-                            <div className="row">
-                              <div className="col s10 m10 l10">
-                                <ul className="collection">
-                                  {/** single message **/}
-                                  <Message messages={messages}
-                                    groups={groups} />
-                                </ul>
-                              </div>
-                              <div className="col s2 m2 l2 email-actions">
-                                <a href="#!">
-                                  <span>
-                                    <i className="mdi-content-reply">
-                                    </i>
-                                  </span>
-                                </a>
-                                <a href="#!">
-                                  <span><i className="mdi-navigation-more-vert">
-                                  </i>
-                                  </span>
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                          <hr />
-                          {/**  message box */}
-                          <MessageBox message={this.state.message}
-                            flag={this.state.flag} onChange={this.onChange}
-                            onSubmit={this.onSubmit} groups={groups}
-                            onClick={this.onClickTour} />
-                        </div>
-                      )
-                      : <Welcome />}
-
+      <div className="dashboard">
+        {/** header **/}
+        <DashboardHeader
+          groups={groups}
+          setGroupMessages={this.setGroupMessages}
+          logout={this.logout}
+          user={this.props.user}
+        />
+        <main className="main">
+          {this.state.groupId ?
+            (
+              <div className="channel-content-wrapper">
+                <div className="channel-header">
+                  <div className="header-wrapper">
+                    <h3 className="title">
+                      {GroupName && GroupName.name}
+                    </h3>
+                    <div className="options">
+                      <a href="#modal2" className=" modal-trigger">
+                        <span className="btn-cta" data-intro="Add users here">Add User</span>
+                      </a>
+                    </div>
                   </div>
                 </div>
-
+                <div className="message-board">
+                      <Messages messages={messages}
+                        groups={groups} />
+                </div>
+                {/**  message box */}
+                <MessageBox message={this.state.message}
+                  flag={this.state.flag} onChange={this.onChange}
+                  onSubmit={this.onSubmit} groups={groups} />
               </div>
-              <Modal createGroup={this.props.createGroup} />
-            </div>
-            <UserModal  group={this.state.groupId} />
-          </div>
-        </section>
+            )
+            : <Welcome />}
+        </main>
+        <Modal createGroup={this.props.createGroup} />
+        <UserModal group={this.state.groupId} />
       </div>
     );
   }
@@ -208,7 +180,8 @@ Dashboard.propTypes = {
   groups: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
   active: PropTypes.bool.isRequired,
-  allMsgs: PropTypes.object.isRequired
+  allMsgs: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
@@ -220,5 +193,7 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps,
-  { getGroups, createGroup, getMessages, 
-    createMessage,loadGroupUsers })(Dashboard);
+  {
+    getGroups, createGroup, getMessages,
+    createMessage, loadGroupUsers, logout
+  })(Dashboard);

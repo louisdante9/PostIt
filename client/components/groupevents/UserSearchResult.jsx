@@ -10,16 +10,16 @@ export const UserSearchResult =
       isGroup: groupUser.some(gUser => gUser.userId === user.id)
     }));
   return (
-    <div>
+    <div className="modal-result">
       {rUsers.map((user, index) => {
-        return user.isGroup ? <p key={user.id}>{user.username}</p> : (
-          <p key={user.id}>
+        return user.isGroup ? <li key={user.id}>{user.username}</li> : (
+          <li key={user.id}>
             <input type="checkbox" id={user.id} />
             <label htmlFor={user.id} 
             onClick={()=>handleSelect(user)}>
             {user.username}
             </label>
-          </p>
+          </li>
         );
       })}
       <ReactPaginate

@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import {PropTypes} from 'prop-types';
 
-export const Component = ({ messages, groups }) => {
+const Messages = ({ messages, groups }) => {
 
   const emptyMessage = (
     <p>There are no meessages yet in this group</p>
@@ -10,8 +10,7 @@ export const Component = ({ messages, groups }) => {
 
   const renderMessage = message => {
     return (
-      <li key={message.id} className="collection-item avatar">
-        <img src="images/avatar.jpg" alt="" className="circle" />
+      <li key={message.id} className="collection-item">
         <span>
           <span className="username">{message.User.username}
           </span>
@@ -27,16 +26,16 @@ export const Component = ({ messages, groups }) => {
   };
 
   return (
-    <div className="messages">
+    <ul className="messages">
       {
         messages.length > 0 ?
           messages.map(message => renderMessage(message)) : emptyMessage
       }
-    </div>
+    </ul>
   );
 };
-Component.propTypes = {
+Messages.propTypes = {
   messages: PropTypes.array.isRequired,
   groups: PropTypes.array.isRequired
 };
-export default Component;
+export default Messages;

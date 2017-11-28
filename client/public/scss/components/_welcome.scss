@@ -1,0 +1,17 @@
+.welcome-content {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  h2, p {
+    margin-top: 0;
+  }
+}
+
+.illustration img {
+  width: 180px;
+  height: auto;
+  opacity: .3;
+}

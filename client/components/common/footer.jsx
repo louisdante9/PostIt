@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <div className="mastfoot black">
+    <div className="mastfoot #181B48">
       <p className="">Post-IT, by &nbsp;
       <a href="https://github.com/louisdante9/PostIt">
           @louisdante9

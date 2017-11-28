@@ -1,0 +1,21 @@
+
+/**
+* Layout related styles
+*
+*/
+.dashboard { 
+  height: 100%;
+  width: inherit;
+  header, main {
+    padding-left: 300px;
+  }
+  
+  @media only screen and (max-width : 992px) {
+    header, main {
+      padding-left: 0;
+    }
+  }
+}
+.main {
+  height: 100%;
+}

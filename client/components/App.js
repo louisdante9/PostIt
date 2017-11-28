@@ -1,5 +1,5 @@
 import React from 'react';
-import NavigationBar from './NavigationBar';
+import NavigationBar from './NavigationBar.jsx';
 import { connect } from 'react-redux';
 import {PropTypes} from 'prop-types';
 
@@ -31,16 +31,13 @@ class App extends React.Component {
      * @memberof App
      */
     render() {
-        let imgUrl = '/img/background.jpg';
         const divStyle = {
-            color: 'white',
-            backgroundImage: 'url(' + imgUrl + ')',
             backgroundSize: '100%',
-            height: '100%'
+            height: '100%',
+            overflow: 'inherit'
           };
         return(
-            <div style={ divStyle }>
-                <NavigationBar auth={this.props.auth}/>
+            <div style={divStyle}>
                 {this.props.children}
             </div>
         );

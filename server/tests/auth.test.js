@@ -16,7 +16,7 @@ describe('Auth Suite', () => {
     it('should successfully create a new user on successful registration', 
     (done) => {
       request
-        .post('/api/user/signup')
+        .post('/api/v1/user/signup')
         .send(fakerObj.users)
         .expect('Content-Type', /json/)
         .expect(201)
@@ -27,7 +27,7 @@ describe('Auth Suite', () => {
     });
     it('(409 error) with duplicate email', (done) => {
       request
-        .post('/api/user/signup')
+        .post('/api/v1/user/signup')
         .send(fakerObj.users)
         .end((err, res) => {
           expect(res.status).to.equal(409);
@@ -37,7 +37,7 @@ describe('Auth Suite', () => {
     it('should return an error when the signup form is missing a field', 
     (done) => {
       request
-        .post('/api/user/signup')
+        .post('/api/v1/user/signup')
         .send(fakerObj.wrongUser)
         .end((err, res) => {
           if (err) return done(err);
@@ -50,7 +50,7 @@ describe('Auth Suite', () => {
   describe('Login User: /api/users/signin', () => {
     it('should successfully log in a registered user', (done) => {
       request
-        .post('/api/user/signin')
+        .post('/api/v1/user/signin')
         .send(fakerObj.users)
         .end((err, res) => {
           if (err) return done(err);
@@ -60,7 +60,7 @@ describe('Auth Suite', () => {
     });
     it('should return an error if the password field is empty', (done) => {
       request
-        .post('/api/user/signin')
+        .post('/api/v1/user/signin')
         .send(fakerObj.wrongUser2)
         .end((err, res) => {
           if (err) return done(err);
@@ -70,7 +70,7 @@ describe('Auth Suite', () => {
     });
     it('should return an error if the email field is empty', (done) => {
       request
-        .post('/api/user/signin')
+        .post('/api/v1/user/signin')
         .send(fakerObj.wrongUser)
         .end((err, res) => {
           if (err) return done(err);
@@ -80,7 +80,7 @@ describe('Auth Suite', () => {
     });
     it('(400 error) with invalid email format', (done) => {
       request
-        .post('/api/user/signup')
+        .post('/api/v1/user/signup')
         .send({
           email: 'test',
           username: 'testusername3',
@@ -94,4 +94,5 @@ describe('Auth Suite', () => {
         });
     });
   });
+ 
 });

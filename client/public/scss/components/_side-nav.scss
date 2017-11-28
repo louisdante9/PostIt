@@ -1,0 +1,46 @@
+.side-nav-section {
+  margin-bottom: 25px;
+
+  ul {
+    margin: 0;
+  }
+
+  li, li > a {
+    height: unset;
+    line-height: unset;
+  }
+
+  .side-nav-header {
+    font-size: .9rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 10px 0;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .side-nav-item {
+    a {
+      padding: 10px 32px !important;
+      cursor: pointer;
+    }
+  }
+}
+.side-nav-profile {
+  padding: 0 32px !important;
+}
+.page-down {
+  float: right;
+  padding-left: 110px;
+}
+.profile-item {
+  display: flex;
+  align-items: center;
+}
+.side-nav-section.logo {
+  padding: 25px 32px;
+  border-bottom: 1px solid $color-brand-gray-light;
+  
+}

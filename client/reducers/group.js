@@ -1,6 +1,5 @@
 import {
-    CREATE_USER_GROUP, GET_USER_GROUP,
-    GET_USER_IN_A_GROUP
+    CREATE_USER_GROUP, GET_USER_GROUP  
 } from '../actions/types';
 
 const initialState = [];

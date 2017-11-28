@@ -6,6 +6,7 @@ import {
   ADD_USER_TO_GROUP, INCREASE_UNREAD_MESSAGE, GET_USER_IN_A_GROUP
 } from './types';
 import socket from './../utils/socket';
+/* global  Materialize */
 
 /**
  * 
@@ -15,7 +16,7 @@ import socket from './../utils/socket';
  */
 export function getGroups() {
   return dispatch => {
-    axios().get('/api/group')
+    return axios().get('/api/v1/group')
       .then(res => {
         dispatch({
           type: GET_USER_GROUP,
@@ -37,7 +38,7 @@ export function getGroups() {
  */
 export function createGroup(groupData) {
   return dispatch => {
-    return axios().post('/api/group', groupData)
+    return axios().post('/api/v1/group', groupData)
       .then(res => {
         dispatch({
           type: CREATE_USER_GROUP,
@@ -62,7 +63,7 @@ export function createGroup(groupData) {
  */
 export function getMessages(groupId) {
   return dispatch => {
-    return axios().get(`/api/group/${groupId}/messages`)
+    return axios().get(`/api/v1/group/${groupId}/messages`)
       .then(res => {
         dispatch({
           type: GET_GROUP_MESSAGES,
@@ -87,7 +88,7 @@ export function getMessages(groupId) {
  */
 export function createMessage(groupId, data) {
   return dispatch => {
-    return axios().post(`/api/group/${groupId}/messages`, data)
+    return axios().post(`/api/v1/group/${groupId}/messages`, data)
       .then(res => {
         const payload = { ...res.data, User: data };
         socket.emit('newMessage', payload);
@@ -103,6 +104,21 @@ export function createMessage(groupId, data) {
 
 /**
  * 
+ * @export
+ * @param {any} query
+ * @param {any} limit
+ * @param {any} offset
+ * @returns {void}
+ */
+export function userQuery(query, limit, offset) {
+  return () => {
+      return axios().get(`/api/v1/user/searchuser?name=${query}&limit=
+      ${limit}&offset=${offset}`);
+  };
+}
+
+/**
+ * 
  * 
  * @export
  * @param {any} groupId 
@@ -111,9 +127,9 @@ export function createMessage(groupId, data) {
  */
 export function addUsers(groupId, userId) {
   return dispatch => {
-    return axios().post(`/api/group/${groupId}/user`, { userId })
+    return axios().post(`/api/v1/group/${groupId}/user`, { userId })
       .then(res => {
-        dispatch({
+        return dispatch({
           type: ADD_USER_TO_GROUP,
           payload: res.data
         });
@@ -130,10 +146,9 @@ export function addUsers(groupId, userId) {
  */
 export function loadGroupUsers(groupId) {
   return dispatch => {
-    return axios().get(
-      `api/v1/group/${groupId}/user/list` )
+    return axios().get(`/api/v1/group/${groupId}/user/list` )
       .then(({ data }) => {
-        dispatch({
+        return dispatch({
           type: GET_USER_IN_A_GROUP,
           payload: data
         });

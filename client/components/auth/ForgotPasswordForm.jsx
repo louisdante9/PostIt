@@ -1,10 +1,12 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import validateInput from '../../../server/shared/validations/forgotpass';
 import TextFieldGroup from '../common/TextFieldGroup';
 import Footer from '../common/footer.jsx';
-
+import { resetPassword } from '../../actions/authActions';
+/*global Materialize */
 /**
  * 
  * 
@@ -12,7 +14,7 @@ import Footer from '../common/footer.jsx';
  * @extends {React.Component}
  */
 export class ForgotPasswordForm extends React.Component {
-  
+
   /**
    * Creates an instance of ForgotPasswordForm.
    * @param {any} props 
@@ -52,19 +54,13 @@ export class ForgotPasswordForm extends React.Component {
     const { errors, isValid } = validateInput(this.state);
     const { email } = this.state;
     if (isValid) {
-      axios({
-        method: 'POST',
-        url: '/api/user/reqpass',
-        data: {
-          email: email
-        }
-      })
+      this.props.resetPassword({email})
         .then(res => {
           if (res && res.status == '200') {
             Materialize.toast('password updated, pls check your mail', 3000, 'blue');
+          }else{
+            Materialize.toast('error updating your password', 3000, 'red');
           }
-
-          Materialize.toast('error updating your password', 3000, 'red');
         })
         .catch(error => {
           if (error.response) {
@@ -83,28 +79,30 @@ export class ForgotPasswordForm extends React.Component {
   render() {
     const message = this.state.successMessage;
     return (
-      <div className="container align">
-        <div className="signincontainer">
-          <h2>Forgot Your Password?</h2>
-          <p>enter your email address below and to get a new one</p>
-          <form className="col s12 " onSubmit={this.onSubmit}>
+      <div className="container auth-form align">
+        <h2>Forgot Your Password?</h2>
+        <p>enter your email address below and 
+        <br/> to get a new one</p>
+        <form className="row" onSubmit={this.onSubmit}>
 
-            <div className="row">
-              <TextFieldGroup
-                error={this.state.errors.email}
-                onChange={this.onChange}
-                value={this.state.email}
-                field="email"
-                placeholder="Enter Email"
-              />
-            </div>
-            <button className="btn waves-effect waves-light black card-1">
-              Send
-        </button>
-          </form>
-        </div>
+          <div className="col s12">
+            <TextFieldGroup
+              error={this.state.errors.email}
+              onChange={this.onChange}
+              value={this.state.email}
+              field="email"
+              placeholder="Enter Email"
+            />
+            <div className="form-cta">
+              <button className="btn shadow-effect  black ">
+                Send
+              </button>
+             </div>
+           </div>
+         </form>
         <Footer />
       </div>
     );
   }
 }
+export default connect(null, { resetPassword })(ForgotPasswordForm);

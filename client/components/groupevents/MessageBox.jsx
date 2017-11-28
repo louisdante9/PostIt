@@ -1,44 +1,30 @@
 import React from 'react';
-import {PropTypes} from 'prop-types';
+import { PropTypes } from 'prop-types';
 
-export const Component = ({message,flag, onChange, onSubmit }) => {
-    return(
-        <div>
-             <div className="email-content-wrap">
-                <div className="row">
-                    <div className="col s12 m12 l12">
-                        <hr />
-                        <ul>
-                        <li className="collection-item avatar" id="text-input">
-                            <textarea id="text-area" className="col s10" 
-                            placeholder="write message..." value={message} 
-                            name="message" onChange={onChange}></textarea>
-                            <select className="col s1" id="select" name="flag" 
-                            value={flag} onChange={onChange}>
-                                <option value="normal">Normal</option>
-                                <option value="urgent">Urgent</option>
-                                <option value="critical">Critical</option>
-                            </select>
-                            <a href="" className="" 
-                            onClick={onSubmit}>
-                            <span className="send">
-                                SEND
-                            </span>
-                            </a>
-                        </li>
-                        </ul>
-                    </div>
-                </div>
+const MessageBox = ({ message, flag, onChange, onSubmit }) => {
+    return (
+        <div className="message-box-footer">
+            <div className="footer-wrapper">
+                    <textarea className="message-input materialize-textarea "
+                        placeholder="write message..." value={message}
+                        name="message" onChange={onChange}></textarea>
+                    <select className="priority-select" name="flag"
+                      value={flag} onChange={onChange}>
+                    <option value="normal">Normal</option>
+                    <option value="urgent">Urgent</option>
+                    <option value="critical">Critical</option>
+                    </select>
+                    <a className="cta btn-cta" onClick={onSubmit}>SEND</a>
             </div>
         </div>
     );
 };
 
-Component.propTypes={
+MessageBox.propTypes = {
     onChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     groups: PropTypes.array.isRequired,
     message: PropTypes.string.isRequired,
     flag: PropTypes.string.isRequired
 };
-export default Component;
+export default MessageBox;

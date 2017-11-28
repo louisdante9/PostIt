@@ -82,25 +82,4 @@ export default {
       .then(groups => res.status(200).send(groups))
       .catch(error => res.status(400).send(error));
   },
- 
-  /**
-   * 
-   * 
-   * @param {any} req 
-   * @param {any} res 
-   * @returns {void}
-   */
-  retrieveOneGroup(req, res) {
-    return models.Group
-      .findById(req.params.groupId)
-      .then(group => {
-        if (!group) {
-          return res.status(404).send({
-            message: "Group Not Found",
-          });
-        }
-        return res.status(200).send(group);
-      })
-      .catch(error => res.status(400).send(error));
-  },
 };

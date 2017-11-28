@@ -7,6 +7,7 @@ import { userSignupRequest } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 import validateInput from '../../../server/shared/validations/signup';
 
+/*global Materialize */
 /**
  * 
  * 

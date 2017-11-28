@@ -3,6 +3,7 @@ import { Link, browserHistory, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { logout } from '../actions/authActions';
 import {PropTypes} from 'prop-types';
+import BrandLogo from '../components/common/BrandLogo.jsx';
 
 /**
  * 
@@ -36,30 +37,37 @@ class NavigationBar extends React.Component {
   /**
    * 
    * 
+   * @memberof Dashboard
+   * @returns {void}
+   */
+  componentDidMount() {
+    $(document).ready(function () {
+      $(".button-collapse").sideNav();
+    });
+  }
+  
+  /**
+   * 
+   * 
    * @memberof NavigationBar
    * @returns {void}
    */
   render() {
-    const navLogo = {
-      marginLeft: 33,
-      fontSize: 21,
-      fontWeight: 200
-    };
     const { active, user } = this.props.auth;
     const userLinks = (
       <span>
         <a data-activates="mobile-demo" className="button-collapse">
           <i className="material-icons">
             menu
-      </i>
+          </i>
         </a>
         <ul className="side-nav" id="mobile-demo">
-        <li><a onClick={this.logout}> Log out</a></li>
+          <li><a onClick={this.logout}> Log out</a></li>
         </ul>
         <ul id="nav-mobile" className="right hide-on-med-and-down">
           <li><span>Welcome </span>{user.username}
             <span className="material-icons white nav_user">
-            perm_identity 
+              perm_identity
             </span>
           </li>
           <li><a onClick={this.logout}> Log out</a></li>
@@ -74,12 +82,12 @@ class NavigationBar extends React.Component {
        </i>
         </a>
         <ul className="side-nav" id="mobile-demo">
-          <li><Link to="/signup">Sign up</Link></li>
-          <li><Link to="/signin">Sign in</Link></li>
+          <li><Link to="signup">Sign up</Link></li>
+          <li><Link to="signin">Sign in</Link></li>
         </ul>
         <ul className="right hide-on-med-and-down">
-          <li><Link to="/signup">Sign up</Link></li>
-          <li><Link to="/signin">Sign in</Link></li>
+          <li><Link to="signup">Sign up</Link></li>
+          <li><Link to="signin">Sign in</Link></li>
         </ul>
       </span>
     );
@@ -87,9 +95,8 @@ class NavigationBar extends React.Component {
       <div className="navbar-fixed navbar-main">
         <nav>
           <div className="nav-wrapper">
-            <Link to="/" className="brand-logo" style={navLogo}>POST-IT</Link>
-            <img src="/img/logo.png" alt="test"/>
-            {active ? userLinks : guestLink}
+          <BrandLogo />
+            {guestLink}
           </div>
         </nav>
       </div>

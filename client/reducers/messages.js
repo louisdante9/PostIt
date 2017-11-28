@@ -2,17 +2,18 @@ import { GET_GROUP_MESSAGES,
     CREATE_GROUP_MESSAGE, 
     INCREASE_UNREAD_MESSAGE } from '../actions/types';
 
-const initialState = {
+export const initialState = {
     msg: {},
     unread: {},
     activeGroup: 1,
 };
 
 export default (state=initialState, action) => {
+
     switch(action.type) {
         case GET_GROUP_MESSAGES: {
             const { groupId, payload } = action;
-            const groupMsgs = state.msg[groupId];
+            // const groupMsgs = state.msg[groupId];
             return { ...state, msg: { ...state.msg, [groupId]: payload } };
         }
         case CREATE_GROUP_MESSAGE: {
