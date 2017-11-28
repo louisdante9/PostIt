@@ -6,7 +6,7 @@ node_js:
 before_script:
   - npm install -g sequelize-cli
   - npm install -g nyc
-script: 
- - npm run coverage
-after_success:
- - npm run coveralls
+# script: 
+#   - npm run coverage
+# after_success:
+#   - npm run coveralls
