@@ -17,46 +17,6 @@ const app = express();
 dotenv.config();
 Logger.useDefaults();
 app.use(morgan());
-/**
- * Normalize a port into a number, string, or false.
- * @param {number} val port number to be used
- * @returns {any} res
- */
-const normalizePort = (val) => {
-  const port = parseInt(val, 10);
-  if (isNaN(port)) {
-    return val;
-  }
-  if (port >= 0) {
-    return port;
-  }
-  return false;
-};
-
-/**
- * 
- * par of the http server
- * @param {any} error 
- * @returns {void}
- */
-const onError = (error) => {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-  const bind = typeof port === 'string'
-    ? `Pipe ${port}`
-    : `Port ${port}`;
-  switch (error.code) {
-    case 'EACCES':
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-};
 
 /**
  * Event listener for HTTP server "listening" event.
