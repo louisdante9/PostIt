@@ -96,7 +96,6 @@ export default {
  */
   searchUsers(req, res) {
     const{ offset, limit } = req.query;
-    console.log(req.query)
     // validate request object
     if (!req.query.name || !req.query.limit) {
       return res.status(400).send({

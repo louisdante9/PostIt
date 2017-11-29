@@ -8,7 +8,7 @@ import axios from 'axios';
 const socket = io();
 
 socket.on('groupMessage', (data) => {
-  const state = store.getState();
+  const state = store.getState();  
   const { messages: { activeGroup }, auth: { user: {userId}} } = state;
   store.dispatch({
     type: CREATE_GROUP_MESSAGE,
@@ -30,6 +30,6 @@ socket.on('groupMessage', (data) => {
   }
 });
 export const increaseUnread = (userId, groupId) => {
-  axios().post(`/api/group/${groupId}`, { userId });
+  axios().post(`/api/v1/group/${groupId}`, { userId });
 };
 export default socket;
