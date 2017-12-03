@@ -8,6 +8,7 @@ import React from 'react';
 import { shallow, mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 import { provider } from 'react-redux';
+import mockLocalStorage from '../../../__mocks__/mockLocalStorage';
 import connectedDashboard, {Dashboard} 
 from '../../components/groupevents/Dashboard.jsx';
 import mockData from '../../../__mocks__/mockData';
@@ -16,6 +17,7 @@ import mockData from '../../../__mocks__/mockData';
 configure({ adapter: new Adapter() });
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+window.localStorage = mockLocalStorage;
 const store = mockStore({
     groups: [],
     allMsgs: {},

@@ -39,7 +39,7 @@ describe('Message actions', () => {
             } 
           }
         };
-      moxios.stubRequest('/api/group/1/messages', {
+      moxios.stubRequest('/api/v1/group/1/messages', {
         status: 200,
         response: data
       });
@@ -85,7 +85,7 @@ describe('Message actions', () => {
           username: "louisdante9",
         }
       };
-      moxios.stubRequest('/api/group/1/messages', {
+      moxios.stubRequest('/api/v1/group/1/messages', {
         status: 200,
         response: data
       });

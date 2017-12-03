@@ -185,10 +185,7 @@ html, body {
   /* Dark-grey background */
 }
 
-.material-icons {
-  color: grey;
-  padding-top: 5px;
-}
+
 
 .icon-bar a {
   display: block;
@@ -220,39 +217,35 @@ html, body {
 
 
 
-/* The navigation links inside the overlay */
+// /* The navigation links inside the overlay */
 
-/* When you mouse over the navigation links, change their color */
+// /* When you mouse over the navigation links, change their color */
 
-/* Position the close button (top right corner) */
+// /* Position the close button (top right corner) */
 
-/* 
-* When the height of the screen is less than 450 pixels, 
-*  change the font-size of the links and position the close 
-* button again, so they don't overlap 
-*/
-@media screen and (max-height: 450px) {
-  .overlay {
-    a {
-      font-size: 20px;
-    }
-    .closebtn {
-      font-size: 40px;
-      top: 15px;
-      right: 35px;
-    }
-  }
-}
+// /* 
+// * When the height of the screen is less than 450 pixels, 
+// *  change the font-size of the links and position the close 
+// * button again, so they don't overlap 
+// */
+// @media screen and (max-height: 450px) {
+//   .overlay {
+//     a {
+//       font-size: 20px;
+//     }
+//     .closebtn {
+//       font-size: 40px;
+//       top: 15px;
+//       right: 35px;
+//     }
+//   }
+// }
 
 /*
 * style for the materialize css nav bar
 */
 
-.intro-word {
-  font-size: 23px; 
-  margin: 25px 0;
-  line-height: 36px;
-}
+
 .home-btn {
   height: unset;
   padding: .5rem 2rem;
@@ -281,13 +274,7 @@ html, body {
   font-size: 16em;
 }
 
-.card-1 {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  &:hover {
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  }
-}
+
 .group-collection {
   padding-left: 10px !important;
   /*font-style: italic;*/
@@ -308,50 +295,16 @@ span.bad.new {
   padding-right: 10px;
 }
 
-.email-tag {
-  font-size: 18px !important;
-}
 
 .time-text {
   font-size: 12px;
 }
 
-span {
-  &.bad {
-    margin-left: 14px;
-    text-align: center;
-    font-size: 1.3rem;
-    line-height: 24px;
-    height: 25px;
-    color: #757575;
-    float: right;
-    box-sizing: border-box;
-  }
-  &.send {
-    cursor: pointer;
-    margin-left: 5px;
-    font-weight: 300;
-    text-align: center;
-    font-size: 1rem;
-    line-height: 35px;
-    height: 35px;
-    margin-top: 4px;
-    color: #fff;
-    float: right;
-    box-sizing: border-box;
-    background-color: grey;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-}
+
 .nav_user{
   margin-left: 7px;
 }
-.username{
-  padding-right: 4px;
-  color: #4a148c;
-  font-weight: 300;
-}
+
 .createGroup{
   float: right;
   margin-right:7px; 
@@ -380,10 +333,7 @@ span {
     
   }
 }
-.material-icons {
-  height: 100%;
-  padding: 10px;
-}
+
 .addicon{
   padding-bottom: 15px;
 }
@@ -427,60 +377,5 @@ span {
 .modalHeader{
   padding: 14px;  
 }
-#group-list {
-  height: calc(100vh - 99px);
-  overflow: scroll;
-}
 
-.model-email-content {
-  padding: 24px;
-}
 
-#email-details {
-  height: calc(100vh - 99px);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  margin-left: 355px;
-}
-
-#message-board {
-  overflow: auto;
-  margin-top: 10px;
-  > .row {
-    margin-bottom: 0px !important;
-  }
-}
-
-#text-input {
-  padding-right: 10px;
-  padding-left: 10px;
-}
-
-#priority {
-  display: inline-block;
-}
-
-#text-area {
-  border: 1px solid #ccc;
-  outline: none;
-  line-height: 40px;
-  text-indent: 10px;
-  resize: none;
-  top: -4px;
-  right: 5px;
-  width: 80%;
-  display: inline-block;
-}
-
-.message-text {
-  font-size: 14px;
-  font-weight: 300;
-  font-family: '', cursive;
-}
-
-.send-icon {
-  float: left;
-  margin-top: 20px;
-}

@@ -44,7 +44,12 @@ export class Dashboard extends Component {
    * @returns {void}
    */
   componentDidMount() {
-    this.props.getGroups();
+    this.props.getGroups().then(() => {
+      const currentGroup = localStorage.getItem('currentGroup');
+      if (currentGroup) {
+        this.setGroupMessages(null, currentGroup);
+      }
+    });
     $('.modal').modal({ dismissible: false });
     $(document).ready(function () {
       $(".button-collapse").sideNav();
@@ -70,7 +75,8 @@ export class Dashboard extends Component {
    * @returns {void}
    */
   setGroupMessages(event, id) {
-    event.preventDefault();
+    if(event) event.preventDefault();
+    localStorage.setItem('currentGroup', id);
     this.props.getMessages(id);
     this.props.loadGroupUsers(id);
     this.setState({ groupId: id });
@@ -90,7 +96,7 @@ export class Dashboard extends Component {
     this.props.createMessage(this.state.groupId, data);
     this.setState({ message: '' });
   }
-  
+
   /**
    * 
    * 
@@ -124,7 +130,7 @@ export class Dashboard extends Component {
    * @returns {void}
    */
   render() {
-    const { groups, allMsgs } = this.props;
+    const { groups, allMsgs, user } = this.props;
     const messages = allMsgs[this.state.groupId] || [];
     const GroupName = groups.find(group => group.id === this.state.groupId);
     return (
@@ -154,7 +160,7 @@ export class Dashboard extends Component {
                 </div>
                 <div className="message-board">
                       <Messages messages={messages}
-                        groups={groups} />
+                        groups={groups} user={user}/>
                 </div>
                 {/**  message box */}
                 <MessageBox message={this.state.message}

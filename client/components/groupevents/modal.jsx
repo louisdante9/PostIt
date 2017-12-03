@@ -126,10 +126,10 @@ export default class Modal extends React.Component {
                             </div>
                         </form>
                        
-                        <button className="btn waves-effect waves-light black card-1 createGroup modal-close" 
+                        <button className="btn waves-effect waves-light black shadow-effect createGroup modal-close" 
                         type="button" onClick={this.resetForm}>cancel</button>                          
                         
-                        <button className="btn waves-effect waves-light black card-1 createGroup modal-close" 
+                        <button className="btn waves-effect waves-light black shadow-effect createGroup modal-close" 
                         type="submit" onClick={this.handleSubmit}>
                         create</button>                          
                     </div>

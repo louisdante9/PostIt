@@ -182,7 +182,7 @@ export class UserModal extends React.Component {
                                 </div>
                         </form>
                 </div>
-                <button className="btn waves-effect waves-light black card-1 clearGroup user-modal-header-btn modal-close"
+                <button className="btn waves-effect waves-light black shadow-effect clearGroup user-modal-header-btn modal-close"
                     type="submit" onClick={this.resetForm}>close</button>
                 <UserSearchResult userResult={this.state.matchingUsers}
                     handleSelect={this.handleSelect} pageCount={this.state.count}

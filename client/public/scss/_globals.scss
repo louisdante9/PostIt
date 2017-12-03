@@ -35,6 +35,22 @@ h2 {
     background-color: grey;
     padding: 15px 20px;
     color: $color-white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-icon {
+  .cta-icon {
+    color: $color-white;
+  }
+  .cta-text {
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+  }
+  .cta-icon + .cta-text {
+    margin-left: 10px;
+  }
 }
 /**
 * Layout related styles
@@ -44,4 +60,11 @@ h2 {
 .page-wrapper {
   height: 100%;
   width: 100%;
+}
+
+/**
+* material icon
+*/
+.material-icons {
+  color: grey;
 }
