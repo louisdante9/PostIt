@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import db from '../models';
 
 const secretKey = process.env.JWT_SECRET_KEY;
-const Authenticate = {
+const authenticate = {
   /*
    * Verify auth middleware
    *
@@ -28,4 +28,4 @@ const Authenticate = {
   },
 };
 
-export default Authenticate;
+export default authenticate;

@@ -18,7 +18,7 @@ const options = {
 };
 
 
-export function sendMail(sender, reciever, subject, content){
+export const sendMail = (sender, reciever, subject, content) => {
   const transporter = nodemailer.createTransport(smtpTransport(options));
   console.log(options.auth);
   const mailOptions = {
@@ -35,7 +35,7 @@ export function sendMail(sender, reciever, subject, content){
     }
   });
 }
-export function resetSuccessfulResetMail(email){
+export const  resetSuccessfulResetMail = (email) => {
   const sender =  '"Post It App" <notification@postit.com>';
   const subject =  'Your Password has been changed';
   const content =  'This email confirms that your new POSTIT password has been set.\n\n You can now access your Account.';
@@ -43,7 +43,7 @@ export function resetSuccessfulResetMail(email){
 sendMail(sender, email, subject, content);
 }
 
-export function passwordResetMail(email, token, host){
+export const passwordResetMail = (email, token, host) => {
     const sender =  '"Post It App" <notification@postit.com>';
     const subject =  'Password Reset';
     const content = `You are receiving this because you (or someone) 
@@ -58,7 +58,7 @@ export function passwordResetMail(email, token, host){
 
 }
 
-export default function priorityMail(users) {
+ const priorityMail = (users) => {
   let user = users[0];
   const to = users.map(eachUser => eachUser['User.email']).join(', ');
   const sender = '"Post It App" <notification@postit.com>';
@@ -67,3 +67,4 @@ export default function priorityMail(users) {
 
    sendMail(sender, to, subject, content);
  }
+ export default priorityMail;

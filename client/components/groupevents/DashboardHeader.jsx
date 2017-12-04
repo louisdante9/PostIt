@@ -67,7 +67,7 @@ export class DashboardHeader extends React.Component {
                     <li>Profile</li>
                     <i className="material-icons page-down">
                       keyboard_arrow_down
-                                        </i>
+                    </i>
                   </span>
                 </ul>
                 <ul className="collapsible-body">

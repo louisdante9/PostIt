@@ -1,9 +1,8 @@
 import jwt from 'jsonwebtoken';
-import _ from 'lodash';
 import generator from 'generate-password';
 import crypto from 'crypto';
 import { passwordResetMail, resetSuccessfulResetMail } from './helpers/mailer';
-import db from '../models';
+import models from '../models';
 import paginate from '../shared/paginate';
 import UserHelper from './helpers/userHelper';
 require('dotenv').config({ silent: true });
@@ -19,7 +18,7 @@ export default {
   */
   signup(req, res) {
     const { username, email, password, phone } = req.body;
-    db.User.find({
+    models.User.find({
       where: {
         $or: [
           { email },
@@ -33,7 +32,7 @@ export default {
           message: `User with "${email}" or "${username}" already exists`
         });
       }
-      return db.User.create(req.body).then((user) => {
+      return models.User.create(req.body).then((user) => {
         const jwtData = {
           username: user.username,
           userId: user.id,
@@ -67,7 +66,7 @@ export default {
   * @returns {Object} - Returns response object
   */
   login(req, res) {
-    db.User.findOne({ where: { email: req.body.email } }).then((user) => {
+    models.User.findOne({ where: { email: req.body.email } }).then((user) => {
       if (user && user.matchPassword(req.body.password)) {
         const token = jwt.sign({
           username: user.username,
@@ -104,7 +103,7 @@ export default {
         users: []
       });
     }
-    return db.User
+    return models.User
     .findAndCountAll({
       offset:offset * limit,
       limit: limit,
@@ -142,7 +141,7 @@ export default {
         err: 'Please provide your email'
       });
     } else {
-      return db.User
+      return models.User
         .findOne({
           where: {
             email: email
@@ -155,7 +154,7 @@ export default {
             });
           } else {
             const token = crypto.randomBytes(20).toString('hex');
-            db.User.update({
+            models.User.update({
               resetPasswordToken: token,
               expiryTime: Date.now() + 3600000
             }, {
@@ -195,7 +194,7 @@ export default {
   * @returns {Object} - Returns response object
   */
   resetPassword(req, res) {
-    return db.User
+    return models.User
       .findOne({
         where: {
           resetPasswordToken: req.params.token
@@ -269,5 +268,3 @@ export function handleError(error) {
 
   return result;
 }
-
-// export default Users;

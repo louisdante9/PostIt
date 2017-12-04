@@ -23,7 +23,7 @@ const handleResponse = (error, responseData) => {
   * @param {integer} smsObjects, 
   * @returns {Object} - Returns an object
   */
- export default function smsSender(smsObjects){
+ const smsSender = (smsObjects) => {
  let smsObject = smsObjects[0];
   nexmo.message.sendSms(
     'Post-It App', smsObject['User.phone'],
@@ -31,3 +31,4 @@ const handleResponse = (error, responseData) => {
     handleResponse
   );
  }
+ export default smsSender;

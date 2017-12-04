@@ -1,4 +1,4 @@
-import db from '../models';
+import models from '../models';
 
 /**
  * This methods gets all the users that are in a particular group
@@ -15,7 +15,7 @@ export default {
    * @returns {void}
    */
   listGroupUsers(req, res) {
-    return db.Group.findOne({
+    return models.Group.findOne({
       where: {
         id: req.params.groupId
       }
@@ -27,7 +27,7 @@ export default {
             message: 'Group does not exist'
           });
         }
-        return db.GroupUser
+        return models.GroupUser
           .findAll({
             where: {
               groupId: req.params.groupId
@@ -35,7 +35,7 @@ export default {
             attributes: ['id', 'userId', 'groupId'],
             include: [
               {
-                model: db.User,
+                model: models.User,
                 attributes: ['id', 'username']
               }
             ]
@@ -57,7 +57,7 @@ export default {
      * @return {void}
      */
   addUsersToGroup(req, res) {
-    return db.Group.findOne({
+    return models.Group.findOne({
       where: {
         id: req.params.groupId
       }
@@ -70,7 +70,7 @@ export default {
           });
         }
 
-        return db.GroupUser.findOne({
+        return models.GroupUser.findOne({
           where: {
             userId: req.body.userId,
             groupId: req.params.groupId
@@ -83,7 +83,7 @@ export default {
                 message: 'User already in group'
               });
             }
-            db.GroupUser.create({
+            models.GroupUser.create({
               userId: req.body.userId,
               groupId: req.params.groupId
             })

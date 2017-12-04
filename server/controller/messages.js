@@ -1,4 +1,4 @@
-import db from '../models';
+import models from '../models';
 import { handleError } from './helpers/handleErrors';
 import priorityMail from './helpers/mailer';
 import smsSender from './helpers/smsHelper';
@@ -11,7 +11,7 @@ import { io } from '../app';
  * @param {object} flag
  * @returns {void}
  */
-function sendMessage(data, flag) {
+const sendMessage = (data, flag) => {
   switch (flag) {
     case 'urgent':
       priorityMail(data);
@@ -41,7 +41,7 @@ const Messages = {
         .then(data => res.status(200).json(data))
         .catch(err => res.status(500).json(err));
     } else {
-      db.Group.find({
+      models.Group.find({
         where: { id: req.params.groupId },
       }).then((group) => {
         if (!group) {
@@ -49,10 +49,10 @@ const Messages = {
             error: 'bad request'
           });
         }
-        db.Message.findAll({
+        models.Message.findAll({
           where: { groupId: req.params.groupId },
           include: [{
-            model: db.User,
+            model: models.User,
             attributes: { exclude: ['password'] },
             order: [['createdAt', 'DESC']]
           },
@@ -78,7 +78,7 @@ const Messages = {
    * @returns {void}
    */
   createNewMessage(req, res, Mailer) {
-    db.Group.findById(req.params.groupId).then((group) => {
+    models.Group.findById(req.params.groupId).then((group) => {
       if (group) {
         const newMessage = {
           message: req.body.message,
@@ -86,14 +86,14 @@ const Messages = {
           flag: req.body.flag,
           groupId: group.id
         };
-        db.Message.create(newMessage).then((addedMessage) => {
+        models.Message.create(newMessage).then((addedMessage) => {
           res.status(201).json(addedMessage);
-          db.GroupUser.findAll({
+          models.GroupUser.findAll({
             where: { groupId: req.params.groupId },
             include: [
-              { model: db.Group, required: true, attributes: ['name'] },
+              { model: models.Group, required: true, attributes: ['name'] },
               {
-                model: db.User, required: true,
+                model: models.User, required: true,
                 attributes: ['username', 'phone', 'email']
               }
             ],
@@ -150,7 +150,7 @@ function generateUserMessageData(data, userId) {
   * @returns {Object} - Returns an object
   */
 function createUnreadMessages(data) {
-  return db.UserMessages.bulkCreate(data);
+  return models.UserMessages.bulkCreate(data);
 }
 
 /**
@@ -161,13 +161,13 @@ function createUnreadMessages(data) {
   * @returns {Object} - Returns an object
   */
 function getAllUnreadMessage(userId, groupId) {
-  return db.GroupUser.findAll({
+  return models.GroupUser.findAll({
     where: { userId },
     include: [
       {
-        model: db.Group,
+        model: models.Group,
         include: [{
-          model: db.UserMessages,
+          model: models.UserMessages,
           where: { userId: userId, read: false }
         }]
       }]

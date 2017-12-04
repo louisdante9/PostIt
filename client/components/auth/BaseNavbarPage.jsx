@@ -1,5 +1,5 @@
 import React from 'react';
-import NavigationBar from '../NavigationBar.jsx';
+import NavigationBar from '../common/NavigationBar.jsx';
 import { PropTypes } from 'prop-types';
 
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, browserHistory, Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import { logout } from '../actions/authActions';
+import { logout } from '../../actions/authActions';
 import {PropTypes} from 'prop-types';
-import BrandLogo from '../components/common/BrandLogo.jsx';
+import BrandLogo from '../common/BrandLogo.jsx';
 
 /**
  * 

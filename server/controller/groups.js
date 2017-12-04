@@ -1,7 +1,5 @@
-// import Validator from 'validator';
 import models from "../models";
 import validateInput from "../middleware/validate";
-// import validateInput from "../shared/validations/signin";
 
 export default {
 
