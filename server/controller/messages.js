@@ -140,7 +140,6 @@ function generateUserMessageData(data, userId) {
     if (value.userId !== userId) {
       return value;
     }
-    // return Object.assign({}, value, { read: true });
     return {...value, read: true};
   });
 }

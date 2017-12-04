@@ -85,7 +85,7 @@
     Chukwuebuka Nwamadi
 
 ## License & Copyright
-MIT © [Daniel Atebije](https://github.com/louisdante9)
+MIT © [Louis Nwamadi](https://github.com/louisdante9)
 
 Licensed under the [MIT License](LICENSE).
 
