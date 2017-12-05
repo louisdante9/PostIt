@@ -6,8 +6,8 @@ export default {
   /**
    * 
    * 
-   * @param {any} req 
-   * @param {any} res 
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    * @returns {void}
    */
   create(req, res) {
@@ -63,8 +63,8 @@ export default {
   /**
    * 
    * 
-   * @param {any} req 
-   * @param {any} res 
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    * @return {void}
    */
   list(req, res) {

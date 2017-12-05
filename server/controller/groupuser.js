@@ -2,7 +2,7 @@ import models from '../models';
 
 /**
  * This methods gets all the users that are in a particular group
- * @param {object} req
+ * @param {object} req Request object
  * @param {object} res - A group and it's members
  * @returns {void}
  */
@@ -10,8 +10,8 @@ export default {
   /**
    * 
    * 
-   * @param {any} req 
-   * @param {any} res 
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    * @returns {void}
    */
   listGroupUsers(req, res) {

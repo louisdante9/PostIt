@@ -7,8 +7,8 @@ import { io } from '../app';
 
 /**
  * sendMessage, this is a helper method for sending messages 
- * @param {object} data
- * @param {object} flag
+ * @param {Object} req Request object
+ * @param {Object} res Response object
  * @returns {void}
  */
 const sendMessage = (data, flag) => {
@@ -29,8 +29,8 @@ const Messages = {
 
   /**
    * This method handles getting one group and all it's messages
-   * @param {object} req
-   * @param {object} res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    * @returns {void}
    */
   getGroupMessage(req, res) {
@@ -72,8 +72,8 @@ const Messages = {
 
   /**
    * This method handles posting messages to member groups
-   * @param {object} req
-   * @param {object} res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    * @param {function} Mailer
    * @returns {void}
    */
@@ -130,8 +130,8 @@ export default Messages;
   * @param {integer} userId
   * @returns {Object} - Returns an object
   */
-function generateUserMessageData(data, userId) {
-  return data.map(metadata => {
+const generateUserMessageData = (data, userId) => {
+   return data.map(metadata => {
     const value = {
       read: false,
       userId: metadata.userId,
@@ -149,9 +149,7 @@ function generateUserMessageData(data, userId) {
   * @param {integer} data
   * @returns {Object} - Returns an object
   */
-function createUnreadMessages(data) {
-  return models.UserMessages.bulkCreate(data);
-}
+const createUnreadMessages = data => models.UserMessages.bulkCreate(data);
 
 /**
   * getAllUnreadMessage
@@ -160,7 +158,7 @@ function createUnreadMessages(data) {
   * @param {integer} groupId
   * @returns {Object} - Returns an object
   */
-function getAllUnreadMessage(userId, groupId) {
+const getAllUnreadMessage = (userId, groupId) => {
   return models.GroupUser.findAll({
     where: { userId },
     include: [

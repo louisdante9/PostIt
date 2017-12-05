@@ -189,8 +189,8 @@ export default {
 
   /**
   * reset password
-  * @param {Object} req Request object
-  * @param {Object} res Response object
+  * @param {Object} - req Request object
+  * @param {Object} - res Response object
   * @returns {Object} - Returns response object
   */
   resetPassword(req, res) {
@@ -260,7 +260,7 @@ export default {
   * @param {Object} error
   * @returns {Array} - Returns an array
   */
-export function handleError(error) {
+export const handleError = error => {
   const result = {};
   error.errors.forEach(err => {
     result[err.path] = err.message;

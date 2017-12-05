@@ -23,7 +23,7 @@ describe('Add User Action', () => {
     expect(actions.addUsers()).toBeA('function');
   });
 
-  it('should dispatch ADD_USER_TO_GROUP action creator', (done) => {
+  it('should dispatch an ADD_USER_TO_GROUP action creator', (done) => {
     const store = mockStore({});
     const data = {
       success: true,
@@ -49,7 +49,7 @@ describe('Add User Action', () => {
   });
 });
 
-describe('Get User in group Action', () => {
+describe('Get User Action', () => {
   beforeEach(() => moxios.install());
   afterEach(() => moxios.uninstall());
 

@@ -1,13 +1,13 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-const MessageBox = ({ message, flag, onChange, onSubmit }) => {
+const MessageBox = ({ message, flag, onChange, onSubmit, handleKeyDown }) => {
   return (
     <div className="message-box-footer">
       <div className="footer-wrapper">
-        <textarea className="message-input materialize-textarea "
+        <textarea id="textareaId" className="message-input materialize-textarea"
           placeholder="write message..." value={message}
-          name="message" onChange={onChange}></textarea>
+          name="message" onChange={onChange} onKeyPress={(event) => {handleKeyDown(event, onSubmit)}} ></textarea>
         <select className="priority-select" name="flag"
           value={flag} onChange={onChange}>
           <option value="normal">Normal</option>
@@ -15,7 +15,7 @@ const MessageBox = ({ message, flag, onChange, onSubmit }) => {
           <option value="critical">Critical</option>
         </select>
         <div className="cta">
-          <a className="btn-cta btn-icon" onClick={onSubmit}>
+          <a className="btn-cta btn-icon" onClick={onSubmit} >
             <i className="material-icons cta-icon">send</i>
             <span className="cta-text">SEND</span>
           </a>

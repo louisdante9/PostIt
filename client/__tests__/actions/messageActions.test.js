@@ -11,7 +11,7 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 window.localStorage = mockLocalStorage;
 
-describe('Message actions', () => {
+describe('Message action', () => {
   describe('getMessage action', () => {
     beforeEach(() => moxios.install());
     afterEach(() => moxios.uninstall());

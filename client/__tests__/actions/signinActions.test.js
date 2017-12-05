@@ -20,16 +20,16 @@ describe('Sign in action', () => {
     password: 'password'
   };
 
-  it('contains a logout function', () => {
+  it('should contain a logout function', () => {
     expect(actions.logout()).toBeA('function');
   });
-  it('contains a login function', () => {
+  it('should contain a login function', () => {
     expect(actions.login()).toBeA('function');
   });
   it('should contain setCurrentUser object', () => {
     expect(actions.setCurrentUser()).toBeA('object');
   });
-  it('dispatches an action USER_AUTHENTICATED on successful user sign up',
+  it('should dispatch an action USER_AUTHENTICATED on successful user sign up',
     (done) => {
       const store = mockStore({});
       moxios.stubRequest('/api/v1/user/signin', {
@@ -48,7 +48,7 @@ describe('Sign in action', () => {
       });
       done();
     });
-  it('dispatches an action SET_CURRENT_USER on successful user logout', () => {
+  it('should dispatch an action SET_CURRENT_USER on successful user logout', () => {
     const store = mockStore({});
     const expectedActions = [
       { type: types.USER_AUTHENTICATED, user: {} }

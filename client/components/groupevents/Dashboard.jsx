@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { PropTypes } from 'prop-types';
@@ -14,7 +15,7 @@ import { getGroups, createGroup, getMessages, createMessage, loadGroupUsers }
 
 /**
  * 
- * 
+ * this is a component for the messages dashboard 
  * @class Dashboard
  * @extends {Component}
  */
@@ -35,8 +36,12 @@ export class Dashboard extends Component {
     this.onChange = this.onChange.bind(this);
     this.setGroupMessages = this.setGroupMessages.bind(this);
     this.logout = this.logout.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
+    this.getMessageBoardRef = this.getMessageBoardRef.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
-
+ 
+ 
   /**
    * 
    * 
@@ -47,13 +52,56 @@ export class Dashboard extends Component {
     this.props.getGroups().then(() => {
       const currentGroup = localStorage.getItem('currentGroup');
       if (currentGroup) {
-        this.setGroupMessages(null, currentGroup);
+        this.setGroupMessages(null, Number(currentGroup));
       }
     });
     $('.modal').modal({ dismissible: false });
     $(document).ready(function () {
       $(".button-collapse").sideNav();
     });
+  }
+
+  /**
+   * 
+   * @memberof Dashboard
+   */
+  componentDidUpdate() {
+    if (this.state.groupId) {
+      this.scrollToBottom();
+    }
+  }
+  
+  /**
+   * 
+   * 
+   * @param {any} event 
+   * @param {any} cb 
+   * @memberof Dashboard
+   */
+  handleKeyDown(event, cb) {
+    if (event.key == 'Enter' && event.shiftKey == false) {
+      event.preventDefault()
+      cb(event);
+    }
+  };
+  /**
+   * 
+   * function to get the node for the component div element
+   * @param {any} node 
+   * @memberof Dashboard
+   */
+  getMessageBoardRef(node) {
+    this.messageBoard = node;
+  }
+
+  /**
+   * 
+   * function to scroll messages component to the bottom
+   * @memberof Dashboard
+   */
+  scrollToBottom() {
+    const elem = this.messageBoard;
+    elem.scrollTop = 10000;
   }
 
   /**
@@ -75,7 +123,7 @@ export class Dashboard extends Component {
    * @returns {void}
    */
   setGroupMessages(event, id) {
-    if(event) event.preventDefault();
+    if (event) event.preventDefault();
     localStorage.setItem('currentGroup', id);
     this.props.getMessages(id);
     this.props.loadGroupUsers(id);
@@ -113,19 +161,6 @@ export class Dashboard extends Component {
   /**
    * 
    * 
-   * @param {any} evn 
-   * @returns {void}
-   * @memberof Dashboard
-   */
-  // getGroupName(evn) {
-  //   return (evt) => {
-  //     return evn;
-  //   };
-  // }
-
-  /**
-   * 
-   * 
    * @memberof Dashboard
    * @returns {void}
    */
@@ -158,14 +193,16 @@ export class Dashboard extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="message-board">
-                      <Messages messages={messages}
-                        groups={groups} user={user}/>
+                <div ref={this.getMessageBoardRef} className="message-board">
+                  <Messages messages={messages}
+                    groups={groups} user={user} />
                 </div>
                 {/**  message box */}
                 <MessageBox message={this.state.message}
                   flag={this.state.flag} onChange={this.onChange}
-                  onSubmit={this.onSubmit} groups={groups} />
+                  onSubmit={this.onSubmit} groups={groups} 
+                  handleKeyDown = {this.handleKeyDown}
+                  />
               </div>
             )
             : <Welcome />}
