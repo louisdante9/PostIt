@@ -6,8 +6,10 @@ const MessageBox = ({ message, flag, onChange, onSubmit, handleKeyDown }) => {
     <div className="message-box-footer">
       <div className="footer-wrapper">
         <textarea id="textareaId" className="message-input materialize-textarea"
-          placeholder="write message..." value={message}
-          name="message" onChange={onChange} onKeyPress={(event) => {handleKeyDown(event, onSubmit)}} ></textarea>
+          placeholder="write message... [shift-down] to move to next line" value={message}
+          name="message" onChange={onChange} 
+          onKeyPress={(event) => {handleKeyDown(event, onSubmit)}} >
+        </textarea>
         <select className="priority-select" name="flag"
           value={flag} onChange={onChange}>
           <option value="normal">Normal</option>
