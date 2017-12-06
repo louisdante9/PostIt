@@ -58,6 +58,7 @@ export class Dashboard extends Component {
     $('.modal').modal({ dismissible: false });
     $(document).ready(function () {
       $(".button-collapse").sideNav();
+      $('.tooltipped').tooltip({delay: 50});
     });
   }
 
@@ -69,8 +70,11 @@ export class Dashboard extends Component {
     if (this.state.groupId) {
       this.scrollToBottom();
     }
+    $(document).ready(function () {
+      $('.tooltipped').tooltip({delay: 50});
+    });
   }
-  
+
   /**
    * 
    * 
@@ -165,9 +169,14 @@ export class Dashboard extends Component {
    * @returns {void}
    */
   render() {
-    const { groups, allMsgs, user } = this.props;
+    const { groups, allMsgs, user, groupusers } = this.props;
     const messages = allMsgs[this.state.groupId] || [];
     const GroupName = groups.find(group => group.id === this.state.groupId);
+    const groupMember = groupusers.length
+    const groupUsernames = groupusers.map(function(groupuser) {
+      return groupuser.User.username
+    });
+    const members = groupUsernames.join("\n ")
     return (
       <div className="dashboard">
         {/** header **/}
@@ -187,9 +196,13 @@ export class Dashboard extends Component {
                       {GroupName && GroupName.name}
                     </h3>
                     <div className="options">
-                      <a href="#modal2" className=" modal-trigger">
-                        <span className="btn-cta" data-intro="Add users here">Add User</span>
-                      </a>
+                    <a href="#modal2" className=" modal-trigger">
+                    <span className="btn-cta" data-intro="Add users here">Add User</span>
+                    </a>
+            {/*<span className="tooltipped" data-position="bottom" data-delay="50" data-tooltip={userstest} >{groupMember} members </span>*/}
+            <div className="tooltip">{groupMember} members 
+            <span className="tooltiptext">{members}</span>
+            </div>
                     </div>
                   </div>
                 </div>
@@ -232,6 +245,7 @@ const mapStateToProps = (state) => {
     groups: state.groups,
     allMsgs: state.messages.msg,
     user: state.auth.user,
+    groupusers: state.groupUser
   };
 };
 
