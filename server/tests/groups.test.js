@@ -23,8 +23,8 @@ before((done) => {
       done();
     });
 });
-describe('groups suite', () => {
-  it('returns 201 response', (done) => {
+describe('Test setup', () => {
+  it('should create a new group', (done) => {
     request
       .post('/api/v1/group/')
       .set('authorization', token)
@@ -35,7 +35,7 @@ describe('groups suite', () => {
         done();
       });
   });
-  it('returns 400 response', (done) => {
+  it('should return 400 response if the group doesn\'t exist', (done) => {
     request
       .post('/api/v1/group/')
       .set('authorization', token)
@@ -57,7 +57,7 @@ describe('groups suite', () => {
         done();
       });
   });
-  it('returns all groups', (done) => {
+  it('should returns all groups', (done) => {
     request
       .get('/api/v1/group/')
       .set('authorization', token)
@@ -68,7 +68,7 @@ describe('groups suite', () => {
       });
   });
   describe('Add user to a new group', () => {
-    it('should return 200 to add a user to a group', (done) => {
+    it('should return 200 response if user is successfully added to group', (done) => {
       request
         .post(`/api/v1/group/1/user`)
         .set('authorization', token)
@@ -81,7 +81,7 @@ describe('groups suite', () => {
           done();
         });
     });
-    it('should return 200 to add a user to a group', (done) => {
+    it('should return 404 to add a user to a group that doesn\'t exist', (done) => {
       request
         .post(`/api/v1/group/100/user`)
         .set('authorization', token)
@@ -90,11 +90,11 @@ describe('groups suite', () => {
         })
         .end((err, res) => {
           if (err) return done(err);
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(404);
           done();
         });
     });
-    it('should return 200 to add a user to a group', (done) => {
+    it('should return 401 if the user is already a member of the group', (done) => {
       request
         .post(`/api/v1/group/1/user`)
         .set('authorization', token)
@@ -118,18 +118,18 @@ describe('groups suite', () => {
           done();
         });
     });
-    it('should return users in a group', (done) => {
+    it('should return 404 if group doesn\'t exit', (done) => {
       request
         .get('/api/v1/group/100/user/list')
         .set('authorization', token)
         
         .end((err, res) => {
           if (err) return done(err);
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(404);
           done();
         });
     });
-    it('should return users in a group', (done) => {
+    it('should return 400 if wrong params are sent', (done) => {
       request
         .get('/api/v1/group/n/user/list')
         .set('authorization', token)

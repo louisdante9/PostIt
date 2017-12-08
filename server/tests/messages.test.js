@@ -246,11 +246,9 @@ describe('Test setup', () => {
               .end((err, res) => {
                 if (err) return done(err);
                 expect(res.status).to.equal(401);
-                // expect(res.body).should.equal('biology')
                 done();
               });
           });
       });
     });
-
 });

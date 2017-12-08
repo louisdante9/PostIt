@@ -45,12 +45,12 @@ export default {
                 data: group
               });
             }
-            return res.status(404).json({
+            return res.status(400).json({
               message: "Sorry there was an error while adding user to group"
             });
           });
         } else {
-          return res.status(404).json({
+          return res.status(400).json({
             message: "Sorry there was an error while creating your group"
           });
         }

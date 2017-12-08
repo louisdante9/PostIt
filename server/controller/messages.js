@@ -45,7 +45,7 @@ const Messages = {
         where: { id: req.params.groupId },
       }).then((group) => {
         if (!group) {
-          return res.status(400).json({
+          return res.status(404).json({
             error: 'bad request'
           });
         }
