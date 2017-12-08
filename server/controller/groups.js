@@ -46,12 +46,12 @@ export default {
               });
             }
             return res.status(400).json({
-              message: "Sorry there was an error while adding user to group"
+              message: "Sorry an error occured while adding user to group"
             });
           });
         } else {
           return res.status(400).json({
-            message: "Sorry there was an error while creating your group"
+            message: "Sorry an error occured while creating your group"
           });
         }
       });

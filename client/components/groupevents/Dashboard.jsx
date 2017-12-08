@@ -145,11 +145,11 @@ export class Dashboard extends Component {
     event.preventDefault();
     if (this.state.message.length > 0) {
       const { userId, username } = this.props.user;
-      const data = { ...this.state, userId, username };
-      this.props.createMessage(this.state.groupId, data);
+      const messageData = { ...this.state, userId, username };
+      this.props.createMessage(this.state.groupId, messageData);
       this.setState({ message: '' });
     } else {
-      Materialize.toast('Oops yo! write something', 3000, 'red');
+      Materialize.toast('Oops yo! try write something', 3000, 'red');
     }
   }
 

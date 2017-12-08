@@ -112,7 +112,7 @@ export function createMessage(groupId, data) {
  * @param {any} offset
  * @returns {void}
  */
-export function userQuery(query, limit, offset) {
+export function searcUser(query, limit, offset) {
   return () => {
       return axios().get(`/api/v1/user/searchuser?name=${query}&limit=
       ${limit}&offset=${offset}`);

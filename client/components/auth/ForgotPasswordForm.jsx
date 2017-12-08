@@ -2,7 +2,7 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import validateInput from '../../../server/shared/validations/forgotpass';
+import { validateForgotPasswordInput } from '../../../server/shared/validations';
 import TextFieldGroup from '../common/TextFieldGroup';
 import Footer from '../common/Footer.jsx';
 import { resetPassword } from '../../actions/authActions';
@@ -51,7 +51,7 @@ export class ForgotPasswordForm extends React.Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    const { errors, isValid } = validateInput(this.state);
+    const { errors, isValid } = validateForgotPasswordInput(this.state);
     const { email } = this.state;
     if (isValid) {
       this.props.resetPassword({email})

@@ -23,7 +23,7 @@ configure({ adapter: new Adapter() });
 describe('UserModal', () => {
   let props = {
     addUsers: jest.fn(() => Promise.resolve()),
-    userQuery: jest.fn(() => Promise.resolve({
+    searcUser: jest.fn(() => Promise.resolve({
         data: {
           users: {
             rows: [

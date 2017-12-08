@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { UserSearchResult } from './UserSearchResult.jsx';
-import { addUsers, userQuery } from '../../actions/groupAction';
+import { addUsers, searcUser } from '../../actions/groupAction';
 import { error } from 'util';
 
 
@@ -70,7 +70,7 @@ export class UserModal extends React.Component {
         addUser: ''
       });
     }
-    this.props.userQuery(query, limit, offSet).then(res => {
+    this.props.searcUser(query, limit, offSet).then(res => {
       const mapResult = res.data.users.rows.map(user => {
         return { ...user };
       });
@@ -101,7 +101,7 @@ export class UserModal extends React.Component {
     const selected = data.selected;
     const query = this.state.addUser;
     const limit = 5;
-    this.props.userQuery(query, limit, selected).then(res => {
+    this.props.searcUser(query, limit, selected).then(res => {
       const mapResult = res.data.users.rows.map(user => {
         return { ...user };
       });
@@ -209,11 +209,11 @@ export class UserModal extends React.Component {
 
 UserModal.propTypes = {
   addUsers: PropTypes.func.isRequired,
-  userQuery: PropTypes.func.isRequired
+  searcUser: PropTypes.func.isRequired
 };
 const mapStateToProps = state => {
   return {
     groupUser: state.groupUser
   };
 };
-export default connect(mapStateToProps, { addUsers, userQuery })(UserModal);
+export default connect(mapStateToProps, { addUsers, searcUser })(UserModal);

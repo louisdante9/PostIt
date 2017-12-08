@@ -4,13 +4,14 @@ import { compose } from 'redux';
 import { PropTypes } from 'prop-types';
 import requireauth from '../../utils/requireAuth';
 import { login } from '../../actions/authActions';
-import validateInput from '../../../server/shared/validations/signin';
+import { validateSigninFormInput } from '../../../server/shared/validations';
 import TextFieldGroup from '../common/TextFieldGroup';
 import Footer from '../common/Footer.jsx';
 /* global Materialize */
+
 /**
  * 
- * 
+ * This is class method that handles signin logic
  * @export
  * @class SigninForm
  * @extends {React.Component}
@@ -34,7 +35,8 @@ export class SigninForm extends React.Component {
   }
 
   /**
-   * 
+   * This method validates the input from the state object 
+   * and chcecks if its valid and makes an api call to the backend
    * 
    * @param {any} event 
    * @memberof SigninForm
@@ -42,7 +44,7 @@ export class SigninForm extends React.Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    const { errors, isValid } = validateInput(this.state);
+    const { errors, isValid } = validateSigninFormInput(this.state);
     if (isValid) {
       this.setState({ isLoading: true });
       this.props.login(this.state)
@@ -61,7 +63,7 @@ export class SigninForm extends React.Component {
   }
 
   /**
-   * 
+   * this method handle errors that return as an object
    * 
    * @param {any} errors 
    * @memberof SigninForm
@@ -74,7 +76,8 @@ export class SigninForm extends React.Component {
   }
 
   /**
-   *  
+   *  this method is gets the values of the input
+   * and passes the values to the global state object
    * @param {any} event 
    * @memberof SigninForm
    * @returns {void}
@@ -118,7 +121,6 @@ export class SigninForm extends React.Component {
             </div>
           </div>
         </form>
-
         <div className="row">
           <div className="col s12">
             <p className="authlinks">
@@ -127,7 +129,6 @@ export class SigninForm extends React.Component {
             </p>
           </div>
         </div>
-
         <Footer />
       </div>
     );

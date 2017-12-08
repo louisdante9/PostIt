@@ -106,7 +106,7 @@ export const confirmPasswordResetRequest = (token, newPassword) =>
     axios.post(`/api/v1/user/resetpassword/${token}`, newPassword)
       .then((response) => {
         dispatch(confirmPasswordResetSuccess(response));
-        Materialize.toast('Password reset successful', 6000, 'green');
+        Materialize.toast('Your Password has been changed successful, please go on and signin', 3000, 'green');
         history.push('/login');
       })
       .catch((err) => {

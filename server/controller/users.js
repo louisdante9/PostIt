@@ -94,13 +94,17 @@ export default {
  * @returns {Object} - Returns response object
  */
   searchUsers(req, res) {
-    const{ offset, limit } = req.query;
+    let{ offset, limit } = req.query;
     // validate request object
-    if (!req.query.name || !req.query.limit) {
+    if (!req.query.name) {
       return res.status(404).send({
         success: false,
         message: 'no search parameter/limit',
       });
+    }
+    if(!limit) {
+      limit = 5
+      return limit;
     }
     return models.User
     .findAndCountAll({

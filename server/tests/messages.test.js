@@ -73,7 +73,7 @@ describe('Test setup', () => {
         if (err) {
           return done(err);
         }
-        expect(res.status).to.equal(400);
+        expect(res.status).to.equal(404);
         done();
       });
   });

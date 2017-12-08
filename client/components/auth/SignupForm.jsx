@@ -5,7 +5,7 @@ import {PropTypes} from 'prop-types';
 import Footer from '../common/Footer.jsx';
 import { userSignupRequest } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
-import validateInput from '../../../server/shared/validations/signup';
+import { validateSignupFormInput } from '../../../server/shared/validations';
 
 /*global Materialize */
 /**
@@ -54,7 +54,7 @@ export class SignupForm extends React.Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    const { errors, isValid } = validateInput(this.state);
+    const { errors, isValid } = validateSignupFormInput(this.state);
     if (isValid) {
       this.setState({ isLoading: true });
       this.props.userSignupRequest(this.state).then(

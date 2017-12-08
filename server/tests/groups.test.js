@@ -94,7 +94,7 @@ describe('Test setup', () => {
           done();
         });
     });
-    it('should return 401 if the user is already a member of the group', (done) => {
+    it('should return 409 if the user is already a member of the group', (done) => {
       request
         .post(`/api/v1/group/1/user`)
         .set('authorization', token)
@@ -103,7 +103,7 @@ describe('Test setup', () => {
         })
         .end((err, res) => {
           if (err) return done(err);
-          expect(res.status).to.equal(401);
+          expect(res.status).to.equal(409);
           done();
         });
     });

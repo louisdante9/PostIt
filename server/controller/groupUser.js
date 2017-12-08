@@ -78,7 +78,7 @@ export default {
         })
           .then((member) => {
             if (member) {
-              return res.status(401).send({
+              return res.status(409).send({
                 success: false,
                 message: 'User already in group'
               });
