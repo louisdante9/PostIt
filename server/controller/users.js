@@ -11,7 +11,7 @@ const secretKey = process.env.JWT_SECRET_KEY;
 export default {
 
   /**
-  * Creates a new user
+  * this method creates a new user
   * @param {Object} req Request object
   * @param {Object} res Response object
   * @returns {Object} - Returns response object
@@ -60,7 +60,7 @@ export default {
   },
 
   /**
-  * Logs a user into the api
+  * this method authenticates a user for access into the application
   * @param {Object} req Request object
   * @param {Object} res Response object
   * @returns {Object} - Returns response object
@@ -88,7 +88,7 @@ export default {
   },
 
 /**
- * serach for all users in a group
+ * this method serach for all users in a group
  * @param {Object} req Request object
  * @param {Object} res Response object
  * @returns {Object} - Returns response object
@@ -131,7 +131,8 @@ export default {
   },
   
   /**
-  * request reset password
+  * this method requests for a change of password 
+  * and also send a mail for token authentication
   * @param {Object} req Request object
   * @param {Object} res Response object
   * @returns {Object} - Returns response object
@@ -190,7 +191,7 @@ export default {
   },
 
   /**
-  * reset password
+  * this method reset password
   * @param {Object} - req Request object
   * @param {Object} - res Response object
   * @returns {Object} - Returns response object

@@ -88,6 +88,7 @@ export class Dashboard extends Component {
       cb(event);
     }
   };
+  
   /**
    * 
    * function to get the node for the component div element
@@ -131,7 +132,7 @@ export class Dashboard extends Component {
     localStorage.setItem('currentGroup', id);
     this.props.getMessages(id);
     this.props.loadGroupUsers(id);
-    this.setState({ groupId: id });
+    this.setState(state =>({ groupId: id }));
   }
 
   /**
@@ -176,11 +177,11 @@ export class Dashboard extends Component {
     const { groups, allMsgs, user, groupusers } = this.props;
     const messages = allMsgs[this.state.groupId] || [];
     const GroupName = groups.find(group => group.id === this.state.groupId);
-    const groupMember = groupusers.length
+    const groupMember = groupusers.length;
     const groupUsernames = groupusers.map(function (groupuser) {
-      return groupuser.User.username
+      return groupuser.User.username;
     });
-    const members = groupUsernames.join(", ")
+    const members = groupUsernames.join(", ");
     return (
       <div className="dashboard">
         {/** header **/}

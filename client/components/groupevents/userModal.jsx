@@ -44,9 +44,9 @@ export class UserModal extends React.Component {
    * @return {void}
    */
   componentWillReceiveProps(nextProps) {
-    this.setState({
+    this.setState(state=> ({
       groupUser: nextProps.groupUser
-    });
+    }));
   }
   /**
    * 
@@ -81,12 +81,12 @@ export class UserModal extends React.Component {
           matchingUsers: []
         })
       }else{
-      this.setState({
+      this.setState(state =>({
         matchingUsers: mapResult,
         count: res.data.data.pageCount,
         addUser: query,
         error: false
-      });
+      }));
      }
     });
   }

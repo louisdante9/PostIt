@@ -4,7 +4,7 @@ import validateInput from "../middleware/validate";
 export default {
 
   /**
-   * 
+   * this method creates a group 
    * 
    * @param {Object} req Request object
    * @param {Object} res Response object
@@ -62,7 +62,7 @@ export default {
     
   /**
    * 
-   * 
+   * this method list the group created by users 
    * @param {Object} req Request object
    * @param {Object} res Response object
    * @return {void}

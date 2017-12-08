@@ -126,6 +126,7 @@ export default Messages;
 
 /**
   * generateUserMessageData
+  * this function is a helper function for create new message method 
   * @param {integer} data
   * @param {integer} userId
   * @returns {Object} - Returns an object
@@ -146,6 +147,7 @@ const generateUserMessageData = (data, userId) => {
 
 /**
   * createUnreadMessages
+  * this is a helper function to check users that read a message
   * @param {integer} data
   * @returns {Object} - Returns an object
   */
@@ -153,6 +155,8 @@ const createUnreadMessages = data => models.UserMessages.bulkCreate(data);
 
 /**
   * getAllUnreadMessage
+  * this is a helper function that gets all 
+  * users that haven't read their messages
   * @function
   * @param {integer} userId, 
   * @param {integer} groupId

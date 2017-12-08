@@ -9,7 +9,8 @@ import models from '../models';
 export default {
   /**
    * 
-   * 
+   * this method returns all users that belong to 
+   * a particular group
    * @param {Object} req Request object
    * @param {Object} res Response object
    * @returns {void}
@@ -51,7 +52,7 @@ export default {
   },
 
   /**
-     * add a user to a new group
+     * this method adds a user to a new group
      * @param {object} req users request object
      * @param {object} res servers response
      * @return {void}
