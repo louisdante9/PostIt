@@ -10,9 +10,9 @@ const expect = chai.expect;
 const request = supertest(app);
 let token;
 
-describe('Auth Suite', () => {
-  describe('Create User POST: /api/user/signup', () => {
-    it('should successfully create a new user on successful registration', 
+describe('Test setup', () => {
+  describe('Creating a new user', () => {
+    it('should return 201 response on successful user registration', 
     (done) => {
       request
         .post('/api/v1/user/signup')
@@ -24,7 +24,7 @@ describe('Auth Suite', () => {
           done();
         });
     });
-    it('(409 error) with duplicate email', (done) => {
+    it('should retunrn (409 error) for duplicate email', (done) => {
       request
         .post('/api/v1/user/signup')
         .send(fakerObj.users)
@@ -33,7 +33,7 @@ describe('Auth Suite', () => {
           done();
         });
     });
-    it('should return an error when the signup form is missing a field', 
+    it('should return an error if one of the request fields is empty', 
     (done) => {
       request
         .post('/api/v1/user/signup')
@@ -46,7 +46,7 @@ describe('Auth Suite', () => {
     });
   });
 
-  describe('Login User: /api/users/signin', () => {
+  describe('Logging in a user', () => {
     it('should successfully log in a registered user', (done) => {
       request
         .post('/api/v1/user/signin')

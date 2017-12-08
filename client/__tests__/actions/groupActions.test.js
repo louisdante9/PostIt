@@ -79,7 +79,6 @@ describe('Get User Action', () => {
         payload: data
       }
     ];
-
     store.dispatch(actions.loadGroupUsers(groupId)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
@@ -90,7 +89,6 @@ describe('Get User Action', () => {
 describe('Get Group Action', () => {
   beforeEach(() => moxios.install());
   afterEach(() => moxios.uninstall());
-
   it('should contain getGroups function', () => {
     expect(actions.getGroups()).toBeA('function');
   });
@@ -111,7 +109,6 @@ describe('Get Group Action', () => {
         payload: data
       }
     ];
-
     store.dispatch(actions.getGroups()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
