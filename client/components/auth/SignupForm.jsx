@@ -2,7 +2,7 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import {PropTypes} from 'prop-types';
-import Footer from '../common/footer.jsx';
+import Footer from '../common/Footer.jsx';
 import { userSignupRequest } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 import validateInput from '../../../server/shared/validations/signup';
@@ -108,6 +108,7 @@ export class SignupForm extends React.Component {
               value={this.state.username}
               field="username"
               placeholder="Enter Username"
+              required
             />
             <TextFieldGroup
               error={this.state.errors.email}
@@ -115,6 +116,16 @@ export class SignupForm extends React.Component {
               value={this.state.email}
               field="email"
               placeholder="Enter Email"
+              required
+            />
+            <TextFieldGroup
+            error={this.state.errors.phone}
+            onChange={this.onChange}
+            value={this.state.phone}
+            type="text"
+            field="phone"
+            placeholder="Enter Phone number"
+            required
             />
             <TextFieldGroup
               error={this.state.errors.password}
@@ -123,14 +134,7 @@ export class SignupForm extends React.Component {
               type="password"
               field="password"
               placeholder="Enter Password"
-            />
-            <TextFieldGroup
-              error={this.state.errors.phone}
-              onChange={this.onChange}
-              value={this.state.phone}
-              type="text"
-              field="phone"
-              placeholder="Enter Phone number"
+              required
             />
             <div className="form-cta">
               <button className="btn waves-effect waves-light black shadow-effect" 

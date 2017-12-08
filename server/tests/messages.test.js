@@ -23,7 +23,6 @@ before((done) => {
         return done(err);
       }
       token = res.body.token;
-      console.log(token, ';khfhsdkjhfkjh')
       request
         .post('/api/v1/group')
         .set('authorization', token)

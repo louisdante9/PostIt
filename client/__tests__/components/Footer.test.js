@@ -3,7 +3,7 @@ import { shallow, mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 import expect from 'expect';
 import { provider } from 'react-redux';
-import  Footer from '../../components/common/footer.jsx';
+import  Footer from '../../components/common/Footer.jsx';
 
 // jest.dontMock();
 configure({ adapter: new Adapter() });

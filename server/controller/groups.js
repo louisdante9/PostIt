@@ -23,7 +23,7 @@ export default {
       if(found){
         return  res.status(409).json({
           status: 409,
-          err: 'Group name already taken'
+          err: 'Oops! A group already exists with the same name'
         });
       }
       return models.Group
@@ -46,12 +46,12 @@ export default {
               });
             }
             return res.status(404).json({
-              message: "Could not add user to group"
+              message: "Sorry there was an error while adding user to group"
             });
           });
         } else {
           return res.status(404).json({
-            message: "Could not create group"
+            message: "Sorry there was an error while creating your group"
           });
         }
       });

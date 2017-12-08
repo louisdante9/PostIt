@@ -7,8 +7,8 @@ import DashboardHeader from './DashboardHeader.jsx';
 import { logout } from '../../actions/authActions';
 import Messages from './Messages.jsx';
 import MessageBox from './MessageBox.jsx';
-import Modal from './modal.jsx';
-import UserModal from './userModal.jsx';
+import Modal from './Modal.jsx';
+import UserModal from './UserModal.jsx';
 import { Welcome } from './welcome.jsx';
 import { getGroups, createGroup, getMessages, createMessage, loadGroupUsers }
   from '../../actions/groupAction';
@@ -40,8 +40,8 @@ export class Dashboard extends Component {
     this.getMessageBoardRef = this.getMessageBoardRef.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
- 
- 
+
+
   /**
    * 
    * 
@@ -58,7 +58,7 @@ export class Dashboard extends Component {
     $('.modal').modal({ dismissible: false });
     $(document).ready(function () {
       $(".button-collapse").sideNav();
-      $('.tooltipped').tooltip({delay: 50});
+      $('.tooltipped').tooltip({ delay: 50 });
     });
   }
 
@@ -71,7 +71,7 @@ export class Dashboard extends Component {
       this.scrollToBottom();
     }
     $(document).ready(function () {
-      $('.tooltipped').tooltip({delay: 50});
+      $('.tooltipped').tooltip({ delay: 50 });
     });
   }
 
@@ -143,10 +143,14 @@ export class Dashboard extends Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    const { userId, username } = this.props.user;
-    const data = { ...this.state, userId, username };
-    this.props.createMessage(this.state.groupId, data);
-    this.setState({ message: '' });
+    if (this.state.message.length > 0) {
+      const { userId, username } = this.props.user;
+      const data = { ...this.state, userId, username };
+      this.props.createMessage(this.state.groupId, data);
+      this.setState({ message: '' });
+    } else {
+      Materialize.toast('Oops yo! write something', 3000, 'red');
+    }
   }
 
   /**
@@ -173,10 +177,10 @@ export class Dashboard extends Component {
     const messages = allMsgs[this.state.groupId] || [];
     const GroupName = groups.find(group => group.id === this.state.groupId);
     const groupMember = groupusers.length
-    const groupUsernames = groupusers.map(function(groupuser) {
+    const groupUsernames = groupusers.map(function (groupuser) {
       return groupuser.User.username
     });
-    const members = groupUsernames.join("\n ")
+    const members = groupUsernames.join(", ")
     return (
       <div className="dashboard">
         {/** header **/}
@@ -196,13 +200,12 @@ export class Dashboard extends Component {
                       {GroupName && GroupName.name}
                     </h3>
                     <div className="options">
-                    <a href="#modal2" className=" modal-trigger">
-                    <span className="btn-cta" data-intro="Add users here">Add User</span>
-                    </a>
-            {/*<span className="tooltipped" data-position="bottom" data-delay="50" data-tooltip={userstest} >{groupMember} members </span>*/}
-            <div className="tooltip">{groupMember} members 
-            <span className="tooltiptext">{members}</span>
-            </div>
+                      <a href="#modal2" className=" modal-trigger">
+                        <span className="btn-cta" data-intro="Add users here">Add User</span>
+                      </a>
+                      <div className="tooltip">{groupMember} members
+                        <span className="tooltiptext">{members}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -213,9 +216,9 @@ export class Dashboard extends Component {
                 {/**  message box */}
                 <MessageBox message={this.state.message}
                   flag={this.state.flag} onChange={this.onChange}
-                  onSubmit={this.onSubmit} groups={groups} 
-                  handleKeyDown = {this.handleKeyDown}
-                  />
+                  onSubmit={this.onSubmit} groups={groups}
+                  handleKeyDown={this.handleKeyDown}
+                />
               </div>
             )
             : <Welcome />}

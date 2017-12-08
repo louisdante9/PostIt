@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 import { confirmPasswordResetRequest } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 import validateInput from '../../../server/shared/validations/changepassword';
-import Footer from '../common/footer.jsx';
+import Footer from '../common/Footer.jsx';
 
 /**
  * 
@@ -75,6 +75,7 @@ export class ChangePasswordForm extends React.Component {
               type="password"
               field="newPassword"
               placeholder="Enter New Password"
+              required
             />
             <TextFieldGroup
               onChange={this.onChange}
@@ -82,6 +83,7 @@ export class ChangePasswordForm extends React.Component {
               type="password"
               field="confirmPassword"
               placeholder="Confirm Password"
+              required
             />
             <div className="form-cta">
               <button className="btn shadow-effect black card-1">

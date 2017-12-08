@@ -11,8 +11,8 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import {store} from './utils/store';
 import { setCurrentUser } from './actions/authActions';
-import './public/scss/styles.scss';
-import './public/scss/main.scss';
+import './scss/styles.scss';
+import './scss/main.scss';
 
 
 

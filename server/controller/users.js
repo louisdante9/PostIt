@@ -97,10 +97,9 @@ export default {
     const{ offset, limit } = req.query;
     // validate request object
     if (!req.query.name || !req.query.limit) {
-      return res.status(400).send({
+      return res.status(404).send({
         success: false,
         message: 'no search parameter/limit',
-        users: []
       });
     }
     return models.User
@@ -123,7 +122,6 @@ export default {
         success: false,
         message: 'an error occured searching users',
         error: err.message,
-        users: []
       });
     });
   },

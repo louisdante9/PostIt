@@ -6,7 +6,7 @@ import requireauth from '../../utils/requireAuth';
 import { login } from '../../actions/authActions';
 import validateInput from '../../../server/shared/validations/signin';
 import TextFieldGroup from '../common/TextFieldGroup';
-import Footer from '../common/footer.jsx';
+import Footer from '../common/Footer.jsx';
 /* global Materialize */
 /**
  * 
@@ -101,6 +101,7 @@ export class SigninForm extends React.Component {
               value={this.state.email}
               field="email"
               placeholder="Enter Email"
+              required
             />
             <TextFieldGroup
               error={this.state.errors.password}
@@ -109,6 +110,7 @@ export class SigninForm extends React.Component {
               type="password"
               field="password"
               placeholder="Enter Password"
+              required
             />
             <div className="form-cta">
               <button className="btn waves-effect waves-light black shadow-effect" 

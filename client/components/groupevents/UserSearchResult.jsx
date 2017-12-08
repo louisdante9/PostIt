@@ -4,14 +4,14 @@ import {PropTypes} from 'prop-types';
 
 export const UserSearchResult = 
 ({ userResult = [], handleSelect, pageCount, pageClick, groupUser }) => {
-  const rUsers = userResult.map(user => 
+  const returnedUsers = userResult.map(user => 
     ({ 
       ...user,
-      isGroup: groupUser.some(gUser => gUser.userId === user.id)
+      isGroup: groupUser.some(isGroupMember => isGroupMember.userId === user.id)
     }));
   return (
     <div className="modal-result">
-      {rUsers.map((user, index) => {
+      {returnedUsers.map((user, index) => {
         return user.isGroup ? <li key={user.id}>{user.username}</li> : (
           <li key={user.id}>
             <input type="checkbox" id={user.id} />

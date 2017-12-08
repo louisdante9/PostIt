@@ -16,7 +16,6 @@ describe('Group model', () => {
   });
   it('should not create a group if group name is a duplicate', (done) => {
     models.Group.create(group.demoGroup2).then().catch((error) => {
-      console.log(error.errors[0])
       error.errors[0].message.should.equal('Name can not be empty');
     });
     done();

@@ -11,7 +11,4 @@ const BrandLogo = (props) => {
     </Link>
   );
 };
-// BrandLogo.propTypes = {
-//   textColor: PropTypes.string.isRequired,
-// };
 export default BrandLogo;

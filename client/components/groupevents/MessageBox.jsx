@@ -8,7 +8,7 @@ const MessageBox = ({ message, flag, onChange, onSubmit, handleKeyDown }) => {
         <textarea id="textareaId" className="message-input materialize-textarea"
           placeholder="write message... [shift-down] to move to next line" value={message}
           name="message" onChange={onChange} 
-          onKeyPress={(event) => {handleKeyDown(event, onSubmit)}} >
+          onKeyPress={(event) => {handleKeyDown(event, onSubmit)}} required>
         </textarea>
         <select className="priority-select" name="flag"
           value={flag} onChange={onChange}>

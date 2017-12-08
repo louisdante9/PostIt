@@ -11,7 +11,7 @@ import morgan from 'morgan';
 import socket from 'socket.io';
 import config from '../webpack.config.dev';
 import authenticate from './middleware/auth';
-import db from './models/';
+const indexPath = process.env.NODE_ENV === 'production' ? 'dist' : 'client';
 
 const app = express();
 dotenv.config();
@@ -30,14 +30,16 @@ const onListening = () => {
   debug(`Application is Listening on ${bind}`);
 };
 
-app.use(express.static(path.join(__dirname, '../client/public')));
+app.use(express.static(path.join(__dirname, './../assets')));
+if (process.env.NODE_ENV !== 'development') {
+  app.use(express.static(path.join(__dirname, './../dist')));
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-if (process.env.NODE_ENV != 'test') {
+if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
   app.use(require('webpack-dev-middleware')(compiler, {
-    // noInfo: true,
     publicPath: config.output.publicPath
   }));
   app.use(require('webpack-hot-middleware')(compiler));
@@ -47,10 +49,11 @@ if (process.env.NODE_ENV != 'test') {
  *  route that sends back 
  *  a welcome message in JSON format.
  */
+
 require('./routes')(app);
 app.get('*', (req, res) => {
   res.status(200)
-  .sendFile(path.join(__dirname, '../client/index.html'));
+  .sendFile(path.join(__dirname, `../${indexPath}/index.html`));
 });
 
 // This will be our application entry. We'll setup our server here.

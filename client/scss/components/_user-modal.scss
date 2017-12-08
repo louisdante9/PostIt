@@ -12,3 +12,13 @@
 .pagination {
   cursor: pointer;
 }
+.error {
+  font-weight: 600;
+  opacity: 0.7;
+  font-size: 12px;
+  color: red;
+
+  &.hide-display {
+    display: none
+  }
+}

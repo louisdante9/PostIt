@@ -1,7 +1,7 @@
 
 export const handleError = (errors) => {
     const result = {}; 
-    errors.forEach(error => {
+    return errors.forEach(error => {
       result[error.path] = error.message;
     });
 }

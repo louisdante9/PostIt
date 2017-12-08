@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import validateInput from '../../../server/shared/validations/forgotpass';
 import TextFieldGroup from '../common/TextFieldGroup';
-import Footer from '../common/footer.jsx';
+import Footer from '../common/Footer.jsx';
 import { resetPassword } from '../../actions/authActions';
 /*global Materialize */
 /**
@@ -57,9 +57,9 @@ export class ForgotPasswordForm extends React.Component {
       this.props.resetPassword({email})
         .then(res => {
           if (res && res.status == '200') {
-            Materialize.toast('password updated, pls check your mail', 3000, 'blue');
+            Materialize.toast('A password reset link has been sent to your mail, pls check your mail', 3000, 'blue');
           }else{
-            Materialize.toast('error updating your password', 3000, 'red');
+            Materialize.toast('ops! sorry an error occured while updating your password', 3000, 'red');
           }
         })
         .catch(error => {
@@ -92,6 +92,7 @@ export class ForgotPasswordForm extends React.Component {
               value={this.state.email}
               field="email"
               placeholder="Enter Email"
+              required
             />
             <div className="form-cta">
               <button className="btn shadow-effect  black ">

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import axios from '../../utils/setAuthToken';
 import { UserSearchResult } from './UserSearchResult.jsx';
 import { addUsers, userQuery } from '../../actions/groupAction';
+import { error } from 'util';
 
 
 /**
@@ -27,7 +27,8 @@ export class UserModal extends React.Component {
       offset: 0,
       count: 0,
       addUser: '',
-      groupUser: props.groupUser
+      groupUser: props.groupUser,
+      error: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
@@ -73,11 +74,20 @@ export class UserModal extends React.Component {
       const mapResult = res.data.users.rows.map(user => {
         return { ...user };
       });
+      
+      if(mapResult.length < 1){
+        this.setState({
+          error: true,
+          matchingUsers: []
+        })
+      }else{
       this.setState({
         matchingUsers: mapResult,
         count: res.data.data.pageCount,
-        addUser: query
+        addUser: query,
+        error: false
       });
+     }
     });
   }
 
@@ -126,6 +136,7 @@ export class UserModal extends React.Component {
   resetForm() {
     this.setState({
       name: '',
+      matchingUsers:[]
     });
   }
 
@@ -152,6 +163,7 @@ export class UserModal extends React.Component {
    * @memberof UserModal
    */
   render() {
+    const searchError = this.state.error == true ? 'error' : 'error hide-display'
     return (
       <div id="modal2" className="modal">
         <div className="modal-content">
@@ -160,7 +172,7 @@ export class UserModal extends React.Component {
               <ul>
                 <li className="black modal-header">
                   Add users to group
-                                    </li>
+                </li>
               </ul>
             </div>
           </nav>
@@ -175,15 +187,17 @@ export class UserModal extends React.Component {
                 name="name"
                 value={this.state.name}
                 onChange={this.handleChange}
+                autoComplete = "off"
               />
+              <span className={searchError}>sorry no user found</span>
               <label htmlFor="group-title">
                 search for users
-                                    </label>
+              </label>
             </div>
           </form>
         </div>
         <button className="btn waves-effect waves-light black shadow-effect clearGroup user-modal-header-btn modal-close"
-          type="submit" onClick={this.resetForm}>close</button>
+          type="reset" onClick={this.resetForm}>close</button>
         <UserSearchResult userResult={this.state.matchingUsers}
           handleSelect={this.handleSelect} pageCount={this.state.count}
           pageClick={this.pageClick} groupUser={this.state.groupUser} />

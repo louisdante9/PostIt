@@ -24,7 +24,8 @@ export function getGroups() {
         });
       })
       .catch(err => {
-        console.log(err.response.data);
+        Materialize
+        .toast(err.response.data, 3000, 'red');
       });
   };
 }
@@ -74,7 +75,7 @@ export function getMessages(groupId) {
           type: INCREASE_UNREAD_MESSAGE,
         });
       })
-      .catch(err => console.log(err));
+      .catch(err =>  Materialize.toast(err.response.data, 3000, 'red'));
   };
 }
 
@@ -98,7 +99,8 @@ export function createMessage(groupId, data) {
           groupId
         });
       })
-      .catch(err => console.log(err.response));
+      .catch(err =>  Materialize
+        .toast(err.response, 3000, 'red'));
   };
 }
 
@@ -134,7 +136,7 @@ export function addUsers(groupId, userId) {
           payload: res.data
         });
       })
-      .catch(err => console.log(err.response));
+      .catch(err =>  Materialize.toast(err.response, 3000, 'red'));
   };
 }
 
@@ -152,6 +154,6 @@ export function loadGroupUsers(groupId) {
           type: GET_USER_IN_A_GROUP,
           payload: data
         });
-      }, err => console.log(err.message));
+      }, err =>  Materialize.toast(err.response, 3000, 'red'));
   };
 }
