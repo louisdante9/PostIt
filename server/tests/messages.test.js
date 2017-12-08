@@ -3,7 +3,6 @@
 import chai from 'chai';
 import supertest from 'supertest';
 import app from '../app';
-import fakerObj from './helpers/auth.helper';
 import db from '../models';
 
 const expect = chai.expect;
@@ -36,9 +35,9 @@ before((done) => {
         });
     });
 });
-describe('Messages suite', () => {
-  describe('Create Messages', () => {
-    it('allows a user create a message successfully', (done) => {
+describe('Test setup', () => {
+  describe('Create Messages route', () => {
+    it('should allow a user create a message successfully', (done) => {
       request
         .post(`/api/v1/group/${group.id}/messages`)
         .set('authorization', token)
@@ -51,8 +50,6 @@ describe('Messages suite', () => {
           done();
         });
     });
-
-
     it('should not create a message if the group does not exist', (done) => {
       request
         .post(`/api/v1/group/${group.id * 5}/messages`)
@@ -67,7 +64,6 @@ describe('Messages suite', () => {
         });
     });
   });
-
   it('should not get messages from a group that does not exist', (done) => {
     request
       .get(`/api/v1/group/${group.id * 5}/messages`)
@@ -81,8 +77,6 @@ describe('Messages suite', () => {
         done();
       });
   });
-
-  describe('Add user to a new group', () => {
     it('should return 201 to add a user to a group', (done) => {
       token;
       request
@@ -100,7 +94,7 @@ describe('Messages suite', () => {
         });
 
     });
-    describe('Send message to a group', () => {
+    describe('should send a message to a group', () => {
       it('returns 201 response', (done) => {
         request
           .post(`/api/v1/group/${group.id}/messages`)
@@ -116,7 +110,7 @@ describe('Messages suite', () => {
             done();
           });
       });
-      it('should work with priority level critical', (done) => {
+      it('should send a message with priority level critical', (done) => {
         request
           .post(`/api/v1/group/${group.id}/messages`)
           .set('authorization', token)
@@ -132,7 +126,7 @@ describe('Messages suite', () => {
             done();
           });
       });
-      it('should work with priority level urgent', (done) => {
+      it('should send a message with priority level urgent', (done) => {
         request
           .post(`/api/v1/group/${group.id}/messages`)
           .set('authorization', token)
@@ -148,8 +142,7 @@ describe('Messages suite', () => {
             done();
           });
       });
-      describe('View all messages in a group', () => {
-        it('returns 200 response', (done) => {
+        it('should get all messages in a group', (done) => {
           request
             .get(`/api/v1/group/${group.id}/messages`)
             .set('authorization', token)
@@ -162,9 +155,7 @@ describe('Messages suite', () => {
               done();
             });
         });
-        
-      });
-      describe('Search Users Route \'POST: /api/v1/user\'', () => {
+      describe('Search Users Route', () => {
         it('should successfully search for other users', (done) => {
           let query = 'G',
             limit = 5,
@@ -180,7 +171,7 @@ describe('Messages suite', () => {
             });
         });
 
-        it('should not search when no search or limit parameter is sent', (done) => {
+        it('should return an error when no search or limit parameter is sent', (done) => {
           let query = '',
             limit,
             offset = 0;
@@ -190,7 +181,7 @@ describe('Messages suite', () => {
             .query({ name: query, limit, offset })
             .end((err, res) => {
               if (err) return done(err);
-              expect(res.status).to.equal(400);
+              expect(res.status).to.equal(404);
               done();
             });
         });
@@ -242,7 +233,6 @@ describe('Messages suite', () => {
               .end((err, res) => {
                 if (err) return done(err);
                 expect(res.status).to.equal(201);
-                // expect(res.body).should.equal('biology')
                 done();
               });
           });
@@ -262,5 +252,5 @@ describe('Messages suite', () => {
           });
       });
     });
-  });
+
 });

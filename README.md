@@ -15,6 +15,8 @@
 
 
 ## Installation and Setup
+*  Install NodeJs
+*  Install Postgres
 *  Navigate to a directory of choice on `terminal`.
 *  Clone this repository on that directory.
   *  Using SSH;
@@ -27,18 +29,20 @@
 
 *  Navigate to the repo's folder on your computer
   *  `cd PostIt/`
-* Install the app's backend dependencies using `npm install`
+* Install the application's dependencies using `npm install`
 
   #### Note
   * In order to begin using, you need to have __nodeJs__ and **npm** installed on your system.
   * For database you need to install __PostGres__ locally or setup with an online client eg. **ElephantSql**
+  * Setup Database according to setting in server/config/config.json
+  *  Migrate to database sequelize db:migrate
   * Create two (2) databases one for __development__ and the other for **testing**
   * Change database config variables in the config.json file, based on your own db set-up
   * In other to interact effectively with endpoints, install and use __Postman__
 
 * Run the app
   *  `npm start`
-  *  Running the command above will run the app at localhost://3002.
+  *  Running the command above will run the app at `localhost://8000`.
 
 ## Dependencies
 * See Package.json for reference 
@@ -65,7 +69,8 @@
 # Language
 - Javascript
 
-
+## Api Documentation
+*[Click here to see the api documentation](https://postit12.docs.apiary.io/#)
 ## Limitations
 + Users cannot choose to accept invitation request
 + Users cannot leave a group
