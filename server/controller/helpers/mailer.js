@@ -49,7 +49,7 @@ const sendMail = (sender, reciever, subject, content) => {
  * 
  * @return { void }
  */
-const resetSuccessfulResetMail = (email) => {
+export const resetSuccessfulResetMail = (email) => {
   const sender = '"Post It App" <notification@postit.com>';
   const subject = 'Your Password has been changed';
   const content = `<div style="width: 100%; background-color: grey; padding: 2%;">
