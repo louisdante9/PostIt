@@ -9,7 +9,7 @@ import Messages from './Messages.jsx';
 import MessageBox from './MessageBox.jsx';
 import Modal from './Modal.jsx';
 import UserModal from './UserModal.jsx';
-import { Welcome } from './welcome.jsx';
+import { Welcome } from './Welcome.jsx';
 import { getGroups, createGroup, getMessages, createMessage, loadGroupUsers }
   from '../../actions/groupAction';
 
@@ -184,7 +184,7 @@ export class Dashboard extends Component {
     const groupMember = groupusers.length;
     const groupUsernames = groupusers.map(function (groupuser) {
       return groupuser.User.username;
-    });
+  });
     const members = groupUsernames.join(", ");
     return (
       <div className="dashboard">
@@ -215,11 +215,13 @@ export class Dashboard extends Component {
                   </div>
                 </div>
                 <div ref={this.getMessageBoardRef} className="message-board">
-                  <Messages messages={messages}
+                  <Messages
+                    messages={messages}
                     groups={groups} user={user} />
                 </div>
                 {/**  message box */}
-                <MessageBox message={this.state.message}
+                <MessageBox 
+                  message={this.state.message}
                   flag={this.state.flag} onChange={this.onChange}
                   onSubmit={this.onSubmit} groups={groups}
                   handleKeyDown={this.handleKeyDown}
@@ -257,8 +259,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps,
+export default connect(
+  mapStateToProps,
   {
-    getGroups, createGroup, getMessages,
-    createMessage, loadGroupUsers, logout
-  })(Dashboard);
+    getGroups, 
+    createGroup, 
+    getMessages,
+    createMessage, 
+    loadGroupUsers, 
+    logout
+  }
+)(Dashboard);
