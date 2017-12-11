@@ -1,6 +1,6 @@
 import axios from 'axios';
-import setAuthToken from '../utils/setAuthToken';
 import jwtDecode from 'jwt-decode';
+import setAuthToken from '../utils/setAuthToken';
 import { USER_AUTHENTICATED, RESET_PASSWORD_SUCCESS } from './types';
 
 /* global Materialize */
@@ -28,7 +28,7 @@ export function setCurrentUser(user) {
 export function login(data) {
   return dispatch => {
     return axios.post('/api/v1/user/signin', data).then(res => {
-      const token = res.data.token;
+      const { token } = res.data.token;
       localStorage.setItem('jwtToken', token);
       setAuthToken(token);
       dispatch(setCurrentUser(decode(token)));

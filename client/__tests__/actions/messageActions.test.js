@@ -6,7 +6,6 @@ import * as actions from '../../actions/groupAction';
 import * as types from '../../actions/types';
 import mockLocalStorage from '../../../__mocks__/mockLocalStorage';
 
-
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 window.localStorage = mockLocalStorage;
@@ -15,35 +14,34 @@ describe('Message action', () => {
   describe('getMessage action', () => {
     beforeEach(() => moxios.install());
     afterEach(() => moxios.uninstall());
-
     it('should contain getMessages function', () => {
       expect(actions.getMessages()).toBeA('function');
     });
     it('should dispatch GET_GROUP_MESSAGES action when called', (done) => {
       const store = mockStore({});
       const data = { 
-        messages:{
+        messages: {
           id: 1,
-           message: 'yo', 
-           flag: 'normal', 
-           msgRead: null, 
-           groupId: 1, 
-           userId: 1, 
-           User: { 
-             id: 1, 
-             username: 'louisdante9', 
-             email: 'louisdante9@gmail.com', 
-             phone: '0808997776667', 
-             resetPasswordToken: null, 
-             expiryTime: null 
-            } 
-          }
-        };
+          message: 'yo', 
+          flag: 'normal', 
+          msgRead: null, 
+          groupId: 1, 
+          userId: 1, 
+          User: { 
+            id: 1, 
+            username: 'louisdante9', 
+            email: 'louisdante9@gmail.com', 
+            phone: '0808997776667', 
+            resetPasswordToken: null, 
+            expiryTime: null 
+          } 
+        }
+      };
       moxios.stubRequest('/api/v1/group/1/messages', {
         status: 200,
         response: data
       });
-      let groupId = 1;
+      const groupId = 1;
       
       const expectedActions = [
         {
@@ -58,8 +56,7 @@ describe('Message action', () => {
       });
       done();
     });
-
-   });
+  });
 
   describe('Create Message Action', () => {
     beforeEach(() => moxios.install());
@@ -89,7 +86,7 @@ describe('Message action', () => {
         status: 200,
         response: data
       });
-      let groupId = 1;
+      const groupId = 1;
       const messageData = {
         groupId: 1,
         message: 'yo',
@@ -97,7 +94,6 @@ describe('Message action', () => {
         userId: 1,
         username: 'louisdante9'
       };
-
       const expectedActions = [
         {
           type: types.CREATE_GROUP_MESSAGE,
@@ -105,7 +101,6 @@ describe('Message action', () => {
           groupId
         }
       ];
-
       store.dispatch(actions.createMessage(groupId, messageData)).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
         done();

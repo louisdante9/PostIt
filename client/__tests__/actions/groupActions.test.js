@@ -57,7 +57,7 @@ describe('Get User Action', () => {
     expect(actions.loadGroupUsers()).toBeA('function');
   });
 
-  it('should dispatch GET_USER_IN_A_GROUP action creator', (done) => {
+  it('should dispatch GET_USER_IN_A_GROUP action creator when called', (done) => {
     const store = mockStore({});
     const data = {
       id: 1,
@@ -92,7 +92,7 @@ describe('Get Group Action', () => {
   it('should contain getGroups function', () => {
     expect(actions.getGroups()).toBeA('function');
   });
-  it('should dispatch GET_USER_GROUP action creator', (done) => {
+  it('should dispatch GET_USER_GROUP action creator when called', (done) => {
     const store = mockStore({});
     const data = [{
       id: 1,

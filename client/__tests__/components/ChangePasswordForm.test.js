@@ -2,7 +2,6 @@
 global jest 
 expect 
 */
-
 import React from 'react';
 import { shallow, mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
@@ -15,7 +14,7 @@ import mockData from '../../../__mocks__/mockData';
 configure({ adapter: new Adapter() });
 
 describe('ChangePasswordForm', () => {
-  let props = {
+  const props = {
     confirmPasswordResetRequest: jest.fn(() => Promise.resolve()),
     params: {
       token: 'abcdefghijklmnopqrstuvwxyz'
@@ -30,7 +29,6 @@ describe('ChangePasswordForm', () => {
   });
   it('always renders signup form', () => {
     expect(component.find('form').length).toBe(1);
-
   });
   it('always renders a signup form with the inputs required', () => {
     expect(component.find('TextFieldGroup').length).toBe(2);
@@ -38,7 +36,6 @@ describe('ChangePasswordForm', () => {
 
   it('always renders a form submit button ', () => {
     expect(component.find('button').length).toBe(1);
-
   });
   it('calls onChange method', () => {
     const event = mockData.changePasswordDate;
@@ -46,15 +43,12 @@ describe('ChangePasswordForm', () => {
     component.instance().onChange(event);
     expect(onChangeSpy).toHaveBeenCalled();
   });
-
   it('calls onSubmit method with valid data', () => {
     component.setState(mockData.changePasswordState);
     const event = {
       preventDefault: jest.fn()
     };
-    const handleSubmitSpy = jest.spyOn(
-      component.instance(), 'onSubmit'
-    );
+    const handleSubmitSpy = jest.spyOn(component.instance(), 'onSubmit');
     component.instance().onSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalled();
   });

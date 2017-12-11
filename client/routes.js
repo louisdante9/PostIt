@@ -12,8 +12,6 @@ import requireAuth from './utils/requireAuth';
 import NavigationBar from '../client/components/common/NavigationBar.jsx';
 import BaseNavbarPage from './components/auth/BaseNavbarPage.jsx';
 
-
-
 export default (
   <Route component={App}>
     <Route path="/dashboard" component={requireAuth(Dashboard)} />

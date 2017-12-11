@@ -9,8 +9,8 @@ import { shallow, mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 import { provider } from 'react-redux';
 import mockLocalStorage from '../../../__mocks__/mockLocalStorage';
-import connectedDashboard, {Dashboard} 
-from '../../components/groupevents/Dashboard.jsx';
+import connectedDashboard, { Dashboard } 
+  from '../../components/groupevents/Dashboard.jsx';
 import mockData from '../../../__mocks__/mockData';
 
 // jest.dontMock();
@@ -19,20 +19,22 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 window.localStorage = mockLocalStorage;
 const store = mockStore({
-    groups: [],
-    allMsgs: {},
-    user: {},
+  groups: [],
+  allMsgs: {},
+  user: {},
 });
-//mock jquery
-Object.defineProperty(window, '$', { value: () => ({
-  collapsible: () => jest.fn(),
-  modal: () => jest.fn(),
-  sideNav: () => jest.fn(),
-  ready: () => jest.fn()
-}) });
+// mock jquery
+Object.defineProperty(window, '$', {
+  value: () => ({
+    collapsible: () => jest.fn(),
+    modal: () => jest.fn(),
+    sideNav: () => jest.fn(),
+    ready: () => jest.fn()
+  }) 
+});
 
 describe('UserSearchResult', () => {
-  let props = {
+  const props = {
     createGroup: jest.fn(() => Promise.resolve()),
     getGroups: jest.fn(() => Promise.resolve()),
     getMessages: jest.fn(() => Promise.resolve()),
@@ -41,7 +43,7 @@ describe('UserSearchResult', () => {
     groups: [],
     user: {},
     active: true,
-    allMsgs:{},
+    allMsgs: {},
     logout: jest.fn(),
   };
   const component = shallow(<Dashboard {...props} />);
@@ -59,44 +61,35 @@ describe('UserSearchResult', () => {
   });
   it('calls logout method', () => {
     const event = {
-          preventDefault: jest.fn()
-        };
-    const logoutSpy = jest.spyOn(
-      component.instance(), 'logout'
-    );
+      preventDefault: jest.fn()
+    };
+    const logoutSpy = jest.spyOn(component.instance(), 'logout');
     
     component.instance().logout(event);
     expect(logoutSpy).toHaveBeenCalled();
   });
   it('calls setGroupMessages method', () => {
-      const event = {
-        preventDefault: jest.fn()
-      };
-      const id = 1;
-      console.log(component);
-      const setGroupMessagesSpy = jest.spyOn(component.instance(), 'setGroupMessages');
-      component.instance().setGroupMessages(event, id);
-      expect(setGroupMessagesSpy).toHaveBeenCalled();
-    });
+    const event = { preventDefault: jest.fn() };
+    const id = 1;
+    const setGroupMessagesSpy = jest.spyOn(component.instance(), 'setGroupMessages');
+    component.instance().setGroupMessages(event, id);
+    expect(setGroupMessagesSpy).toHaveBeenCalled();
+  });
   it('calls onSubmit method', () => {
     const event = {
       preventDefault: jest.fn()
     };
-  
     component.setState({
       groupId: 1,
       message: 'yo',
       flag: 'nnormal'
-
     });
-    const handleSubmitSpy = jest.spyOn(
-      component.instance(), 'onSubmit'
-    );
+    const handleSubmitSpy = jest.spyOn(component.instance(), 'onSubmit');
     component.instance().onSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalled();
   });
   it('calls mapStateToProps method', () => {
-    const wrapper = shallow(<connectedDashboard {...props } store={store} />);
+    const wrapper = shallow(<connectedDashboard {...props} store={store} />);
     expect(wrapper.length).toBe(1);
   });
 });

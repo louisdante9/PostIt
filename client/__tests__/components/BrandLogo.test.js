@@ -13,7 +13,7 @@ describe('BrandLogo', () => {
     textColor: 'white'
   }
   const component = mount(<BrandLogo {...props} />);
-  it('should render link atleast once', () => {
+  it('should render link once', () => {
     expect(component.length).toEqual(1);
   });
   it('renders a div', () => {
