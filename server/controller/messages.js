@@ -1,14 +1,14 @@
+import pry from 'pryjs';
 import models from '../models';
 import { handleError } from './helpers/handleErrors';
 import priorityMail from './helpers/mailer';
 import smsSender from './helpers/smsHelper';
-import pry from 'pryjs';
 import { io } from '../app';
 
 /**
  * sendMessage, this is a helper method for sending messages 
- * @param {Object} req Request object
- * @param {Object} res Response object
+ * @param {Object} data
+ * @param {Object} flag Response object
  * @returns {void}
  */
 const sendMessage = (data, flag) => {
@@ -34,8 +34,8 @@ const Messages = {
    * @returns {void}
    */
   getGroupMessage(req, res) {
-    const userId = req.decoded.userId;
-    const groupId = req.params.groupId;
+    const { userId } = req.decoded.userId;
+    const { groupId } = req.params.groupId;
     if (req.query.read) {
       getAllUnreadMessage(userId, groupId)
         .then(data => res.status(200).json(data))
@@ -93,7 +93,8 @@ const Messages = {
             include: [
               { model: models.Group, required: true, attributes: ['name'] },
               {
-                model: models.User, required: true,
+                model: models.User, 
+                required: true,
                 attributes: ['username', 'phone', 'email']
               }
             ],
@@ -132,7 +133,7 @@ export default Messages;
   * @returns {Object} - Returns an object
   */
 const generateUserMessageData = (data, userId) => {
-   return data.map(metadata => {
+  return data.map(metadata => {
     const value = {
       read: false,
       userId: metadata.userId,
@@ -141,7 +142,10 @@ const generateUserMessageData = (data, userId) => {
     if (value.userId !== userId) {
       return value;
     }
-    return {...value, read: true};
+    return {
+      ...value, 
+      read: true 
+    };
   });
 }
 
@@ -170,7 +174,10 @@ const getAllUnreadMessage = (userId, groupId) => {
         model: models.Group,
         include: [{
           model: models.UserMessages,
-          where: { userId: userId, read: false }
+          where: {
+            userId, 
+            read: false
+          }
         }]
       }]
   });

@@ -63,8 +63,9 @@ export class Dashboard extends Component {
   }
 
   /**
-   * 
+   * @description react life scyle method use to move the message bar to the last message 
    * @memberof Dashboard
+   * @returns { void }
    */
   componentDidUpdate() {
     if (this.state.groupId) {
@@ -81,6 +82,7 @@ export class Dashboard extends Component {
    * @param {any} event 
    * @param {any} cb 
    * @memberof Dashboard
+   * @returns { void }
    */
   handleKeyDown(event, cb) {
     if (event.key == 'Enter' && event.shiftKey == false) {
@@ -94,6 +96,7 @@ export class Dashboard extends Component {
    * function to get the node for the component div element
    * @param {any} node 
    * @memberof Dashboard
+   * @returns { void }
    */
   getMessageBoardRef(node) {
     this.messageBoard = node;
@@ -103,6 +106,7 @@ export class Dashboard extends Component {
    * 
    * function to scroll messages component to the bottom
    * @memberof Dashboard
+   * @returns { void }
    */
   scrollToBottom() {
     const elem = this.messageBoard;
@@ -150,7 +154,7 @@ export class Dashboard extends Component {
       this.props.createMessage(this.state.groupId, messageData);
       this.setState({ message: '' });
     } else {
-      Materialize.toast('Oops yo! try write something', 3000, 'red');
+      Materialize.toast('Oops yo! try writing something', 3000, 'red');
     }
   }
 

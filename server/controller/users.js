@@ -5,6 +5,7 @@ import { passwordResetMail, resetSuccessfulResetMail } from './helpers/mailer';
 import models from '../models';
 import paginate from '../shared/paginate';
 import UserHelper from './helpers/userHelper';
+
 require('dotenv').config({ silent: true });
 
 const secretKey = process.env.JWT_SECRET_KEY;
@@ -81,20 +82,20 @@ export default {
       }
       return res.status(401).json({
         errors:
-        { message: 'Failed to authenticate user' }
+          { message: 'Failed to authenticate user' }
       });
     })
       .catch(error => res.status(500).json({ error }));
   },
 
-/**
- * this method serach for all users in a group
- * @param {Object} req Request object
- * @param {Object} res Response object
- * @returns {Object} - Returns response object
- */
+  /**
+   * this method serach for all users in a group
+   * @param {Object} req Request object
+   * @param {Object} res Response object
+   * @returns {Object} - Returns response object
+   */
   searchUsers(req, res) {
-    let{ offset, limit } = req.query;
+    let { offset, limit } = req.query;
     // validate request object
     if (!req.query.name) {
       return res.status(404).send({
@@ -102,34 +103,34 @@ export default {
         message: 'no search parameter/limit',
       });
     }
-    if(!limit) {
-      limit = 5
+    if (!limit) {
+      limit = 5;
       return limit;
     }
     return models.User
-    .findAndCountAll({
-      offset:offset * limit,
-      limit: limit,
-      where: {
-        username: { $ilike: `%${req.query.name}%` }
-      },
-      attributes: ['id', 'username']
-    })
-    .then((users) => {
-      res.status(200).send({
-        success: true,
-        users,
-        data: paginate(users.count, limit, offset * 5)
+      .findAndCountAll({
+        offset: offset * limit,
+        limit,
+        where: {
+          username: { $ilike: `%${req.query.name}%` }
+        },
+        attributes: ['id', 'username']
+      })
+      .then((users) => {
+        res.status(200).send({
+          success: true,
+          users,
+          data: paginate(users.count, limit, offset * 5)
+        });
+      }, (err) => {
+        res.status(400).send({
+          success: false,
+          message: 'an error occured searching users',
+          error: err.message,
+        });
       });
-    }, (err) => {
-      res.status(400).send({
-        success: false,
-        message: 'an error occured searching users',
-        error: err.message,
-      });
-    });
   },
-  
+
   /**
   * this method requests for a change of password 
   * and also send a mail for token authentication
@@ -147,7 +148,7 @@ export default {
       return models.User
         .findOne({
           where: {
-            email: email
+            email
           }
         })
         .then((user) => {
@@ -161,19 +162,17 @@ export default {
               resetPasswordToken: token,
               expiryTime: Date.now() + 3600000
             }, {
-                where: {
-                  email: email
-                }
-              })
+              where: {
+                email
+              }
+            })
               .then(() => {
                 passwordResetMail(email, token, req.headers.host);
                 return res.status(200).send(
-                  { 
+                  {
                     message: "password updated succesfully",
                     token
-                }
-                );
-
+                  });
               }, (err) => {
                 res.status(400).send({
                   success: false,
@@ -191,9 +190,9 @@ export default {
   },
 
   /**
-  * this method reset password
-  * @param {Object} - req Request object
-  * @param {Object} - res Response object
+  * @description this method reset password
+  * @param {Object} req Request object
+  * @param {Object} res Response object
   * @returns {Object} - Returns response object
   */
   resetPassword(req, res) {
@@ -215,10 +214,10 @@ export default {
               resetPasswordToken: null,
               expiryTime: null
             }, {
-                where: {
-                  resetPasswordToken: req.params.token
-                }
-              })
+              where: {
+                resetPasswordToken: req.params.token
+              }
+            })
               .then(() => {
                 res.status(400).send({ err: false });
               }, err => res.status(400).send(err.message));
