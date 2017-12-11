@@ -8,6 +8,6 @@ module.exports = {
     use_env_variable: "DATABASE_URL_TESTS"
   },
   production: { 
-    use_env_variable: "DATABASE_URL_PRODUCTION"
+    use_env_variable: "DATABASE_URL"
   }
 };
