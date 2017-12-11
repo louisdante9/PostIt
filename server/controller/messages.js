@@ -1,8 +1,8 @@
 import pry from 'pryjs';
 import models from '../models';
-import { handleError } from './helpers/handleErrors';
+import { handleErrors } from './helpers/handleErrors';
 import priorityMail from './helpers/mailer';
-import smsSender from './helpers/smsHelper';
+import smsHelper from './helpers/smsHelper';
 import { io } from '../app';
 
 /**
@@ -18,7 +18,7 @@ const sendMessage = (data, flag) => {
       break;
     case 'critical':
       priorityMail(data);
-      smsSender(data);
+      smsHelper(data);
       break;
     default:
       break;
@@ -108,7 +108,7 @@ const Messages = {
         }).catch((err) => {
           return res.status(400).json({
             message: 'Bad Request',
-            err: handleError(err)
+            err: handleErrors(err)
           });
         });
       } else {

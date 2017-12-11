@@ -1,9 +1,10 @@
-'use strict';
+' use strict';
+
 import nodemailer from 'nodemailer';
 import smtpTransport from 'nodemailer-smtp-transport';
 import dotenv from 'dotenv';
 
-//config setup
+// config setup
 dotenv.config();
 const options = {
   service: 'gmail',
@@ -11,32 +12,47 @@ const options = {
   port: 587,
   secured: true,
   auth: {
-        user: process.env.SMTPUSER,
-        pass: process.env.PASS
-    }
-    
+    user: process.env.SMTPUSER,
+    pass: process.env.PASS
+  }  
 };
 
-
-export const sendMail = (sender, reciever, subject, content) => {
+/**
+ * 
+ * @description this is a helper method for sending mails generally
+ * @param {any} sender 
+ * @param {any} reciever 
+ * @param {any} subject 
+ * @param {any} content 
+ * 
+ * @return { void }
+ */
+const sendMail = (sender, reciever, subject, content) => {
   const transporter = nodemailer.createTransport(smtpTransport(options));
   const mailOptions = {
     to: reciever,
     from: sender,
-    subject: subject,
+    subject,
     html: content
- };
+  };
 
- transporter.sendMail(mailOptions, (error) => {
+  transporter.sendMail(mailOptions, (error) => {
     if (error) {
-      return false
+      return false;
     }
   });
-}
-export const  resetSuccessfulResetMail = (email) => {
-  const sender =  '"Post It App" <notification@postit.com>';
-  const subject =  'Your Password has been changed';
-  const content =  `<div style="width: 100%; background-color: grey; padding: 2%;">
+};
+/**
+ * 
+ * @description this helper method to send mails for reset password
+ * @param {any} email 
+ * 
+ * @return { void }
+ */
+const resetSuccessfulResetMail = (email) => {
+  const sender = '"Post It App" <notification@postit.com>';
+  const subject = 'Your Password has been changed';
+  const content = `<div style="width: 100%; background-color: grey; padding: 2%;">
   <div style="width: 60%; background-color: white; margin: auto;">
     <div style="height: 8%; background-color: #000000; width:100%">
     </div>
@@ -51,13 +67,13 @@ export const  resetSuccessfulResetMail = (email) => {
   </div>
 </div>`;
 
-sendMail(sender, email, subject, content);
-}
+  sendMail(sender, email, subject, content);
+};
 
 export const passwordResetMail = (email, token, host) => {
-    const sender =  '"Post It App" <notification@postit.com>';
-    const subject =  'Password Reset';
-    const content = `<div style="width: 100%; background-color: grey; padding: 2%;">
+  const sender = '"Post It App" <notification@postit.com>';
+  const subject = 'Password Reset';
+  const content = `<div style="width: 100%; background-color: grey; padding: 2%;">
     <div style="width: 60%; background-color: white; margin: auto;">
       <div style="height: 8%; background-color: #000000; width:100%">
       </div>
@@ -74,12 +90,12 @@ export const passwordResetMail = (email, token, host) => {
         <p style="font-weight: bold; color: #004d40;">PostIt</p>
       </div>
     </div>
-  </div>`
+  </div>`;
   sendMail(sender, email, subject, content);
-}
+};
 
- const priorityMail = (users) => {
-  let user = users[0];
+const priorityMail = (users) => {
+  const user = users[0];
   const to = users.map(eachUser => eachUser['User.email']).join(', ');
   const sender = '"Post It App" <notification@postit.com>';
   const subject = 'Message Posted';
@@ -97,6 +113,6 @@ export const passwordResetMail = (email, token, host) => {
   </div>
 </div>`;
 
-   sendMail(sender, to, subject, content);
- }
- export default priorityMail;
+  sendMail(sender, to, subject, content);
+};
+export default priorityMail;
