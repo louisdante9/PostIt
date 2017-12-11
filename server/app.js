@@ -11,8 +11,8 @@ import morgan from 'morgan';
 import socket from 'socket.io';
 import config from '../webpack.config.dev';
 import authenticate from './middleware/auth';
-const indexPath = process.env.NODE_ENV === 'production' ? 'dist' : 'client';
 
+const indexPath = process.env.NODE_ENV === 'production' ? 'dist' : 'client';
 const app = express();
 dotenv.config();
 Logger.useDefaults();
@@ -51,30 +51,31 @@ if (process.env.NODE_ENV === 'development') {
  */
 
 require('./routes')(app);
+
 app.get('*', (req, res) => {
   res.status(200)
-  .sendFile(path.join(__dirname, `../${indexPath}/index.html`));
+    .sendFile(path.join(__dirname, `../${indexPath}/index.html`));
 });
 
 // This will be our application entry. We'll setup our server here.
-const port = parseInt(process.env.PORT, 10);
+const port = process.env.PORT || 8000;
 app.set('port', port);
 const server = http.createServer(app);
 
-//declare socket for real time 
+// declare socket for real time 
 const io = socket(server);
 export { io };  
-io.on('connect', (soc)=>{
+io.on('connect', (soc) => {
   console.log('connected');
-  soc.on('newMessage', (payload)=>{
+  soc.on('newMessage', (payload) => {
     console.log(payload);
     soc.broadcast.emit('groupMessage', payload);
   });
-  soc.on('disconnect',()=>{
+  soc.on('disconnect', () => {
     console.log('Disconnected');
   });
 });
-server.listen(port, function (err) {
+server.listen(port, (err) => {
   if (err) {
     console.log(err);
   } else {
