@@ -14,7 +14,7 @@ import { setCurrentUser } from './actions/authActions';
 import './scss/styles.scss';
 import './scss/main.scss';
 
-const { localStorage } = window;
+const  localStorage  = window.localStorage;
 const jwtToken = localStorage && localStorage.getItem('jwtToken');
 if (jwtToken) {
   const decodedToken = jwt.decode(jwtToken);

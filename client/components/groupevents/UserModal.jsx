@@ -94,7 +94,7 @@ export class UserModal extends React.Component {
    * @return {void}
    */
   pageClick(searchData) {
-    const { selected } = searchData.selected;
+    const { selected } = searchData;
     const query = this.state.addUser;
     const limit = 5;
     this.props.searcUser(query, limit, selected).then(res => {
@@ -165,10 +165,11 @@ export class UserModal extends React.Component {
         <div className="modal-content">
           <nav className="white">
             <div className="nav-wrapper black">
-              <ul>
+              <ul className="search-header">
                 <li className="black modal-header">
                   Add users to group
                 </li>
+                <li className="close  modal-close"><a href="#" onClick={this.resetForm}>X</a></li>
               </ul>
             </div>
           </nav>
@@ -192,12 +193,8 @@ export class UserModal extends React.Component {
             </div>
           </form>
         </div>
-        <button
-className="btn waves-effect waves-light black shadow-effect clearGroup user-modal-header-btn modal-close"
-          type="reset" onClick={this.resetForm}>close
-        </button>
-        <UserSearchResult
-userResult={this.state.matchingUsers}
+        <UserSearchResult 
+          userResult={this.state.matchingUsers}
           handleSelect={this.handleSelect} pageCount={this.state.count}
           pageClick={this.pageClick} groupUser={this.state.groupUser} />
 
@@ -214,4 +211,7 @@ UserModal.propTypes = {
 const mapStateToProps = state => ({
   groupUser: state.groupUser
 });
-export default connect(mapStateToProps, { addUsers, searcUser, loadGroupUsers })(UserModal);
+export default connect(
+  mapStateToProps, 
+  { addUsers, searcUser, loadGroupUsers }
+)(UserModal);
