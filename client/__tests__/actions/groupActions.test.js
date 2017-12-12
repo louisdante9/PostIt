@@ -23,7 +23,7 @@ describe('Add User Action', () => {
     expect(actions.addUsers()).toBeA('function');
   });
 
-  it('should dispatch an ADD_USER_TO_GROUP action creator', (done) => {
+  it('should dispatch an ADD_USER_TO_GROUP action creator when called', (done) => {
     const store = mockStore({});
     const data = {
       success: true,
@@ -123,7 +123,7 @@ describe('Create Group Action', () => {
   it('should contain loadGroupUsers function', () => {
     expect(actions.createGroup()).toBeA('function');
   });
-  it('should dispatch CREATE_USER_GROUP action creator', (done) => {
+  it('should dispatch CREATE_USER_GROUP action creator when called', (done) => {
     const store = mockStore({});
     const data = [{
       data: {

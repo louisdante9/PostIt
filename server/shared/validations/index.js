@@ -10,7 +10,7 @@ import isEmpty from 'lodash/isEmpty';
  * @returns {void}
  */
 export const validateSigninFormInput = (inputData) => {  
-  let errors ={};
+  const errors ={};
   if (Validator.isEmpty(inputData.email)) {
     errors.email = 'Email field is required';
   }
@@ -31,7 +31,7 @@ export const validateSigninFormInput = (inputData) => {
  * @returns {void}
  */
 export const validateSignupFormInput = (inputData) => {
-  let errors = {};
+  const errors = {};
   if (Validator.isEmpty(inputData.username)) {
     errors.username = 'Username field is required';
   }
@@ -61,7 +61,7 @@ export const validateSignupFormInput = (inputData) => {
  * @returns {void}
  */
 export const validateForgotPasswordInput = (inputData) => {
-  let errors = {};
+  const errors = {};
   if (Validator.isEmpty(inputData.email)) {
     errors.email = 'Email field is required';
   }
@@ -79,7 +79,7 @@ export const validateForgotPasswordInput = (inputData) => {
  * @returns {void}
  */
 export default function validateChangePasswordInput(inputData) {
-  let errors = {};
+  const errors = {};
   if (Validator.isEmpty(inputData.newPassword)) {
     errors.email = 'Email field is required';
   }

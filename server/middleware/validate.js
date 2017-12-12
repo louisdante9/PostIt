@@ -9,7 +9,7 @@ import isEmpty from 'lodash/isEmpty';
  * @returns {void}
  */
 const validateInput = (data) => {
-  let errors = {};
+  const errors = {};
   if (Validator.isEmpty(data.name)) {
     errors.name = 'Group name can not be empty';
   }

@@ -34,6 +34,7 @@
     "semi": [1, "always"],
     "no-use-before-define": 0,
     "no-lonely-if": 0,
+    "import/extensions": 0,  
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/anchor-is-valid": 0,
     "jsx-a11y/no-static-element-interaction": 0,
@@ -82,7 +83,7 @@
     "no-param-reassign": 0,
     "comma-dangle": 0,
     "curly": ["error", "multi-line"],
-    "import/no-unresolved": [2, { "commonjs": true }],
+    "import/no-unresolved": [0, { "commonjs": true }],
     "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
     "valid-jsdoc": ["error", {
       "requireReturn": true,

@@ -65,7 +65,7 @@ describe('Message action', () => {
     it('should contain createMessage function', () => {
       expect(actions.createMessage()).toBeA('function');
     });
-    it('should dispatch CREATE_USER_GROUP action creator', (done) => {
+    it('should dispatch CREATE_USER_GROUP action creator when called', (done) => {
       const store = mockStore({});
       const data = {
         id: 1,

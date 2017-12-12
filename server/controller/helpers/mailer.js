@@ -66,11 +66,18 @@ export const resetSuccessfulResetMail = (email) => {
     </div>
   </div>
 </div>`;
-
   sendMail(sender, email, subject, content);
 };
-
-export const passwordResetMail = (email, token, host) => {
+/**
+ * 
+ * @description this a helper method for password reset
+ * @param {any} email 
+ * @param {any} token 
+ * @param {any} host 
+ * 
+ * @returns { void }
+ */
+const passwordResetMail = (email, token, host) => {
   const sender = '"Post It App" <notification@postit.com>';
   const subject = 'Password Reset';
   const content = `<div style="width: 100%; background-color: grey; padding: 2%;">
@@ -94,7 +101,7 @@ export const passwordResetMail = (email, token, host) => {
   sendMail(sender, email, subject, content);
 };
 
-const priorityMail = (users) => {
+const mailer = (users) => {
   const user = users[0];
   const to = users.map(eachUser => eachUser['User.email']).join(', ');
   const sender = '"Post It App" <notification@postit.com>';
@@ -115,4 +122,4 @@ const priorityMail = (users) => {
 
   sendMail(sender, to, subject, content);
 };
-export default priorityMail;
+export default mailer;

@@ -50,16 +50,16 @@ describe('UserSearchResult', () => {
   it('should render atleast once', () => {
     expect(component.length).toEqual(1);
   });
-  it('renders a div', () => {
+  it('should render a div', () => {
     expect(component.find('div').length).toBeGreaterThan(0);
   });
-  it('calls onChange method', () => {
+  it('calls an onChange method', () => {
     const event = mockData.dashboardOnChangeEvent;
     const onChangeSpy = jest.spyOn(component.instance(), 'onChange');
     component.instance().onChange(event);
     expect(onChangeSpy).toHaveBeenCalled();
   });
-  it('calls logout method', () => {
+  it('calls a logout method', () => {
     const event = {
       preventDefault: jest.fn()
     };
@@ -68,14 +68,14 @@ describe('UserSearchResult', () => {
     component.instance().logout(event);
     expect(logoutSpy).toHaveBeenCalled();
   });
-  it('calls setGroupMessages method', () => {
+  it('calls a setGroupMessages method', () => {
     const event = { preventDefault: jest.fn() };
     const id = 1;
     const setGroupMessagesSpy = jest.spyOn(component.instance(), 'setGroupMessages');
     component.instance().setGroupMessages(event, id);
     expect(setGroupMessagesSpy).toHaveBeenCalled();
   });
-  it('calls onSubmit method', () => {
+  it('calls an onSubmit method', () => {
     const event = {
       preventDefault: jest.fn()
     };
@@ -88,7 +88,7 @@ describe('UserSearchResult', () => {
     component.instance().onSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalled();
   });
-  it('calls mapStateToProps method', () => {
+  it('calls a mapStateToProps method', () => {
     const wrapper = shallow(<connectedDashboard {...props} store={store} />);
     expect(wrapper.length).toBe(1);
   });

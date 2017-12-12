@@ -37,13 +37,13 @@ describe('ChangePasswordForm', () => {
   it('always renders a form submit button ', () => {
     expect(component.find('button').length).toBe(1);
   });
-  it('calls onChange method', () => {
+  it('calls an onChange method', () => {
     const event = mockData.changePasswordDate;
     const onChangeSpy = jest.spyOn(component.instance(), 'onChange');
     component.instance().onChange(event);
     expect(onChangeSpy).toHaveBeenCalled();
   });
-  it('calls onSubmit method with valid data', () => {
+  it('calls an onSubmit method with valid data', () => {
     component.setState(mockData.changePasswordState);
     const event = {
       preventDefault: jest.fn()

@@ -1,7 +1,7 @@
 import pry from 'pryjs';
 import models from '../models';
 import { handleErrors } from './helpers/handleErrors';
-import priorityMail from './helpers/mailer';
+import { mailer as priorityMail } from './helpers/mailer';
 import smsHelper from './helpers/smsHelper';
 import { io } from '../app';
 
@@ -127,7 +127,7 @@ export default Messages;
 
 /**
   * generateUserMessageData
-  * this function is a helper function for create new message method 
+  * @description this function is a helper function for create new message method 
   * @param {integer} data
   * @param {integer} userId
   * @returns {Object} - Returns an object
@@ -151,7 +151,7 @@ const generateUserMessageData = (data, userId) => {
 
 /**
   * createUnreadMessages
-  * this is a helper function to check users that read a message
+  * @description this is a helper function to check users that read a message
   * @param {integer} data
   * @returns {Object} - Returns an object
   */

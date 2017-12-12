@@ -9,7 +9,7 @@ import { shallow, mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 import { provider } from 'react-redux';
 import ConnectedUserModal,
- { UserModal } from '../../components/groupevents/userModal.jsx';
+{ UserModal } from '../../components/groupevents/userModal.jsx';
 import mockData from '../../../__mocks__/mockData';
 
 const middlewares = [thunk];
@@ -21,23 +21,23 @@ const store = mockStore({
 configure({ adapter: new Adapter() });
 
 describe('UserModal', () => {
-  let props = {
+  const props = {
     addUsers: jest.fn(() => Promise.resolve()),
     searcUser: jest.fn(() => Promise.resolve({
-        data: {
-          users: {
-            rows: [
-              {
-                id:1,
-                username:"ebuka"
-              }
-            ]
-          }
+      data: {
+        users: {
+          rows: [
+            {
+              id: 1,
+              username: "ebuka"
+            }
+          ]
+        }
       }
     })),
     group: 1
   };
-  const component = mount(<UserModal {...props } />);
+  const component = mount(<UserModal {...props} />);
   it('should render atleast once', () => {
     expect(component.length).toEqual(1);
   });
@@ -130,7 +130,7 @@ describe('UserModal', () => {
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });
   it('calls componentWillReceiveProps method', () => {
-    const wrapper = shallow(<ConnectedUserModal {...props } store={store}/>);
+    const wrapper = shallow(<ConnectedUserModal {...props} store={store} />);
     expect(wrapper.length).toBe(1);
   });
 });

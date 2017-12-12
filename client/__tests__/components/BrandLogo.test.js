@@ -16,7 +16,7 @@ describe('BrandLogo', () => {
   it('should render link once', () => {
     expect(component.length).toEqual(1);
   });
-  it('renders a div', () => {
+  it('should renders a div', () => {
     expect(component.find('Link').length).toBeGreaterThan(0);
   });
 });

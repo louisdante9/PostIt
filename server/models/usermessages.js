@@ -1,4 +1,5 @@
-'use strict';
+' use strict ';
+
 module.exports = function(sequelize, DataTypes) {
   const UserMessages = sequelize.define('UserMessages', {
     groupId: DataTypes.INTEGER,
