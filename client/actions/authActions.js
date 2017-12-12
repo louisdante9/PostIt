@@ -21,42 +21,38 @@ export function setCurrentUser(user) {
 /**
  * 
  * 
- * @export
+ * @desc this function signs in a user
  * @param {any} data 
  * @returns {void}
  */
 export function login(data) {
-  return dispatch => {
-    return axios.post('/api/v1/user/signin', data).then(res => {
-      const { token } = res.data.token;
-      localStorage.setItem('jwtToken', token);
-      setAuthToken(token);
-      dispatch(setCurrentUser(decode(token)));
-    });
-  };
+  return dispatch => axios.post('/api/v1/user/signin', data).then(res => {
+    const { token } = res.data;
+    localStorage.setItem('jwtToken', token);
+    setAuthToken(token);
+    dispatch(setCurrentUser(decode(token)));
+  });
 }
 /**
  * 
  * 
- * @export
+ * @desc this method signs up a user 
  * @param {any} userData 
  * @returns {void}
  */
 export function userSignupRequest(userData) {
-  return dispatch => {
-    return axios.post('/api/v1/user/signup', userData).then(res => {
-      const token = res.data.token;
-      localStorage.setItem('jwtToken', token);
-      setAuthToken(token);
-      dispatch(setCurrentUser(decode(token)));
-    });
-  };
+  return dispatch => axios.post('/api/v1/user/signup', userData).then(res => {
+    const { token } = res.data;
+    localStorage.setItem('jwtToken', token);
+    setAuthToken(token);
+    dispatch(setCurrentUser(decode(token)));
+  });
 }
 
 /**
  * 
  * 
- * @export
+ * @desc this method logs out a user
  * @returns {void}
  */
 export function logout() {
@@ -70,20 +66,18 @@ export function logout() {
 
 /**
  *  
- * @export
+ * @desc this function resets a users password  
  * @param {any} emailData 
  * @returns {void}
  */
 export function resetPassword(emailData) {
-  return () => {
-    return axios.post('/api/v1/user/reqpass', emailData);
-  };
+  return () => axios.post('/api/v1/user/reqpass', emailData);
 }
 
 
 /**
  * 
- * 
+ * @desc this function returns a jwt token 
  * @param {any} token 
  * @returns {void}
  */
@@ -100,8 +94,14 @@ const confirmPasswordResetFailed = password => ({
   type: 'RESET_PASSWORD_FAILED',
   password
 });
-
-export const confirmPasswordResetRequest = (token, newPassword) =>
+/**
+ * 
+ * @desc this function confirms the users changed password 
+ * @param {any} token 
+ * @param {any} newPassword
+ * @returns {void} 
+ */
+const confirmPasswordResetRequest = (token, newPassword) =>
   dispatch =>
     axios.post(`/api/v1/user/resetpassword/${token}`, newPassword)
       .then((response) => {

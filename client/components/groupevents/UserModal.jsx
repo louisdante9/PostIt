@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { UserSearchResult } from './UserSearchResult.jsx';
-import { addUsers, searcUser } from '../../actions/groupAction';
+import { addUsers, searcUser, loadGroupUsers } from '../../actions/groupAction';
 import { error } from 'util';
 
 
@@ -44,7 +44,7 @@ export class UserModal extends React.Component {
    * @return {void}
    */
   componentWillReceiveProps(nextProps) {
-    this.setState(state=> ({
+    this.setState(state => ({
       groupUser: nextProps.groupUser
     }));
   }
@@ -52,17 +52,16 @@ export class UserModal extends React.Component {
    * 
    * 
    * @param {any} event 
-   * @param {any} groupId 
    * @param {any} offset 
    * @memberof UserModal
    * @returns {void}
    */
-  handleChange(event, groupId, offset) {
+  handleChange(event, offset) {
     event.preventDefault();
     this.setState({ [event.target.name]: event.target.value });
     const query = event.target.value;
     const limit = 5;
-    let offSet = this.state.offset;
+    const offSet = this.state.offset;
     if (!query.length) {
       return this.setState({
         matchingUsers: [],
@@ -71,40 +70,35 @@ export class UserModal extends React.Component {
       });
     }
     this.props.searcUser(query, limit, offSet).then(res => {
-      const mapResult = res.data.users.rows.map(user => {
-        return { ...user };
-      });
-      
-      if(mapResult.length < 1){
+      const mapResult = res.data.users.rows.map(user => ({ ...user }));
+      if (mapResult.length < 1) {
         this.setState({
           error: true,
           matchingUsers: []
-        })
-      }else{
-      this.setState(state =>({
-        matchingUsers: mapResult,
-        count: res.data.data.pageCount,
-        addUser: query,
-        error: false
-      }));
-     }
+        });
+      } else {
+        this.setState(state => ({
+          matchingUsers: mapResult,
+          count: res.data.data.pageCount,
+          addUser: query,
+          error: false
+        }));
+      }
     });
   }
 
   /**
-   * 
-   * @return {void}
-   * @param {any} data 
+   * @description this method provides data for paginations of the user search
+   * @param {any} searchData 
    * @memberof UserModal
+   * @return {void}
    */
-  pageClick(data) {
-    const selected = data.selected;
+  pageClick(searchData) {
+    const { selected } = searchData.selected;
     const query = this.state.addUser;
     const limit = 5;
     this.props.searcUser(query, limit, selected).then(res => {
-      const mapResult = res.data.users.rows.map(user => {
-        return { ...user };
-      });
+      const mapResult = res.data.users.rows.map(user => ({ ...user }));
       this.setState({
         matchingUsers: mapResult,
         count: res.data.data.pageCount,
@@ -118,10 +112,12 @@ export class UserModal extends React.Component {
    * 
    * @return {void}
    * @param {any} user 
+   * @param {any} groupId 
    * @memberof UserModal
    */
-  handleSelect(user) {
+  handleSelect(user, groupId) {
     this.props.addUsers(this.props.group, user.id).then(() => {
+      this.props.loadGroupUsers(this.props.group);
       this.setState((state) => ({
         groupUser: [...state.groupUser, { ...user, userId: user.id }]
       }));
@@ -136,7 +132,7 @@ export class UserModal extends React.Component {
   resetForm() {
     this.setState({
       name: '',
-      matchingUsers:[]
+      matchingUsers: []
     });
   }
 
@@ -163,7 +159,7 @@ export class UserModal extends React.Component {
    * @memberof UserModal
    */
   render() {
-    const searchError = this.state.error == true ? 'error' : 'error hide-display'
+    const searchError = this.state.error == true ? 'error' : 'error hide-display';
     return (
       <div id="modal2" className="modal">
         <div className="modal-content">
@@ -187,7 +183,7 @@ export class UserModal extends React.Component {
                 name="name"
                 value={this.state.name}
                 onChange={this.handleChange}
-                autoComplete = "off"
+                autoComplete="off"
               />
               <span className={searchError}>sorry no user found</span>
               <label htmlFor="group-title">
@@ -196,9 +192,12 @@ export class UserModal extends React.Component {
             </div>
           </form>
         </div>
-        <button className="btn waves-effect waves-light black shadow-effect clearGroup user-modal-header-btn modal-close"
-          type="reset" onClick={this.resetForm}>close</button>
-        <UserSearchResult userResult={this.state.matchingUsers}
+        <button
+className="btn waves-effect waves-light black shadow-effect clearGroup user-modal-header-btn modal-close"
+          type="reset" onClick={this.resetForm}>close
+        </button>
+        <UserSearchResult
+userResult={this.state.matchingUsers}
           handleSelect={this.handleSelect} pageCount={this.state.count}
           pageClick={this.pageClick} groupUser={this.state.groupUser} />
 
@@ -209,11 +208,10 @@ export class UserModal extends React.Component {
 
 UserModal.propTypes = {
   addUsers: PropTypes.func.isRequired,
-  searcUser: PropTypes.func.isRequired
+  searcUser: PropTypes.func.isRequired,
+  loadGroupUsers: PropTypes.func.isRequired
 };
-const mapStateToProps = state => {
-  return {
-    groupUser: state.groupUser
-  };
-};
-export default connect(mapStateToProps, { addUsers, searcUser })(UserModal);
+const mapStateToProps = state => ({
+  groupUser: state.groupUser
+});
+export default connect(mapStateToProps, { addUsers, searcUser, loadGroupUsers })(UserModal);

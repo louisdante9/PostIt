@@ -11,7 +11,6 @@ import { PropTypes } from 'prop-types';
  * @returns {void}
  */
 export default function (ComposedComponent) {
-
   /**
    * 
    * 
@@ -19,7 +18,6 @@ export default function (ComposedComponent) {
    * @extends {Component}
    */
   class Autheticate extends Component {
-
     /**
      * 
      * @returns {void}
@@ -31,8 +29,7 @@ export default function (ComposedComponent) {
         Materialize
           .toast('You need to be logged in to access this page', 3000, 'red');
         this.context.router.push('/signin');
-      }
-      else if (active) {
+      } else if (active) {
         this.context.router.push('/dashboard');
       }
     }

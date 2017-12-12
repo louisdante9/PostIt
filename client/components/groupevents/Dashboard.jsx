@@ -56,7 +56,7 @@ export class Dashboard extends Component {
       }
     });
     $('.modal').modal({ dismissible: false });
-    $(document).ready(function () {
+    $(document).ready(() => {
       $(".button-collapse").sideNav();
       $('.tooltipped').tooltip({ delay: 50 });
     });
@@ -71,7 +71,7 @@ export class Dashboard extends Component {
     if (this.state.groupId) {
       this.scrollToBottom();
     }
-    $(document).ready(function () {
+    $(document).ready(() => {
       $('.tooltipped').tooltip({ delay: 50 });
     });
   }
@@ -86,10 +86,10 @@ export class Dashboard extends Component {
    */
   handleKeyDown(event, cb) {
     if (event.key == 'Enter' && event.shiftKey == false) {
-      event.preventDefault()
+      event.preventDefault();
       cb(event);
     }
-  };
+  }
   
   /**
    * 
@@ -136,7 +136,7 @@ export class Dashboard extends Component {
     localStorage.setItem('currentGroup', id);
     this.props.getMessages(id);
     this.props.loadGroupUsers(id);
-    this.setState(state =>({ groupId: id }));
+    this.setState(state => ({ groupId: id }));
   }
 
   /**
@@ -178,17 +178,17 @@ export class Dashboard extends Component {
    * @returns {void}
    */
   render() {
-    const { groups, allMsgs, user, groupusers } = this.props;
+    const {
+      groups, allMsgs, user, groupusers 
+    } = this.props;
     const messages = allMsgs[this.state.groupId] || [];
     const GroupName = groups.find(group => group.id === this.state.groupId);
     const groupMember = groupusers.length;
-    const groupUsernames = groupusers.map(function (groupuser) {
-      return groupuser.User.username;
-  });
+    const groupUsernames = groupusers.map((groupuser) => groupuser.User.username);
     const members = groupUsernames.join(", ");
     return (
       <div className="dashboard">
-        {/** header **/}
+        {/** header * */}
         <DashboardHeader
           groups={groups}
           setGroupMessages={this.setGroupMessages}
@@ -250,14 +250,12 @@ Dashboard.propTypes = {
   logout: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => {
-  return {
-    groups: state.groups,
-    allMsgs: state.messages.msg,
-    user: state.auth.user,
-    groupusers: state.groupUser
-  };
-};
+const mapStateToProps = (state) => ({
+  groups: state.groups,
+  allMsgs: state.messages.msg,
+  user: state.auth.user,
+  groupusers: state.groupUser
+});
 
 export default connect(
   mapStateToProps,

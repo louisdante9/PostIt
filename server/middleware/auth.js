@@ -1,5 +1,6 @@
 /* eslint import/no-unresolved: 0 */
 import jwt from 'jsonwebtoken';
+import db from '../models';
 
 const secretKey = process.env.JWT_SECRET_KEY;
 const authenticate = {

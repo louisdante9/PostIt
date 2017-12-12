@@ -85,7 +85,7 @@ export default class Modal extends React.Component {
                   <li className="modalHeader">
                     <span className="email-type elementHeight">
                       Create a New Group
-                                    </span>
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -108,7 +108,7 @@ export default class Modal extends React.Component {
                     value={this.state.name} />
                   <label htmlFor="group-title">
                     Group Title
-                                    </label>
+                  </label>
                 </div>
               </div>
               <div className="row">
@@ -116,20 +116,17 @@ export default class Modal extends React.Component {
                   <textarea
                     id="description"
                     className="materialize-textarea"
-
                     name="description"
                     onChange={this.handleChange}
                     value={this.state.description}></textarea>
                   <label htmlFor="description">
                     Enter description...
-                                    </label>
+                  </label>
                 </div>
               </div>
             </form>
-
             <button className="btn waves-effect waves-light black shadow-effect createGroup modal-close"
               type="button" onClick={this.resetForm}>cancel</button>
-
             <button className="btn waves-effect waves-light black shadow-effect createGroup modal-close"
               type="submit" onClick={this.handleSubmit}>
               create</button>
