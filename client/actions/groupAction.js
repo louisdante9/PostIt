@@ -43,7 +43,7 @@ export function createGroup(groupData) {
       Materialize
         .toast('Group successfully created!', 6000, 'green');
     })
-    .catch(err => err.response.data.message);
+    .catch(err => Materialize.toast(err.response.data.err, 3000, 'red'));
 }
 
 /**
@@ -65,7 +65,7 @@ export function getMessages(groupId) {
         type: INCREASE_UNREAD_MESSAGE,
       });
     })
-    .catch(err => Materialize.toast(err.response.data, 3000, 'red'));
+    .catch(err => Materialize.toast(err.response.data.error, 3000, 'red'));
 }
 
 /**

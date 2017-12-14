@@ -169,19 +169,22 @@ describe('Test setup', () => {
       });
   });
 
-  it('should return an error when no search or limit parameter is sent', (done) => {
-    const query = '',
-      offset = 0;
-    request
-      .get(`/api/v1/user/searchuser`)
-      .set('authorization', token)
-      .query({ name: query, offset })
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.status).to.equal(404);
-        done();
-      });
-  });
+  it(
+    'should return an error when no search or limit parameter is sent', 
+    (done) => {
+      const query = '',
+        offset = 0;
+      request
+        .get(`/api/v1/user/searchuser`)
+        .set('authorization', token)
+        .query({ name: query, offset })
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(404);
+          done();
+        });
+    }
+  );
   it('should not send an email if user email doesn\'t exist', (done) => {
     request
       .post('/api/v1/user/reqpass')
