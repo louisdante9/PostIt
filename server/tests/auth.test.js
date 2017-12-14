@@ -1,19 +1,18 @@
 /* eslint no-unused-expressions: 0 */
 /* eslint import/no-unresolved: 0 */
-//import 'babel-polyfill';
+// import 'babel-polyfill';
 import chai from 'chai';
 import supertest from 'supertest';
 import app from '../app';
 import fakerObj from './helpers/auth.helper';
 
-const expect = chai.expect;
+const { expect } = chai;
 const request = supertest(app);
 let token;
 
 describe('Test setup', () => {
   describe('Creating a new user', () => {
-    it('should return 201 response on successful user registration', 
-    (done) => {
+    it('should return 201 response on successful user registration', (done) => {
       request
         .post('/api/v1/user/signup')
         .send(fakerObj.users)
@@ -33,17 +32,19 @@ describe('Test setup', () => {
           done();
         });
     });
-    it('should return an error if one of the request fields is empty', 
-    (done) => {
-      request
-        .post('/api/v1/user/signup')
-        .send(fakerObj.wrongUser)
-        .end((err, res) => {
-          if (err) return done(err);
-          expect(res.status).to.equal(400);
-          done();
-        });
-    });
+    it(
+      'should return an error if one of the request fields is empty', 
+      (done) => {
+        request
+          .post('/api/v1/user/signup')
+          .send(fakerObj.wrongUser)
+          .end((err, res) => {
+            if (err) return done(err);
+            expect(res.status).to.equal(400);
+            done();
+          });
+      }
+    );
   });
 
   describe('Logging in a user', () => {
@@ -93,5 +94,4 @@ describe('Test setup', () => {
         });
     });
   });
- 
 });

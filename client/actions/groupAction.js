@@ -3,7 +3,8 @@ import {
   CREATE_USER_GROUP,
   GET_USER_GROUP, GET_GROUP_MESSAGES,
   CREATE_GROUP_MESSAGE, GET_ALL_USERS,
-  ADD_USER_TO_GROUP, INCREASE_UNREAD_MESSAGE, GET_USER_IN_A_GROUP
+  ADD_USER_TO_GROUP, INCREASE_UNREAD_MESSAGE, GET_USER_IN_A_GROUP,
+  DELETE_USER_FROM_GROUP
 } from './types';
 import socket from './../utils/socket';
 /* global  Materialize */
@@ -113,13 +114,27 @@ export function searcUser(query, limit, offset) {
  */
 export function addUsers(groupId, userId) {
   return dispatch => axios().post(`/api/v1/group/${groupId}/user`, { userId })
-    .then(res => dispatch({
-      type: ADD_USER_TO_GROUP,
-      payload: res.data
-    }))
+    .then(() => true)
     .catch(err => Materialize.toast(err.response, 3000, 'red'));
 }
 
+/**
+ * 
+ * 
+ * @desc this function is used to removes users from a group
+ * @param {any} groupId 
+ * @param {any} userId 
+ * @param {any} groupName
+ * @returns {void}
+ */
+export function removeUsers(groupId, userId, groupName) {
+  return () => axios().delete(`/api/v1/group/${groupId}/user`, { data: { userId } })
+    .then(() => {
+      Materialize.toast(`You left ${groupName.name} group`, 3000, 'green');
+      return true;
+    })
+    .catch(err => Materialize.toast(err.response.data.message, 3000, 'red'));
+}
 /**
  * @desc this function loads users in a particular group
  * @param {any} groupId id of group in view

@@ -77,7 +77,7 @@ export const resetSuccessfulResetMail = (email) => {
  * 
  * @returns { void }
  */
-const passwordResetMail = (email, token, host) => {
+export const passwordResetMail = (email, token, host) => {
   const sender = '"Post It App" <notification@postit.com>';
   const subject = 'Password Reset';
   const content = `<div style="width: 100%; background-color: grey; padding: 2%;">

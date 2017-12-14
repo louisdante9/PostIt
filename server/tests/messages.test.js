@@ -36,7 +36,7 @@ before((done) => {
     });
 });
 describe('Test setup', () => {
-  describe('Create Messages route', () => {
+  describe('for messages route', () => {
     it('should allow a user create a message successfully', (done) => {
       request
         .post(`/api/v1/group/${group.id}/messages`)
@@ -77,178 +77,172 @@ describe('Test setup', () => {
         done();
       });
   });
-    it('should return 201 to add a user to a group', (done) => {
-      token;
+  it('should return 201 to add a user to a group', (done) => {
+    token;
+    request
+      .post(`/api/v1/group/2/user`)
+      .set('authorization', token)
+      .send({
+        userId: 3
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        expect(res.status).to.equal(201);
+        done();
+      });
+  });
+  
+  it('returns 201 response', (done) => {
+    request
+      .post(`/api/v1/group/${group.id}/messages`)
+      .set('authorization', token)
+      .send({
+        message: 'test message'
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        expect(res.status).to.equal(201);
+        done();
+      });
+  });
+  it('should send a message with priority level critical', (done) => {
+    request
+      .post(`/api/v1/group/${group.id}/messages`)
+      .set('authorization', token)
+      .send({
+        message: 'test message',
+        priority: 'critical'
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        expect(res.status).to.equal(201);
+        done();
+      });
+  });
+  it('should send a message with priority level urgent', (done) => {
+    request
+      .post(`/api/v1/group/${group.id}/messages`)
+      .set('authorization', token)
+      .send({
+        message: 'test message',
+        priority: 'urgent'
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        expect(res.status).to.equal(201);
+        done();
+      });
+  });
+  it('should get all messages in a group', (done) => {
+    request
+      .get(`/api/v1/group/${group.id}/messages`)
+      .set('authorization', token)
+      .send()
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+        expect(res.status).to.equal(200);
+        done();
+      });
+  });
+  it('should successfully search for other users', (done) => {
+    const query = 'G',
+      limit = 5,
+      offset = 0;
+    request
+      .get(`/api/v1/user/searchuser`)
+      .set('authorization', token)
+      .query({ name: query, limit, offset })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(200);
+        done();
+      });
+  });
+
+  it('should return an error when no search or limit parameter is sent', (done) => {
+    const query = '',
+      offset = 0;
+    request
+      .get(`/api/v1/user/searchuser`)
+      .set('authorization', token)
+      .query({ name: query, offset })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(404);
+        done();
+      });
+  });
+  it('should not send an email if user email doesn\'t exist', (done) => {
+    request
+      .post('/api/v1/user/reqpass')
+      .send({
+        email: 'tony@test.com'
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(404);
+        done();
+      });
+  });
+  it('should not send request if email is empty', (done) => {
+    request
+      .post('/api/v1/user/reqpass')
+      .send()
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(401);
+        done();
+      });
+  });
+  describe('for users', () => {
+    it('should send an email to the  user with reset link', (done) => {
       request
-        .post(`/api/v1/group/2/user`)
-        .set('authorization', token)
+        .post('/api/v1/user/reqpass')
         .send({
-          userId: 3
+          email: 'louisdante9@gmail.com'
         })
         .end((err, res) => {
-          if (err) {
-            return done(err);
-          }
+          token = res.body.token;
+          if (err) return done(err);
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+    it('should reset password successfully', (done) => {
+      request
+        .post(`/api/v1/user/resetpassword/${token}`)
+        .send({
+          newPassword: 'biology@1',
+          confirmPassword: 'biology@1'
+        })
+        .end((err, res) => {
+          if (err) return done(err);
           expect(res.status).to.equal(201);
           done();
         });
-
     });
-    describe('should send a message to a group', () => {
-      it('returns 201 response', (done) => {
-        request
-          .post(`/api/v1/group/${group.id}/messages`)
-          .set('authorization', token)
-          .send({
-            message: 'test message'
-          })
-          .end((err, res) => {
-            if (err) {
-              return done(err);
-            }
-            expect(res.status).to.equal(201);
-            done();
-          });
-      });
-      it('should send a message with priority level critical', (done) => {
-        request
-          .post(`/api/v1/group/${group.id}/messages`)
-          .set('authorization', token)
-          .send({
-            message: 'test message',
-            priority: 'critical'
-          })
-          .end((err, res) => {
-            if (err) {
-              return done(err);
-            }
-            expect(res.status).to.equal(201);
-            done();
-          });
-      });
-      it('should send a message with priority level urgent', (done) => {
-        request
-          .post(`/api/v1/group/${group.id}/messages`)
-          .set('authorization', token)
-          .send({
-            message: 'test message',
-            priority: 'urgent'
-          })
-          .end((err, res) => {
-            if (err) {
-              return done(err);
-            }
-            expect(res.status).to.equal(201);
-            done();
-          });
-      });
-        it('should get all messages in a group', (done) => {
-          request
-            .get(`/api/v1/group/${group.id}/messages`)
-            .set('authorization', token)
-            .send()
-            .end((err, res) => {
-              if (err) {
-                return done(err);
-              }
-              expect(res.status).to.equal(200);
-              done();
-            });
+    it('should fail password reset', (done) => {
+      request
+        .post('/api/v1/user/resetpassword/jjhhhh')
+        .send({
+          newPassword: 'biology@1',
+          confirmPassword: 'biology@1'
+        })
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(401);
+          done();
         });
-      describe('Search Users Route', () => {
-        it('should successfully search for other users', (done) => {
-          let query = 'G',
-            limit = 5,
-            offset = 0;
-          request
-            .get(`/api/v1/user/searchuser`)
-            .set('authorization', token)
-            .query({ name: query, limit, offset })
-            .end((err, res) => {
-              if (err) return done(err);
-              expect(res.status).to.equal(200);
-              done();
-            });
-        });
-
-        it('should return an error when no search or limit parameter is sent', (done) => {
-          let query = '',
-            limit,
-            offset = 0;
-          request
-            .get(`/api/v1/user/searchuser`)
-            .set('authorization', token)
-            .query({ name: query, limit, offset })
-            .end((err, res) => {
-              if (err) return done(err);
-              expect(res.status).to.equal(404);
-              done();
-            });
-        });
-        it('should not send an email if user email doesn\'t exist',
-          (done) => {
-            request
-              .post('/api/v1/user/reqpass')
-              .send({
-                email: 'tony@test.com'
-              })
-              .end((err, res) => {
-                if (err) return done(err);
-                expect(res.status).to.equal(404);
-                done();
-              });
-          });
-        it('should not send request if email is empty',
-          (done) => {
-            request
-              .post('/api/v1/user/reqpass')
-              .send()
-              .end((err, res) => {
-                if (err) return done(err);
-                expect(res.status).to.equal(401);
-                done();
-              });
-          });
-        it('should send an email to the  user with reset link',
-          (done) => {
-            request
-              .post('/api/v1/user/reqpass')
-              .send({
-                email: 'louisdante9@gmail.com'
-              })
-              .end((err, res) => {
-                token = res.body.token
-                if (err) return done(err);
-                expect(res.status).to.equal(200);
-                done();
-              });
-          });
-          it('should reset password successfully', (done) => {
-            request
-              .post(`/api/v1/user/resetpassword/${token}`)
-              .send({
-                newPassword: 'biology@1',
-                confirmPassword: 'biology@1'
-              })
-              .end((err, res) => {
-                if (err) return done(err);
-                expect(res.status).to.equal(201);
-                done();
-              });
-          });
-          it('should fail password rest', (done) => {
-            request
-              .post('/api/v1/user/resetpassword/jjhhhh')
-              .send({
-                newPassword: 'biology@1',
-                confirmPassword: 'biology@1'
-              })
-              .end((err, res) => {
-                if (err) return done(err);
-                expect(res.status).to.equal(401);
-                done();
-              });
-          });
-      });
     });
+  });
 });

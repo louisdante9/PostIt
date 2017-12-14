@@ -1,7 +1,7 @@
 import pry from 'pryjs';
 import models from '../models';
 import { handleErrors } from './helpers/handleErrors';
-import { mailer as priorityMail } from './helpers/mailer';
+import mailer from './helpers/mailer';
 import smsHelper from './helpers/smsHelper';
 import { io } from '../app';
 
@@ -14,10 +14,10 @@ import { io } from '../app';
 const sendMessage = (data, flag) => {
   switch (flag) {
     case 'urgent':
-      priorityMail(data);
+      mailer(data);
       break;
     case 'critical':
-      priorityMail(data);
+      mailer(data);
       smsHelper(data);
       break;
     default:

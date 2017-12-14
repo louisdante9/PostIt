@@ -1,13 +1,13 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import {PropTypes} from 'prop-types';
+import { PropTypes } from 'prop-types';
 import Footer from '../common/Footer.jsx';
 import { userSignupRequest } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 import { validateSignupFormInput } from '../../../server/shared/validations';
 
-/*global Materialize */
+/* global Materialize */
 /**
  * 
  * 
@@ -57,19 +57,17 @@ export class SignupForm extends React.Component {
     const { errors, isValid } = validateSignupFormInput(this.state);
     if (isValid) {
       this.setState({ isLoading: true });
-      this.props.userSignupRequest(this.state).then(
-        (result) => {
-          Materialize
+      this.props.userSignupRequest(this.state).then((result) => {
+        Materialize
           .toast('You signed up successfull. Welcome!', 3000, 'green');
-          browserHistory.push('/dashboard');
-        })
+        browserHistory.push('/dashboard');
+      })
         .catch((err) => {
           const error = err.response.data.message;
           this.handleErrors(error);
           this.setState({ isLoading: false });
         });
-    }
-    else {
+    } else {
       this.handleErrors(errors);
     }
   }
@@ -137,8 +135,10 @@ export class SignupForm extends React.Component {
               required
             />
             <div className="form-cta">
-              <button className="btn waves-effect waves-light black shadow-effect" 
-              type="submit" name="action">Sign Up</button>
+              <button
+               className="btn waves-effect waves-light black shadow-effect" 
+              type="submit" name="action">Sign Up
+              </button>
             </div>
           </div>
         </form>
@@ -146,7 +146,7 @@ export class SignupForm extends React.Component {
         <div className="row">
           <div className="col s12">
             <p className="authlinks">
-              Already have an account &nbsp;<a href="/signin">Sign In</a><br/>
+              Already have an account &nbsp;<a href="/signin">Sign In</a><br />
             </p>
           </div>
         </div>

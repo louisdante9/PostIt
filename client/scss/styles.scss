@@ -33,7 +33,9 @@ html, body {
     }
   }
 }
-
+.lead {
+  font-size: 20px;
+}
 #sidenav-overlay{
   z-index: 0;
 }
@@ -186,7 +188,6 @@ html, body {
 
 .group-collection {
   padding-left: 10px !important;
-  /*font-style: italic;*/
   font-weight: 600;
 }
 
@@ -222,7 +223,7 @@ span.bad.new {
 .secondary-content {
   top: 9px !important;
 }
-.group-span{
+.group-span {
   font-size: 17px;
   font-weight: 200;
 }
@@ -230,7 +231,7 @@ span.bad.new {
   font-size: 16px;
   font-weight: 200;
 }
-.welcome{
+.welcome {
   font-size: 32px;
   font-weight: 200;
   > h2{
@@ -287,6 +288,7 @@ span.bad.new {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  float: right;
 }
 
 /* Tooltip text */
@@ -307,7 +309,6 @@ span.bad.new {
   max-height: 200px;
   overflow-y: auto;
   
-
   /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 1;

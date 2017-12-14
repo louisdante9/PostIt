@@ -42,7 +42,7 @@ export default {
             ]
           })
           .then(users => {
-            res.status(200).send(users)
+            res.status(200).send(users);
           });
       })
       .catch(err => res.status(400).send({
@@ -107,4 +107,62 @@ export default {
         message: err.message
       }));
   },
+  
+  /**
+  * this method removes a user to a new group
+  * @param {object} req users request object
+  * @param {object} res servers response
+  * @return {void}
+   */
+  removerUserFromGroup(req, res) {
+    return models.Group.findOne({
+      where: {
+        id: req.params.groupId
+      }
+    })
+      .then((group) => {
+        if (!group) {
+          return res.status(404).send({
+            success: false,
+            message: 'Group does not exist'
+          });
+        }
+        return models.GroupUser.findOne({
+          where: {
+            userId: req.body.userId,
+            groupId: req.params.groupId
+          }
+        })
+          .then((member) => {
+            if (!member) {
+              return res.status(404).send({
+                success: false,
+                message: 'User does not belong to the group'
+              });
+            }
+            models.GroupUser.destroy({
+              where: {
+                userId: req.body.userId,
+                groupId: req.params.groupId
+              }
+            })
+              .then((removeMember) => {
+                res.status(200).send({
+                  success: true,
+                  message: 'successfully removed from group',
+                  id: removeMember.id
+                });
+              }, err => res.status(400).send({
+                success: false,
+                message: err.message
+              }));
+          }, err => res.status(400).send({
+            success: false,
+            message: err.message
+          }));
+      }, err => res.status(400).send({
+        success: false,
+        message: err.message
+      }));
+  }
 };

@@ -19,7 +19,7 @@ export const Home = (props) => {
             degree of priority to everyone in your group
             by sending a message once. Awesome isn't it
           </p>
-          <p className="">
+          <p>
             <a href="/signup"
               className=" btn shadow-effect home-btn">
               Get Started

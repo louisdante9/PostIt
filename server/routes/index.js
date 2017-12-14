@@ -15,6 +15,10 @@ module.exports = (app) => {
     '/api/v1/group/:groupId/user', 
     authenticate.verifyToken, GroupUsers.addUsersToGroup
   );
+  app.delete(
+    '/api/v1/group/:groupId/user', 
+    authenticate.verifyToken, GroupUsers.removerUserFromGroup
+  );
   app.get(
     '/api/v1/group/:groupId/messages', 
     authenticate.verifyToken, Messages.getGroupMessage

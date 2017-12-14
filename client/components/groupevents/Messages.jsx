@@ -7,17 +7,17 @@ const renderMessage = (message, user) => {
   const priorityFlag = message.flag;
   let flagColor;
   if (priorityFlag == 'normal') {
-    flagColor = 'flag normal'
+    flagColor = 'flag normal';
   } else if (priorityFlag == 'urgent') {
-    flagColor = 'flag urgent'
+    flagColor = 'flag urgent';
   } else {
-    flagColor = 'flag critical'
+    flagColor = 'flag critical';
   }
 
   return (
     <li key={message.id} className={addClass}>
       <span>
-      <span className="username">
+        <span className="username">
           {message.User.username}
         </span>
         <span className="ultra-small grey-text time-text">

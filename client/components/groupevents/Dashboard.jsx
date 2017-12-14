@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -10,7 +11,7 @@ import MessageBox from './MessageBox.jsx';
 import Modal from './Modal.jsx';
 import UserModal from './UserModal.jsx';
 import { Welcome } from './Welcome.jsx';
-import { getGroups, createGroup, getMessages, createMessage, loadGroupUsers }
+import { getGroups, createGroup, getMessages, createMessage, loadGroupUsers, removeUsers }
   from '../../actions/groupAction';
 
 /**
@@ -39,6 +40,7 @@ export class Dashboard extends Component {
     this.scrollToBottom = this.scrollToBottom.bind(this);
     this.getMessageBoardRef = this.getMessageBoardRef.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.removeUser = this.removeUser.bind(this);
   }
 
 
@@ -123,7 +125,24 @@ export class Dashboard extends Component {
     event.preventDefault();
     this.props.logout();
   }
-
+  /**
+   * 
+   * 
+   * @param {any} event 
+   * @memberof Dashboard
+   * @returns {void}
+   */
+  onSubmit(event) {
+    event.preventDefault();
+    if (this.state.message.length > 0) {
+      const { userId, username } = this.props.user;
+      const messageData = { ...this.state, userId, username };
+      this.props.createMessage(this.state.groupId, messageData);
+      this.setState({ message: '' });
+    } else {
+      Materialize.toast('Oops yo! try writing something', 3000, 'red');
+    }
+  }
   /**
    * 
    * @param {any} event 
@@ -142,20 +161,20 @@ export class Dashboard extends Component {
   /**
    * 
    * 
-   * @param {any} event 
+   * @param {any} event
    * @memberof Dashboard
-   * @returns {void}
+   * @returns { void }
    */
-  onSubmit(event) {
+  removeUser(event) {
     event.preventDefault();
-    if (this.state.message.length > 0) {
-      const { userId, username } = this.props.user;
-      const messageData = { ...this.state, userId, username };
-      this.props.createMessage(this.state.groupId, messageData);
-      this.setState({ message: '' });
-    } else {
-      Materialize.toast('Oops yo! try writing something', 3000, 'red');
-    }
+    const groupName = this.props.groups.find(group => group.id === this.state.groupId);    
+    console.log(this.state.groupId, '', this.props.user.userId, groupName, 'hello i am here');
+    this.props.removeUsers(this.state.groupId, this.props.user.userId, groupName).then(() => {
+      localStorage.removeItem('currentGroup', this.state.groupId);
+      this.setState(state => ({ groupId: '' }));
+      this.props.getGroups();
+      browserHistory.push('/dashboard');
+    });
   }
 
   /**
@@ -205,9 +224,14 @@ export class Dashboard extends Component {
                       {GroupName && GroupName.name}
                     </h3>
                     <div className="options">
-                      <a href="#modal2" className=" modal-trigger">
-                        <span className="btn-cta" data-intro="Add users here">Add User</span>
-                      </a>
+                      <div className="user-actions">
+                        <a href="#" className="" onClick={this.removeUser}>
+                          <span className="btn-cta remove-user" data-intro="remove users here">Leave group</span>
+                        </a>
+                        <a href="#modal2" className=" modal-trigger">
+                          <span className="btn-cta" data-intro="Add users here">Add User</span>
+                        </a>
+                      </div>
                       <div className="tooltip">{groupMember} members
                         <span className="tooltiptext">{members}</span>
                       </div>
@@ -247,7 +271,8 @@ Dashboard.propTypes = {
   user: PropTypes.object.isRequired,
   active: PropTypes.bool.isRequired,
   allMsgs: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  removeUsers: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -265,6 +290,7 @@ export default connect(
     getMessages,
     createMessage, 
     loadGroupUsers, 
-    logout
+    logout,
+    removeUsers
   }
 )(Dashboard);

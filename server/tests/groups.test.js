@@ -67,8 +67,8 @@ describe('Test setup', () => {
         done();
       });
   });
-  describe('Add user to a new group', () => {
-    it('should return 200 response if user is successfully added to group', (done) => {
+  describe('Adding a user to a new group', () => {
+    it('should return 201 response if user is successfully added to group', (done) => {
       request
         .post(`/api/v1/group/1/user`)
         .set('authorization', token)
@@ -140,5 +140,46 @@ describe('Test setup', () => {
           done();
         });
     });
+  });
+  describe('Deletes user to a new group', () => {
+    it('should return 200 response if user is successfully removed from a group', (done) => {
+      request
+        .delete(`/api/v1/group/1/user`)
+        .set('authorization', token)
+        .send({
+          userId: 1
+        })
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+  });
+  it('should return 404 if the user is already deleted from group', (done) => {
+    request
+      .delete(`/api/v1/group/1/user`)
+      .set('authorization', token)
+      .send({
+        userId: 1
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(404);
+        done();
+      });
+  });
+  it('should return 404 to add a user to a group that doesn\'t exist', (done) => {
+    request
+      .delete(`/api/v1/group/100/user`)
+      .set('authorization', token)
+      .send({
+        userId: 1
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(404);
+        done();
+      });
   });
 });

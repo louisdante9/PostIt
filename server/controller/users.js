@@ -18,7 +18,9 @@ export default {
   * @returns {Object} - Returns response object
   */
   signup(req, res) {
-    const { username, email, password, phone } = req.body;
+    const {
+      username, email, password, phone 
+    } = req.body;
     models.User.find({
       where: {
         $or: [
@@ -47,17 +49,13 @@ export default {
           user
         });
       })
-        .catch(error => {
-          return res.status(400).json({
-            status: 400,
-            message: 'Bad request sent to the server',
-            errors: handleError(error)
-          });
-        });
+        .catch(error => res.status(400).json({
+          status: 400,
+          message: 'Bad request sent to the server',
+          errors: handleError(error)
+        }));
     })
-      .catch((error) => {
-        return res.status(500).json(error);
-      });
+      .catch((error) => res.status(500).json(error));
   },
 
   /**
@@ -168,11 +166,10 @@ export default {
             })
               .then(() => {
                 passwordResetMail(email, token, req.headers.host);
-                return res.status(200).send(
-                  {
-                    message: "password updated succesfully",
-                    token
-                  });
+                return res.status(200).send({
+                  message: "password updated succesfully",
+                  token
+                });
               }, (err) => {
                 res.status(400).send({
                   success: false,
@@ -269,4 +266,4 @@ export const handleError = error => {
   });
 
   return result;
-}
+};
