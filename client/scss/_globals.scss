@@ -1,6 +1,12 @@
 
 html, body, #app {
   height: 100%;
+  background-color: #fff;
+  color: #4d394b;
+  max-height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
 }
 body {
   font-family: $font-family-primary;
