@@ -2,12 +2,12 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { validateForgotPasswordInput } from '../../../server/shared/validations';
+import { validateForgotPasswordInput } from '../../validations';
 import TextFieldGroup from '../common/TextFieldGroup';
 import Footer from '../common/Footer.jsx';
 import { resetPassword } from '../../actions/authActions';
 
-/*global Materialize */
+/* global Materialize */
 /**
  * 
  * 
@@ -15,7 +15,6 @@ import { resetPassword } from '../../actions/authActions';
  * @extends {React.Component}
  */
 export class ForgotPasswordForm extends React.Component {
-
   /**
    * Creates an instance of ForgotPasswordForm.
    * @param {any} props 
@@ -55,11 +54,11 @@ export class ForgotPasswordForm extends React.Component {
     const { errors, isValid } = validateForgotPasswordInput(this.state);
     const { email } = this.state;
     if (isValid) {
-      this.props.resetPassword({email})
+      this.props.resetPassword({ email })
         .then(res => {
           if (res && res.status == '200') {
             Materialize.toast('A password reset link has been sent to your mail, pls check your mail', 3000, 'blue');
-          }else{
+          }else {
             Materialize.toast('ops! sorry an error occured while updating your password', 3000, 'red');
           }
         })
@@ -83,7 +82,8 @@ export class ForgotPasswordForm extends React.Component {
       <div className="container auth-form align">
         <h2>Forgot Your Password?</h2>
         <p>enter your email address below and 
-        <br/> to get a new one</p>
+          <br /> to get a new one
+        </p>
         <form className="row" onSubmit={this.onSubmit}>
 
           <div className="col s12">
@@ -99,9 +99,9 @@ export class ForgotPasswordForm extends React.Component {
               <button className="btn shadow-effect  black ">
                 Send
               </button>
-             </div>
-           </div>
-         </form>
+            </div>
+          </div>
+        </form>
         <Footer />
       </div>
     );

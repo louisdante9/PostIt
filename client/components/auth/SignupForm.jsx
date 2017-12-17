@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types';
 import Footer from '../common/Footer.jsx';
 import { userSignupRequest } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
-import { validateSignupFormInput } from '../../../server/shared/validations';
+import { validateSignupFormInput } from '../../validations';
 
 /* global Materialize */
 /**

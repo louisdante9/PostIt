@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { PropTypes } from 'prop-types';
 import requireauth from '../../utils/requireAuth';
 import { login } from '../../actions/authActions';
-import { validateSigninFormInput } from '../../../server/shared/validations';
+import { validateSigninFormInput } from '../../validations';
 import TextFieldGroup from '../common/TextFieldGroup';
 import Footer from '../common/Footer.jsx';
 /* global Materialize */

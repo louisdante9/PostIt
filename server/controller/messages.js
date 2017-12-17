@@ -7,23 +7,23 @@ import { io } from '../app';
 
 /**
  * sendMessage, this is a helper method for sending messages 
- * @param {Object} data
+ * @param {Object} emailData
  * @param {Object} flag Response object
  * @returns {void}
  */
-const sendMessage = (data, flag) => {
+const sendMessage = (emailData, flag) => {
   switch (flag) {
     case 'urgent':
-      mailer(data);
+      mailer(emailData);
       break;
     case 'critical':
-      mailer(data);
-      smsHelper(data);
+      mailer(emailData);
+      smsHelper(emailData);
       break;
     default:
       break;
   }
-}
+};
 
 const Messages = {
 
@@ -36,38 +36,30 @@ const Messages = {
   getGroupMessage(req, res) {
     const { userId } = req.decoded.userId;
     const { groupId } = req.params.groupId;
-    if (req.query.read) {
-      getAllUnreadMessage(userId, groupId)
-        .then(data => res.status(200).json(data))
-        .catch(err => res.status(500).json(err));
-    } else {
-      models.Group.find({
-        where: { id: req.params.groupId },
-      }).then((group) => {
-        if (!group) {
-          return res.status(404).json({
-            error: 'bad request'
-          });
-        }
-        models.Message.findAll({
-          where: { groupId: req.params.groupId },
-          include: [{
-            model: models.User,
-            attributes: { exclude: ['password'] },
-            order: [['createdAt', 'DESC']]
-          },
-          ],
-          order: [['createdAt', 'ASC']]
-        }).then((messages) => {
-          res.status(200).json({
-            messages,
-          });
+    models.Group.find({
+      where: { id: req.params.groupId },
+    }).then((group) => {
+      if (!group) {
+        return res.status(404).json({
+          error: 'bad request'
         });
-      })
-        .catch((error) => {
-          return res.status(500).json({ error });
+      }
+      models.Message.findAll({
+        where: { groupId: req.params.groupId },
+        include: [{
+          model: models.User,
+          attributes: { exclude: ['password'] },
+          order: [['createdAt', 'DESC']]
+        },
+        ],
+        order: [['createdAt', 'ASC']]
+      }).then((messages) => {
+        res.status(200).json({
+          messages,
         });
-    }
+      });
+    })
+      .catch((error) => res.status(500).json({ error }));
   },
 
   /**
@@ -99,18 +91,18 @@ const Messages = {
               }
             ],
             raw: true
-          }).then((data) => {
-            sendMessage(data, addedMessage.flag);
-            const msgData = generateUserMessageData(data,
-              req.decoded.userId, addedMessage.id);
+          }).then((messsaageData) => {
+            sendMessage(messsaageData, addedMessage.flag);
+            const msgData = generateUserMessageData(
+              messsaageData,
+              req.decoded.userId, addedMessage.id
+            );
             createUnreadMessages(msgData).then(e => { }).catch(() => { });
           });
-        }).catch((err) => {
-          return res.status(400).json({
-            message: 'Bad Request',
-            err: handleErrors(err)
-          });
-        });
+        }).catch((err) => res.status(400).json({
+          message: 'Bad Request',
+          err: handleErrors(err)
+        }));
       } else {
         return res.status(404).json({
           message: 'No such group found'
@@ -128,26 +120,24 @@ export default Messages;
 /**
   * generateUserMessageData
   * @description this function is a helper function for create new message method 
-  * @param {integer} data
+  * @param {integer} userMsgData
   * @param {integer} userId
   * @returns {Object} - Returns an object
   */
-const generateUserMessageData = (data, userId) => {
-  return data.map(metadata => {
-    const value = {
-      read: false,
-      userId: metadata.userId,
-      groupId: metadata.groupId,
-    };
-    if (value.userId !== userId) {
-      return value;
-    }
-    return {
-      ...value, 
-      read: true 
-    };
-  });
-}
+const generateUserMessageData = (userMsgData, userId) => userMsgData.map(metadata => {
+  const value = {
+    read: false,
+    userId: metadata.userId,
+    groupId: metadata.groupId,
+  };
+  if (value.userId !== userId) {
+    return value;
+  }
+  return {
+    ...value, 
+    read: true 
+  };
+});
 
 /**
   * createUnreadMessages
@@ -166,19 +156,17 @@ const createUnreadMessages = data => models.UserMessages.bulkCreate(data);
   * @param {integer} groupId
   * @returns {Object} - Returns an object
   */
-const getAllUnreadMessage = (userId, groupId) => {
-  return models.GroupUser.findAll({
-    where: { userId },
-    include: [
-      {
-        model: models.Group,
-        include: [{
-          model: models.UserMessages,
-          where: {
-            userId, 
-            read: false
-          }
-        }]
-      }]
-  });
-}
+// const getAllUnreadMessage = (userId, groupId) => models.GroupUser.findAll({
+//   where: { userId },
+//   include: [
+//     {
+//       model: models.Group,
+//       include: [{
+//         model: models.UserMessages,
+//         where: {
+//           userId, 
+//           read: false
+//         }
+//       }]
+//     }]
+// });

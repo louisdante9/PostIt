@@ -50,11 +50,24 @@ describe('Test setup', () => {
           done();
         });
     });
+    it('should allow a user create a message successfully with priority urgent', (done) => {
+      request
+        .post(`/api/v1/group/${group.id}/messages`)
+        .set('authorization', token)
+        .send({ message: 'A new new message', flag: 'urgent' })
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          expect(res.status).to.equal(201);
+          done();
+        });
+    });  
     it('should not create a message if the group does not exist', (done) => {
       request
         .post(`/api/v1/group/${group.id * 5}/messages`)
         .set('authorization', token)
-        .send({ message: 'A new new message', flag: 'critical' })
+        .send({ message: 'A new new message', flag: 'urgent' })
         .end((err, res) => {
           if (err) {
             return done(err);
