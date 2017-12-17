@@ -8,14 +8,14 @@ import { shallow, mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 import { provider } from 'react-redux';
 import { ForgotPasswordForm } 
-from '../../components/auth/ForgotPasswordForm.jsx';
+  from '../../components/auth/ForgotPasswordForm.jsx';
 import mockData from '../../../__mocks__/mockData';
 
 // jest.dontMock();
 configure({ adapter: new Adapter() });
 
 describe('ForgotPasswordForm', () => {
-  let props = {
+  const props = {
     userSignupRequest: jest.fn(() => Promise.resolve()),
     resetPassword: jest.fn(() => Promise.resolve({
       res: {
@@ -23,7 +23,7 @@ describe('ForgotPasswordForm', () => {
       }
     }))
   };
-  const component = mount(<ForgotPasswordForm {...props } />);
+  const component = mount(<ForgotPasswordForm {...props} />);
   it('should render atleast once', () => {
     expect(component.length).toEqual(1);
   });
@@ -32,7 +32,6 @@ describe('ForgotPasswordForm', () => {
   });
   it('always renders signup form', () => {
     expect(component.find('form').length).toBe(1);
-
   });
   it('always renders a signup form with the inputs required', () => {
     expect(component.find('TextFieldGroup').length).toBe(1);
@@ -40,7 +39,6 @@ describe('ForgotPasswordForm', () => {
 
   it('always renders a form submit button ', () => {
     expect(component.find('button').length).toBe(1);
-
   });
   it('calls onChange method', () => {
     const event = mockData.forgotPasswwordData;
@@ -54,9 +52,7 @@ describe('ForgotPasswordForm', () => {
     const event = {
       preventDefault: jest.fn()
     };
-    const handleSubmitSpy = jest.spyOn(
-      component.instance(), 'onSubmit'
-    );
+    const handleSubmitSpy = jest.spyOn(component.instance(), 'onSubmit');
     component.instance().onSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalled();
   });
@@ -73,15 +69,13 @@ describe('ForgotPasswordForm', () => {
           }
         }
       }))
-    }
-    const wrapper = mount(<ForgotPasswordForm {...newProps } />);
+    };
+    const wrapper = mount(<ForgotPasswordForm {...newProps} />);
     wrapper.setState(mockData.forgotPasswwordState);
     const event = {
       preventDefault: jest.fn()
     };
-    const handleSubmitSpy = jest.spyOn(
-      wrapper.instance(), 'onSubmit'
-    );
+    const handleSubmitSpy = jest.spyOn(wrapper.instance(), 'onSubmit');
     wrapper.instance().onSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalled();
   });

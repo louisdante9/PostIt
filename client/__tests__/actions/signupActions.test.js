@@ -44,37 +44,40 @@ describe('actions', () => {
       };
       expect(actions.setCurrentUser(userData)).toEqual(expectedAction);
     });
-    it('creates an action USER_AUTHENTICATED on successful user sign up', (done) => {
-      moxios.stubRequest('/api/v1/user/signup', {
-        status: 201,
-        response: {
-          success: true,
-          message: 'Sign up succesful.',
-          token: 'iSX6NVMqqQpgdUebW3iRBJz8oerTtfzYUm4ADESM7fk'
-        }
-      });
-      const store = mockStore({});
-      const auth = {
-        active: true,
-        user: {
-          id: 1,
-          email: 'louisdante9@andela.com',
-        }
-      };
-      const userData = {
-        username: 'louis',
-        email: 'louis@andela.com',
-        password: 'BioLoGy@1',
-        phone: '2349069473974'
-      };
-      const expectedActions = [
-        { type: types.USER_AUTHENTICATED, user: auth.user }
-      ];
-      store.dispatch(actions.userSignupRequest(userData)).then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
-      done();
-    });
+    it(
+      'creates an action USER_AUTHENTICATED on successful user sign up',
+      (done) => {
+        moxios.stubRequest('/api/v1/user/signup', {
+          status: 201,
+          response: {
+            success: true,
+            message: 'Sign up succesful.',
+            token: 'iSX6NVMqqQpgdUebW3iRBJz8oerTtfzYUm4ADESM7fk'
+          }
+        });
+        const store = mockStore({});
+        const auth = {
+          active: true,
+          user: {
+            id: 1,
+            email: 'louisdante9@andela.com',
+          }
+        };
+        const userData = {
+          username: 'louis',
+          email: 'louis@andela.com',
+          password: 'BioLoGy@1',
+          phone: '2349069473974'
+        };
+        const expectedActions = [
+          { type: types.USER_AUTHENTICATED, user: auth.user }
+        ];
+        store.dispatch(actions.userSignupRequest(userData)).then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+        done();
+      }
+);
   });
   describe('confirm Password reset', () => {
     beforeEach(() => moxios.install());
@@ -120,9 +123,11 @@ describe('actions', () => {
       const expectedActions = [
         { type: types.RESET_PASSWORD_FAILED }
       ];
-      store.dispatch(actions.confirmPasswordResetRequest(payLoad.token, payLoad)).then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
+      store.dispatch(actions
+        .confirmPasswordResetRequest(payLoad.token, payLoad))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
       done();
     });
   });

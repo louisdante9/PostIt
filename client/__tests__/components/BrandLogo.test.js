@@ -9,7 +9,7 @@ import  BrandLogo from '../../components/common/BrandLogo.jsx';
 configure({ adapter: new Adapter() });
 
 describe('BrandLogo', () => {
-  let props = {
+  const props = {
     textColor: 'white'
   }
   const component = mount(<BrandLogo {...props} />);

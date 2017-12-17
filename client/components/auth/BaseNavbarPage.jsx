@@ -1,6 +1,6 @@
 import React from 'react';
-import NavigationBar from '../common/NavigationBar.jsx';
 import { PropTypes } from 'prop-types';
+import NavigationBar from '../common/NavigationBar.jsx';
 
 
 const BaseNavbarPage = (props) => (

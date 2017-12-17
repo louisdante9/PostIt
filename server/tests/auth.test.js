@@ -10,9 +10,9 @@ const { expect } = chai;
 const request = supertest(app);
 let token;
 
-describe('Test setup', () => {
-  describe('Creating a new user', () => {
-    it('should return 201 response on successful user registration', (done) => {
+describe('usersControllersTests', () => {
+  describe('Registering a new user', () => {
+    it('returns 201 response on successful user registration', (done) => {
       request
         .post('/api/v1/user/signup')
         .send(fakerObj.users)
@@ -23,7 +23,7 @@ describe('Test setup', () => {
           done();
         });
     });
-    it('should retunrn (409 error) for duplicate email', (done) => {
+    it('returns (409 error) for duplicate email', (done) => {
       request
         .post('/api/v1/user/signup')
         .send(fakerObj.users)
@@ -47,8 +47,8 @@ describe('Test setup', () => {
     );
   });
 
-  describe('Logging in a user', () => {
-    it('should successfully log in a registered user', (done) => {
+  describe('Login a user', () => {
+    it('returns 200 with complete parameters', (done) => {
       request
         .post('/api/v1/user/signin')
         .send(fakerObj.users)
@@ -58,7 +58,7 @@ describe('Test setup', () => {
           done();
         });
     });
-    it('should return an error if the password field is empty', (done) => {
+    it('should return an error if the password is not given', (done) => {
       request
         .post('/api/v1/user/signin')
         .send(fakerObj.wrongUser2)
@@ -68,7 +68,7 @@ describe('Test setup', () => {
           done();
         });
     });
-    it('should return an error if the email field is empty', (done) => {
+    it('should return an error if the email is not given', (done) => {
       request
         .post('/api/v1/user/signin')
         .send(fakerObj.wrongUser)

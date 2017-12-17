@@ -6,6 +6,7 @@ import { validateForgotPasswordInput } from '../../../server/shared/validations'
 import TextFieldGroup from '../common/TextFieldGroup';
 import Footer from '../common/Footer.jsx';
 import { resetPassword } from '../../actions/authActions';
+
 /*global Materialize */
 /**
  * 

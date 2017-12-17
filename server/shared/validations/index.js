@@ -3,14 +3,13 @@ import isEmpty from 'lodash/isEmpty';
 
 /**
  * 
- * this functtion handles validation for signin form
+ * @desc this functtion handles validation for signin form
  * 
- * @export
  * @param {any} inputData 
  * @returns {void}
  */
 export const validateSigninFormInput = (inputData) => {  
-  const errors ={};
+  const errors = {};
   if (Validator.isEmpty(inputData.email)) {
     errors.email = 'Email field is required';
   }
@@ -24,9 +23,8 @@ export const validateSigninFormInput = (inputData) => {
 }
 /**
  * 
- * this function handle validation for signup form 
+ * @desc this function handle validation for signup form 
  * 
- * @export
  * @param {any} inputData 
  * @returns {void}
  */
@@ -54,9 +52,8 @@ export const validateSignupFormInput = (inputData) => {
 }
 /**
  * 
- * this function handle validation for forgot password form
+ * @desc this function handle validation for forgot password form
  * 
- * @export
  * @param {any} inputData 
  * @returns {void}
  */
@@ -70,11 +67,31 @@ export const validateForgotPasswordInput = (inputData) => {
     isValid: isEmpty(errors)
   };
 }
+
 /**
  * 
- * this function handle validation for change password form
+ * @desc this functtion handles validation for signin form
+ * @param {any} inputData 
+ * @returns {void}
+ */
+export const validateCreateGroupInput = (inputData) => {
+  const errors = {};
+  if (Validator.isEmpty(inputData.name)) {
+    errors.name = 'Group name can not be empty';
+  }
+  if (Validator.isEmpty(inputData.description)) {
+    errors.description = 'Group description can not be empty';
+  }
+  return {
+    errors,
+    isValid: isEmpty(errors)
+  };
+}
+
+/**
  * 
- * @export
+ * @desc this function handle validation for change password form
+ * 
  * @param {any} inputData 
  * @returns {void}
  */

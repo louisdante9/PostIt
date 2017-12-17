@@ -31,7 +31,15 @@ socket.on('groupMessage', (data) => {
     increaseUnread(userId, data.groupId);
   }
 });
-export const increaseUnread = (userId, groupId) => {
+
+/**
+* 
+* @desc this function returns number of unread messages 
+* @param {any} userId 
+* @param {any} groupId 
+* @returns { void }
+*/
+const increaseUnread = (userId, groupId) => {
   axios().post(`/api/v1/group/${groupId}`, { userId });
 };
 export default socket;

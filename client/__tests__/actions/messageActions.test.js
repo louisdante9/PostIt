@@ -19,7 +19,7 @@ describe('Message action', () => {
     });
     it('should dispatch GET_GROUP_MESSAGES action when called', (done) => {
       const store = mockStore({});
-      const data = { 
+      const responseData = { 
         messages: {
           id: 1,
           message: 'yo', 
@@ -39,14 +39,14 @@ describe('Message action', () => {
       };
       moxios.stubRequest('/api/v1/group/1/messages', {
         status: 200,
-        response: data
+        response: responseData
       });
       const groupId = 1;
       
       const expectedActions = [
         {
           type: types.GET_GROUP_MESSAGES,
-          payload: data.messages,
+          payload: responseData.messages,
           groupId
         },
         { type: 'INCREASE_UNREAD_MESSAGE' } 
@@ -67,7 +67,7 @@ describe('Message action', () => {
     });
     it('should dispatch CREATE_USER_GROUP action creator when called', (done) => {
       const store = mockStore({});
-      const data = {
+      const responseData = {
         id: 1,
         message: "yo",
         userId: 1,
@@ -84,7 +84,7 @@ describe('Message action', () => {
       };
       moxios.stubRequest('/api/v1/group/1/messages', {
         status: 200,
-        response: data
+        response: responseData
       });
       const groupId = 1;
       const messageData = {
@@ -97,7 +97,7 @@ describe('Message action', () => {
       const expectedActions = [
         {
           type: types.CREATE_GROUP_MESSAGE,
-          payload: data,
+          payload: responseData,
           groupId
         }
       ];

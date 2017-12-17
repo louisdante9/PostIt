@@ -71,7 +71,9 @@ describe('UserSearchResult', () => {
   it('calls a setGroupMessages method', () => {
     const event = { preventDefault: jest.fn() };
     const id = 1;
-    const setGroupMessagesSpy = jest.spyOn(component.instance(), 'setGroupMessages');
+    const setGroupMessagesSpy = jest.spyOn(component.instance(), 
+      'setGroupMessages'
+    );
     component.instance().setGroupMessages(event, id);
     expect(setGroupMessagesSpy).toHaveBeenCalled();
   });

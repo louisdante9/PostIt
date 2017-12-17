@@ -3,7 +3,7 @@ import jwtDecode from 'jwt-decode';
 import setAuthToken from '../utils/setAuthToken';
 import { USER_AUTHENTICATED, RESET_PASSWORD_SUCCESS } from './types';
 
-/* global Materialize */
+/* global Materialize history */
 
 /**
  * 
@@ -22,11 +22,11 @@ export function setCurrentUser(user) {
  * 
  * 
  * @desc this function signs in a user
- * @param {any} data 
+ * @param {any} responseData 
  * @returns {void}
  */
-export function login(data) {
-  return dispatch => axios.post('/api/v1/user/signin', data).then(res => {
+export function login(responseData) {
+  return dispatch => axios.post('/api/v1/user/signin', responseData).then(res => {
     const { token } = res.data;
     localStorage.setItem('jwtToken', token);
     setAuthToken(token);
@@ -101,7 +101,7 @@ const confirmPasswordResetFailed = password => ({
  * @param {any} newPassword
  * @returns {void} 
  */
-const confirmPasswordResetRequest = (token, newPassword) =>
+export const confirmPasswordResetRequest = (token, newPassword) =>
   dispatch =>
     axios.post(`/api/v1/user/resetpassword/${token}`, newPassword)
       .then((response) => {

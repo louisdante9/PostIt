@@ -7,7 +7,7 @@ import { shallow, mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 import { provider } from 'react-redux';
 import { ChangePasswordForm } 
-from '../../components/auth/ChangePasswordForm.jsx';
+  from '../../components/auth/ChangePasswordForm.jsx';
 import mockData from '../../../__mocks__/mockData';
 
 // jest.dontMock();

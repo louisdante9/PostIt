@@ -1,9 +1,9 @@
 import React from 'react';
+import { error } from 'util';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { UserSearchResult } from './UserSearchResult.jsx';
 import { addUsers, searcUser, loadGroupUsers } from '../../actions/groupAction';
-import { error } from 'util';
 
 
 /**
@@ -79,7 +79,7 @@ export class UserModal extends React.Component {
       } else {
         this.setState(state => ({
           matchingUsers: mapResult,
-          count: res.data.data.pageCount,
+          count: res.data.responsedata.pageCount,
           addUser: query,
           error: false
         }));
@@ -101,7 +101,7 @@ export class UserModal extends React.Component {
       const mapResult = res.data.users.rows.map(user => ({ ...user }));
       this.setState({
         matchingUsers: mapResult,
-        count: res.data.data.pageCount,
+        count: res.data.responsedata.pageCount,
         addUser: query,
         offset: Math.ceil(selected * limit)
       });
@@ -185,6 +185,7 @@ export class UserModal extends React.Component {
                 value={this.state.name}
                 onChange={this.handleChange}
                 autoComplete="off"
+                required
               />
               <span className={searchError}>sorry no user found</span>
               <label htmlFor="group-title">

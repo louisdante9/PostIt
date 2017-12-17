@@ -34,8 +34,7 @@ export class DashboardHeader extends React.Component {
       return groups.map(group => {
         const show = (unread[group.id] || 0) > 0;
         return (
-          <li key={group.id}
-            className="side-nav-item"
+          <li key={group.id} className="side-nav-item"
             onClick={(event, id) => setGroupMessages(event, group.id)}>
             <a className="group-names">
               <span className="group-title">{group.name}</span>

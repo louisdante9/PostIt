@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { PropTypes } from 'prop-types';
-
+/**
+ * 
+ * @desc this functional component return the logo of the page
+ * @param {any} props 
+ * @returns { void }
+ */
 const BrandLogo = (props) => {
   const textColor = props.textColor || '';
   return (

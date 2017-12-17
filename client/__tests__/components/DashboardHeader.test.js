@@ -21,7 +21,9 @@ const store = mockStore({
     unread: {}
   }
 });
-//mock jquery
+
+/** mock jquery */
+
 Object.defineProperty(window, '$', {
   value: () => ({
     collapsible: () => jest.fn()
@@ -48,7 +50,7 @@ describe('DashboardHeader component', () => {
   });
   it('should call mapStateToProps method once', () => {
     const wrapper = shallow(<ConnectedDashboardHeader
-      {...props } store={store} />);
+      {...props} store={store} />);
     expect(wrapper.length).toBe(1);
   });
 });

@@ -118,7 +118,7 @@ export default {
         res.status(200).send({
           success: true,
           users,
-          data: paginate(users.count, limit, offset * 5)
+          responsedata: paginate(users.count, limit, offset * 5)
         });
       }, (err) => {
         res.status(400).send({

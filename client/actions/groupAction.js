@@ -43,7 +43,7 @@ export function createGroup(groupData) {
       Materialize
         .toast('Group successfully created!', 6000, 'green');
     })
-    .catch(err => Materialize.toast(err.response.data.err, 3000, 'red'));
+    .catch(err => Materialize.toast(err.response.data.message, 3000, 'red'));
 }
 
 /**

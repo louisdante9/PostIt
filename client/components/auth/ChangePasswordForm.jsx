@@ -14,7 +14,6 @@ import Footer from '../common/Footer.jsx';
  * @extends {React.Component}
  */
 export class ChangePasswordForm extends React.Component {
-
   /**
    * Creates an instance of ChangePasswordForm.
    * @param {any} props 
@@ -50,7 +49,7 @@ export class ChangePasswordForm extends React.Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    const token = this.props.params.token;
+    const { token } = this.props.params;
     this.props.confirmPasswordResetRequest(token, this.state);
   }
 
@@ -65,7 +64,7 @@ export class ChangePasswordForm extends React.Component {
     return (
       <div className="container auth-form align">
         <h2>Change Password</h2>
-        <p></p>
+        <p />
         <form className="row" onSubmit={this.onSubmit}>
           <div className="col s12">
             <TextFieldGroup
@@ -87,7 +86,7 @@ export class ChangePasswordForm extends React.Component {
             <div className="form-cta">
               <button className="btn shadow-effect black card-1">
                 Update password
-           </button>
+              </button>
             </div>
           </div>
         </form>
@@ -100,5 +99,7 @@ ChangePasswordForm.propTypes = {
   confirmPasswordResetRequest: PropTypes.func.isRequired,
   params: PropTypes.object,
 };
-export default connect(null, 
-  { confirmPasswordResetRequest })(ChangePasswordForm);
+export default connect(
+  null, 
+  { confirmPasswordResetRequest }
+)(ChangePasswordForm);

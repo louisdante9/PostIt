@@ -1,7 +1,7 @@
-import messages, { initialState } from '../../reducers/messages';
 import { Reducer } from 'redux-testkit';
-import * as types from '../../actions/types';
 import expect from 'expect';
+import messages, { initialState } from '../../reducers/messages';
+import * as types from '../../actions/types';
 
 describe('group reducer', () => {
   it('should return an initial state', () => {
@@ -11,19 +11,19 @@ describe('group reducer', () => {
     const action = {
       type: types.GET_GROUP_MESSAGES,
       payload: [{
-          id: 1,
-          message: 'yo', 
-          flag: 'normal', 
-          msgRead: null, 
-          groupId: 1, 
-          userId: 1, 
-          User: { 
-            id: 1, 
-            username: 'louisdante9', 
-            email: 'louisdante9@gmail.com', 
-            phone: '0808997776667', 
-            resetPasswordToken: null, 
-            expiryTime: null 
+        id: 1,
+        message: 'yo', 
+        flag: 'normal', 
+        msgRead: null, 
+        groupId: 1, 
+        userId: 1, 
+        User: { 
+          id: 1, 
+          username: 'louisdante9', 
+          email: 'louisdante9@gmail.com', 
+          phone: '0808997776667', 
+          resetPasswordToken: null, 
+          expiryTime: null 
         }
       }], 
       groupId: 1, 
@@ -32,7 +32,6 @@ describe('group reducer', () => {
     expect(result.msg[action.groupId]).toEqual(action.payload);   
   });
   it('should handle CREATE_GROUP_MESSAGE', () => {
-
     const actions = {
       type: types.CREATE_GROUP_MESSAGE,
       payload: {
@@ -42,17 +41,17 @@ describe('group reducer', () => {
         flag: "normal",
         groupId: 2,
         msgRead: null,
-          User: { 
-            groupId: 2,
-            message: "hello",
-            flag: "normal",
-            userId: 1,
-            username: "louisdante9"
+        User: { 
+          groupId: 2,
+          message: "hello",
+          flag: "normal",
+          userId: 1,
+          username: "louisdante9"
         }
       }, 
       groupId: 1, 
     };
-    let groupId = 1
+    const groupId = 1;
     const result = messages(initialState, actions);
     expect(result.msg[actions.groupId]).toEqual([actions.payload]);    
   });
@@ -61,7 +60,6 @@ describe('group reducer', () => {
       type: types.INCREASE_UNREAD_MESSAGE,
       groupId: 1, 
     };
-    expect(
-      messages(undefined, action).unread[action.groupId]).toEqual(1);    
+    expect(messages(undefined, action).unread[action.groupId]).toEqual(1);    
   });
 });

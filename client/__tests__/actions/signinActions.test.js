@@ -29,7 +29,8 @@ describe('Sign in action', () => {
   it('should contain setCurrentUser object', () => {
     expect(actions.setCurrentUser()).toBeA('object');
   });
-  it('should dispatch an action USER_AUTHENTICATED on successful user sign up',
+  it(
+    'should dispatch an action USER_AUTHENTICATED on successful user sign up',
     (done) => {
       const store = mockStore({});
       moxios.stubRequest('/api/v1/user/signin', {
@@ -47,13 +48,17 @@ describe('Sign in action', () => {
         expect(store.getActions()).toEqual(expectedActions);
       });
       done();
-    });
-  it('should dispatch an action SET_CURRENT_USER on successful user logout', () => {
-    const store = mockStore({});
-    const expectedActions = [
-      { type: types.USER_AUTHENTICATED, user: {} }
-    ];
-    store.dispatch(actions.logout());
-    expect(store.getActions()).toEqual(expectedActions);
-  });
+    }
+  );
+  it(
+    'should dispatch an action SET_CURRENT_USER on successful user logout',
+    () => {
+      const store = mockStore({});
+      const expectedActions = [
+        { type: types.USER_AUTHENTICATED, user: {} }
+      ];
+      store.dispatch(actions.logout());
+      expect(store.getActions()).toEqual(expectedActions);
+    }
+  );
 });

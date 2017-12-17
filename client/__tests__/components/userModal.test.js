@@ -61,7 +61,6 @@ describe('UserModal', () => {
         value: 'lo'
       },
     };
-    
     const handleChangeSpy = jest.spyOn(component.instance(), 'handleChange');
     component.instance().handleChange(event);
     expect(handleChangeSpy).toHaveBeenCalled();
@@ -75,7 +74,6 @@ describe('UserModal', () => {
         value: ''
       },
     };
-    
     const handleChangeSpy = jest.spyOn(component.instance(), 'handleChange');
     component.instance().handleChange(event);
     expect(handleChangeSpy).toHaveBeenCalled();
@@ -125,7 +123,10 @@ describe('UserModal', () => {
       id: 1
     };
     
-    const componentWillReceivePropsSpy = jest.spyOn(component.instance(), 'componentWillReceiveProps');
+    const componentWillReceivePropsSpy = jest.spyOn(
+      component.instance(),
+      'componentWillReceiveProps'
+    );
     component.instance().componentWillReceiveProps(mockData.userModalState);
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
   });

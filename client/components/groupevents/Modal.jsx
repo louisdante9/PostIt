@@ -58,8 +58,8 @@ export default class Modal extends React.Component {
    * @memberof Modal
    */
   handleSubmit(event) {
-    event.preventDefault();
-    this.props.createGroup(this.state).then(() => {
+    event.preventDefault();  
+    this.props.createGroup(this.state).then((res) => {
       $('.modal1').modal('close');
     });
     this.setState({
@@ -105,7 +105,7 @@ export default class Modal extends React.Component {
                     className="validate"
                     name="name"
                     onChange={this.handleChange}
-                    value={this.state.name} />
+                    value={this.state.name} required />
                   <label htmlFor="group-title">
                     Group Title
                   </label>
@@ -118,7 +118,9 @@ export default class Modal extends React.Component {
                     className="materialize-textarea"
                     name="description"
                     onChange={this.handleChange}
-                    value={this.state.description}></textarea>
+                    value={this.state.description}
+                    required
+                    ></textarea>
                   <label htmlFor="description">
                     Enter description...
                   </label>

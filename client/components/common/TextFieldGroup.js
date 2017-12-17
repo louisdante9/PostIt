@@ -1,6 +1,18 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
+/**
+* 
+* @desc this functional component returns input fields 
+* @param {any} field 
+* @param {any} value 
+* @param {any} placeholder
+* @param {any} error
+* @param {any} type
+* @param {any} onChange
+* @param {any} required
+* @returns { void }
+*/
 const TextFieldGroup = ({ field, value,
   placeholder, error, type, onChange,required }) => {
   return (
