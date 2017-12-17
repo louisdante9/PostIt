@@ -18,17 +18,6 @@ dotenv.config();
 Logger.useDefaults();
 app.use(morgan());
 
-/**
- * Event listener for HTTP server "listening" event.
- * @return {void}
- */
-const onListening = () => {
-  const addr = server.address();
-  const bind = typeof addr === 'string'
-    ? `pipe ${addr}`
-    : `port ${addr.port}`;
-  debug(`Application is Listening on ${bind}`);
-};
 
 app.use(express.static(path.join(__dirname, './../assets')));
 if (process.env.NODE_ENV !== 'development') {

@@ -1,5 +1,5 @@
 import models from "../models";
-import { validateCreateGroupInput } from "../../client/validations";
+import { validateCreateGroupInput } from "../middleware/groupValidation";
 
 export default {
 

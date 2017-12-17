@@ -37,6 +37,31 @@ before((done) => {
 });
 describe('Test setup', () => {
   describe('for messages route', () => {
+    it('returns Unauthorized Access', (done) => {
+      request
+        .post(`/api/v1/group/${group.id}/messages`)
+        .send({ message: 'A new new message', flag: 'critical' })
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          expect(res.status).to.equal(401);
+          done();
+        });
+    });
+    it('returns Invalid Access', (done) => {
+      request
+        .post(`/api/v1/group/${group.id}/messages`)
+        .set('authorization', "token")
+        .send({ message: 'A new new message', flag: 'critical' })
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          expect(res.status).to.equal(401);
+          done();
+        });
+    });
     it('should allow a user create a message successfully', (done) => {
       request
         .post(`/api/v1/group/${group.id}/messages`)
@@ -50,7 +75,7 @@ describe('Test setup', () => {
           done();
         });
     });
-    it('should allow a user create a message successfully with priority urgent', (done) => {
+    it('should allow a user create a message successfully with priority', (done) => {
       request
         .post(`/api/v1/group/${group.id}/messages`)
         .set('authorization', token)
