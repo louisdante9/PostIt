@@ -23,57 +23,53 @@ before((done) => {
       done();
     });
 });
-describe('groupControllerTests', () => {
-  describe('/api/v1/groups/ route', () => {
-    it('returns 200 and creates a new group', (done) => {
-      request
-        .post('/api/v1/group/')
-        .set('authorization', token)
-        .send({ name: 'Test Group', description: 'A simple test group' })
-        .end((err, res) => {
-          if (err) return done(err);
-          expect(res.status).to.equal(201);
-          done();
-        });
-    });
-
-    it('returns 400 response if the group doesn\'t exist', (done) => {
-      request
-        .post('/api/v1/group/')
-        .set('authorization', token)
-        .send({ name: '', description: '' })
-        .end((err, res) => {
-          if (err) return done(err);
-          expect(res.status).to.equal(400);
-          done();
-        });
-    });
-
-    it('returns 409 response for duplicated group names', (done) => {
-      request
-        .post('/api/v1/group/')
-        .set('authorization', token)
-        .send({ name: 'Test Group', description: 'A simple test group' })
-        .end((err, res) => {
-          if (err) return done(err);
-          expect(res.status).to.equal(409);
-          done();
-        });
-    });
-    it('returns 200 and all groups', (done) => {
-      request
-        .get('/api/v1/group/')
-        .set('authorization', token)
-        .end((err, res) => {
-          if (err) return done(err);
-          expect(res.status).to.equal(200);
-          done();
-        });
-    });
+describe('Test setup', () => {
+  it('should create a new group', (done) => {
+    request
+      .post('/api/v1/group/')
+      .set('authorization', token)
+      .send({ name: 'Test Group', description: 'A simple test group' })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(201);
+        done();
+      });
   });
-  describe('/api/v1/group/:groupId/user route', () => {
+  it('should return 400 response if the group doesn\'t exist', (done) => {
+    request
+      .post('/api/v1/group/')
+      .set('authorization', token)
+      .send({ name: '', description: '' })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(400);
+        done();
+      });
+  });
+  it('returns 409 response for duplicated group names', (done) => {
+    request
+      .post('/api/v1/group/')
+      .set('authorization', token)
+      .send({ name: 'Test Group', description: 'A simple test group' })
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(409);
+        done();
+      });
+  });
+  it('should returns all groups', (done) => {
+    request
+      .get('/api/v1/group/')
+      .set('authorization', token)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(200);
+        done();
+      });
+  });
+  describe('Adding a user to a new group', () => {
     it(
-      'returns 201 response if user is successfully added to group',
+      'should return 201 response if user is successfully added to group',
       (done) => {
         request
           .post(`/api/v1/group/1/user`)
@@ -89,7 +85,7 @@ describe('groupControllerTests', () => {
       }
     );
     it(
-      'returns 404 to add a user to a group that doesn\'t exist', 
+      'should return 404 to add a user to a group that doesn\'t exist', 
       (done) => {
         request
           .post(`/api/v1/group/100/user`)
@@ -120,9 +116,7 @@ describe('groupControllerTests', () => {
           });
       }
     );
-  });
-  describe('/api/v1/group/1/user/list route', () => {
-    it('returns 200 and users in a group', (done) => {
+    it('should return users in a group', (done) => {
       request
         .get('/api/v1/group/1/user/list')
         .set('authorization', token)
@@ -133,7 +127,7 @@ describe('groupControllerTests', () => {
           done();
         });
     });
-    it('returns 404 if group doesn\'t exit', (done) => {
+    it('should return 404 if group doesn\'t exit', (done) => {
       request
         .get('/api/v1/group/100/user/list')
         .set('authorization', token)
@@ -144,7 +138,7 @@ describe('groupControllerTests', () => {
           done();
         });
     });
-    it('returns 400 if wrong params are sent', (done) => {
+    it('should return 400 if wrong params are sent', (done) => {
       request
         .get('/api/v1/group/n/user/list')
         .set('authorization', token)
@@ -156,9 +150,9 @@ describe('groupControllerTests', () => {
         });
     });
   });
-  describe('/api/v1/group/:groupId/user', () => {
+  describe('Deletes user to a new group', () => {
     it(
-      'returns 200 response if user is successfully removed from a group',
+      'should return 200 response if user is successfully removed from a group',
       (done) => {
         request
           .delete(`/api/v1/group/1/user`)
@@ -174,7 +168,7 @@ describe('groupControllerTests', () => {
       }
     );
   });
-  it('returns 404 if the user is already deleted from group', (done) => {
+  it('should return 404 if the user is already deleted from group', (done) => {
     request
       .delete(`/api/v1/group/1/user`)
       .set('authorization', token)
@@ -188,7 +182,7 @@ describe('groupControllerTests', () => {
       });
   });
   it(
-    'returns 404 to add a user to a group that doesn\'t exist',
+    'should return 404 to add a user to a group that doesn\'t exist',
     (done) => {
       request
         .delete(`/api/v1/group/100/user`)
