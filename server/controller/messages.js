@@ -146,27 +146,3 @@ const generateUserMessageData = (userMsgData, userId) => userMsgData.map(metadat
   * @returns {Object} - Returns an object
   */
 const createUnreadMessages = data => models.UserMessages.bulkCreate(data);
-
-/**
-  * getAllUnreadMessage
-  * this is a helper function that gets all 
-  * users that haven't read their messages
-  * @function
-  * @param {integer} userId, 
-  * @param {integer} groupId
-  * @returns {Object} - Returns an object
-  */
-// const getAllUnreadMessage = (userId, groupId) => models.GroupUser.findAll({
-//   where: { userId },
-//   include: [
-//     {
-//       model: models.Group,
-//       include: [{
-//         model: models.UserMessages,
-//         where: {
-//           userId, 
-//           read: false
-//         }
-//       }]
-//     }]
-// });

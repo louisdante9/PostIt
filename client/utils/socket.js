@@ -9,26 +9,26 @@ import { CREATE_USER_GROUP, GET_USER_GROUP,
 
 const socket = io();
 
-socket.on('groupMessage', (data) => {
+socket.on('groupMessage', (messageData) => {
   const state = store.getState();  
   const { messages: { activeGroup }, auth: { user: { userId } } } = state;
   store.dispatch({
     type: CREATE_GROUP_MESSAGE,
-    payload: data,
-    groupId: data.groupId
+    payload: messageData,
+    groupId: messageData.groupId
   });
   if (activeGroup === data.groupId) {
     socket.emit('readMessage', {
-      messageId: data.id,
-      groupId: data.groupId,
-      userId: data.userId
+      messageId: messageData.id,
+      groupId: messageData.groupId,
+      userId: messageData.userId
     });
   } else {
     store.dispatch({
       type: INCREASE_UNREAD_MESSAGE,
-      groupId: data.groupId
+      groupId: messageData.groupId
     });
-    increaseUnread(userId, data.groupId);
+    increaseUnread(userId, messageData.groupId);
   }
 });
 

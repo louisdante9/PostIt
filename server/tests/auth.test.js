@@ -16,8 +16,6 @@ describe('usersControllersTests', () => {
       request
         .post('/api/v1/user/signup')
         .send(fakerObj.users)
-        .expect('Content-Type', /json/)
-        .expect(201)
         .end((err, res) => {
           expect(res.body.user.email).to.equal(fakerObj.users.email);
           done();
@@ -33,7 +31,7 @@ describe('usersControllersTests', () => {
         });
     });
     it(
-      'should return an error if one of the request fields is empty', 
+      'returns 400 error if one of the request fields is empty', 
       (done) => {
         request
           .post('/api/v1/user/signup')
@@ -58,7 +56,7 @@ describe('usersControllersTests', () => {
           done();
         });
     });
-    it('should return an error if the password is not given', (done) => {
+    it('returns 401 if password is not given', (done) => {
       request
         .post('/api/v1/user/signin')
         .send(fakerObj.wrongUser2)
@@ -68,7 +66,7 @@ describe('usersControllersTests', () => {
           done();
         });
     });
-    it('should return an error if the email is not given', (done) => {
+    it('returns 401 error if email is not given', (done) => {
       request
         .post('/api/v1/user/signin')
         .send(fakerObj.wrongUser)
@@ -78,7 +76,7 @@ describe('usersControllersTests', () => {
           done();
         });
     });
-    it('(400 error) with invalid email format', (done) => {
+    it('returns (400 error) for invalid email format', (done) => {
       request
         .post('/api/v1/user/signup')
         .send({

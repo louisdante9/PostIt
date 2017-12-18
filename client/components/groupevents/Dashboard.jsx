@@ -168,7 +168,6 @@ export class Dashboard extends Component {
   removeUser(event) {
     event.preventDefault();
     const groupName = this.props.groups.find(group => group.id === this.state.groupId);    
-    console.log(this.state.groupId, '', this.props.user.userId, groupName, 'hello i am here');
     this.props.removeUsers(this.state.groupId, this.props.user.userId, groupName).then(() => {
       localStorage.removeItem('currentGroup', this.state.groupId);
       this.setState(state => ({ groupId: '' }));
