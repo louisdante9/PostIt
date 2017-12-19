@@ -1,7 +1,13 @@
 import React from 'react';
 import moment from 'moment';
 import { PropTypes } from 'prop-types';
-
+/**
+ * 
+ * 
+ * @param {any} message 
+ * @param {any} user 
+ * @returns { void }
+ */
 const renderMessage = (message, user) => {
   const addClass = message.User.username === user.username ? 'message own' : 'message';
   const priorityFlag = message.flag;
@@ -33,7 +39,12 @@ const renderMessage = (message, user) => {
     </li>
   );
 };
-
+/**
+ * 
+ * 
+ * @param {any} { messages, groups, user } 
+ * @returns { void }
+ */
 const Messages = ({ messages, groups, user }) => {
   const emptyMessage = (
     <p>There are no meessages yet in this group</p>

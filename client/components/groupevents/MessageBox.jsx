@@ -1,6 +1,13 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-
+/**
+ * 
+ * 
+ * @param {any} { 
+ *   message, flag, onChange, onSubmit, handleKeyDown 
+ * } 
+ * @returns { void }
+ */
 const MessageBox = ({ 
   message, flag, onChange, onSubmit, handleKeyDown 
 }) => (
