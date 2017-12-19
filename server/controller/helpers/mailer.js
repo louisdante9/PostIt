@@ -38,10 +38,7 @@ const sendMail = (sender, reciever, subject, content) => {
 
   transporter.sendMail(mailOptions, (error) => {
     if (error) {
-      console.log(error);
       return false;
-    }else{
-      console.log('success');
     }
   });
 };

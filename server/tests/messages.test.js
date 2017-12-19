@@ -30,7 +30,7 @@ before((done) => {
           if (err) {
             return done(err);
           }
-          group = res.body.data;
+          group = res.body.groupData;
           done();
         });
     });
