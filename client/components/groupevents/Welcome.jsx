@@ -1,5 +1,11 @@
 import React from 'react';
 
+/**
+ * 
+ * @desc this functional component returns a welcome page
+ * @param {any} props 
+ * @returns { void }
+ */
 export const Welcome = (props) => {
   return (
     <div className="welcome-content">

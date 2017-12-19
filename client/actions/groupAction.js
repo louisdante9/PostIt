@@ -38,7 +38,7 @@ export function createGroup(groupData) {
     .then(res => {
       dispatch({
         type: CREATE_USER_GROUP,
-        payload: res.data.data
+        payload: res.data.groupData
       });
       Materialize
         .toast('Group successfully created!', 6000, 'green');

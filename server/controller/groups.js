@@ -44,7 +44,7 @@ export default {
             models.GroupUser.create(groupUser).then(createdGroup => {
               if (createdGroup) {
                 return res.status(201).json({
-                  data: group
+                  groupData: group
                 });
               }
               return res.status(400).json({
