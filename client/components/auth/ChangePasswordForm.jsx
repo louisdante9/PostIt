@@ -5,8 +5,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { confirmPasswordResetRequest } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
-import validateInput from '../../../server/shared/validations/changepassword';
-import Footer from '../common/footer.jsx';
+import Footer from '../common/Footer.jsx';
 
 /**
  * 
@@ -15,7 +14,6 @@ import Footer from '../common/footer.jsx';
  * @extends {React.Component}
  */
 export class ChangePasswordForm extends React.Component {
-
   /**
    * Creates an instance of ChangePasswordForm.
    * @param {any} props 
@@ -51,7 +49,7 @@ export class ChangePasswordForm extends React.Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    const token = this.props.params.token;
+    const { token } = this.props.params;
     this.props.confirmPasswordResetRequest(token, this.state);
   }
 
@@ -66,7 +64,7 @@ export class ChangePasswordForm extends React.Component {
     return (
       <div className="container auth-form align">
         <h2>Change Password</h2>
-        <p></p>
+        <p />
         <form className="row" onSubmit={this.onSubmit}>
           <div className="col s12">
             <TextFieldGroup
@@ -75,6 +73,7 @@ export class ChangePasswordForm extends React.Component {
               type="password"
               field="newPassword"
               placeholder="Enter New Password"
+              required
             />
             <TextFieldGroup
               onChange={this.onChange}
@@ -82,11 +81,12 @@ export class ChangePasswordForm extends React.Component {
               type="password"
               field="confirmPassword"
               placeholder="Confirm Password"
+              required
             />
             <div className="form-cta">
               <button className="btn shadow-effect black card-1">
                 Update password
-           </button>
+              </button>
             </div>
           </div>
         </form>
@@ -99,5 +99,7 @@ ChangePasswordForm.propTypes = {
   confirmPasswordResetRequest: PropTypes.func.isRequired,
   params: PropTypes.object,
 };
-export default connect(null, 
-  { confirmPasswordResetRequest })(ChangePasswordForm);
+export default connect(
+  null, 
+  { confirmPasswordResetRequest }
+)(ChangePasswordForm);

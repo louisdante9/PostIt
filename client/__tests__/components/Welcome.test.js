@@ -3,7 +3,7 @@ import { shallow, mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 import expect from 'expect';
 import { provider } from 'react-redux';
-import { Welcome } from '../../components/groupevents/welcome.jsx';
+import { Welcome } from '../../components/groupevents/Welcome.jsx';
 
 // jest.dontMock();
 configure({ adapter: new Adapter() });

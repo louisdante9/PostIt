@@ -41,11 +41,11 @@ describe('actions', () => {
       const expectedAction = { 
         type: types.USER_AUTHENTICATED, 
         user: auth.user
-       };
+      };
       expect(actions.setCurrentUser(userData)).toEqual(expectedAction);
     });
-
-    it('creates an action USER_AUTHENTICATED on successful user sign up',
+    it(
+      'creates an action USER_AUTHENTICATED on successful user sign up',
       (done) => {
         moxios.stubRequest('/api/v1/user/signup', {
           status: 201,
@@ -76,7 +76,8 @@ describe('actions', () => {
           expect(store.getActions()).toEqual(expectedActions);
         });
         done();
-      });
+      }
+);
   });
   describe('confirm Password reset', () => {
     beforeEach(() => moxios.install());
@@ -88,7 +89,7 @@ describe('actions', () => {
       token: '0SX6NVMqqQpgdUebW3iRBJz8oerTtfzYUm4ADESM7fk',
       newPassword: 'qwertyu'
     };
-    const token = '0SX6NVMqqQpgdUebW3iRBJz8oerTtfzYUm4ADESM7fk'
+    const token = '0SX6NVMqqQpgdUebW3iRBJz8oerTtfzYUm4ADESM7fk';
   
     it('should dispatch RESET_PASSWORD_SUCCESS', (done) => {
       moxios.stubRequest(`/api/user/resetpassword/${payLoad.token}`, payLoad, {
@@ -122,9 +123,11 @@ describe('actions', () => {
       const expectedActions = [
         { type: types.RESET_PASSWORD_FAILED }
       ];
-      store.dispatch(actions.confirmPasswordResetRequest(payLoad.token, payLoad)).then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
+      store.dispatch(actions
+        .confirmPasswordResetRequest(payLoad.token, payLoad))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
       done();
     });
   });

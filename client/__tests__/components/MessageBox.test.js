@@ -7,7 +7,7 @@ import React from 'react';
 import { shallow, mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 import { provider } from 'react-redux';
-import  MessageBox  from '../../components/groupevents/MessageBox.jsx';
+import MessageBox from '../../components/groupevents/MessageBox.jsx';
 import mockData from '../../../__mocks__/mockData';
 
 // jest.dontMock();

@@ -1,72 +1,71 @@
-// import Validator from 'validator';
 import models from "../models";
-import validateInput from "../middleware/validate";
-// import validateInput from "../shared/validations/signin";
+import { validateCreateGroupInput } from "../middleware/groupValidation";
 
 export default {
 
   /**
+   * this method creates a group 
    * 
-   * 
-   * @param {any} req 
-   * @param {any} res 
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    * @returns {void}
    */
   create(req, res) {
-    const {errors, isValid} = validateInput(req.body);
-    if(!isValid) {
-      res.status(400).json(errors);
-    }else{
+    const { errors, isValid } = validateCreateGroupInput(req.body);
+    if (!isValid) {
+      return res.status(400).json({
+        message: 'Please fill in the required form fields'
+      });
+    } 
     models.Group.findOne({
-      where:{
+      where: {
         name: req.body.name
       }
-    }).then((found)=>{
-      if(found){
-        return  res.status(409).json({
+    }).then((found) => {
+      if (found) {
+        return res.status(409).json({
           status: 409,
-          err: 'Group name already taken'
+          err: 'Oops! A group already exists with the same name'
         });
       }
       return models.Group
-      .create({
-        name: req.body.name,
-        userId: req.decoded.userId,
-        description: req.body.description
-      })
-      .then(group => {
-        if (group) {
-          const groupUser = {
-            groupId: group.id,
-            userId: req.decoded.userId,
-            isAdmin: true
-          };
-          models.GroupUser.create(groupUser).then(createdGroup => {
-            if (createdGroup) {
-              return res.status(201).json({
-                data: group
+        .create({
+          name: req.body.name,
+          userId: req.decoded.userId,
+          description: req.body.description
+        })
+        .then(group => {
+          if (group) {
+            const groupUser = {
+              groupId: group.id,
+              userId: req.decoded.userId,
+              isAdmin: true
+            };
+            models.GroupUser.create(groupUser).then(createdGroup => {
+              if (createdGroup) {
+                return res.status(201).json({
+                  groupData: group
+                });
+              }
+              return res.status(400).json({
+                message: "Sorry an error occured while adding user to group"
               });
-            }
-            return res.status(404).json({
-              message: "Could not add user to group"
             });
-          });
-        } else {
-          return res.status(404).json({
-            message: "Could not create group"
-          });
-        }
-      });
+          } else {
+            return res.status(400).json({
+              message: "Sorry an error occured while creating your group"
+            });
+          }
+        });
     })
       .catch(error => res.status(500).json(error));
-    }
   },
-    
+
   /**
    * 
-   * 
-   * @param {any} req 
-   * @param {any} res 
+   * this method list the group created by users 
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    * @return {void}
    */
   list(req, res) {
@@ -75,7 +74,7 @@ export default {
         include: [{
           model: models.User,
           where: { id: req.decoded.userId },
-          attributes: { exclude: ["password"]},
+          attributes: { exclude: ["password"] },
           order: [["createdAt", "DESC"]]
         }],
       })

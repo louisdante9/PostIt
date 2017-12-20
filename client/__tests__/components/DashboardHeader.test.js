@@ -21,7 +21,9 @@ const store = mockStore({
     unread: {}
   }
 });
-//mock jquery
+
+/** mock jquery */
+
 Object.defineProperty(window, '$', {
   value: () => ({
     collapsible: () => jest.fn()
@@ -31,8 +33,8 @@ Object.defineProperty(window, '$', {
 // jest.dontMock();
 configure({ adapter: new Adapter() });
 
-describe('DashboardHeader', () => {
-  let props = {
+describe('DashboardHeader component', () => {
+  const props = {
     logout: jest.fn(),
     groups: mockData.dashboardGroupData,
     setGroupMessages: jest.fn(() => Promise.resolve()),
@@ -43,12 +45,12 @@ describe('DashboardHeader', () => {
   it('should render atleast once', () => {
     expect(component.length).toEqual(1);
   });
-  it('renders a div', () => {
+  it('should renders a div', () => {
     expect(component.find('div').length).toBeGreaterThan(0);
   });
-  it('calls mapStateToProps method', () => {
+  it('should call mapStateToProps method once', () => {
     const wrapper = shallow(<ConnectedDashboardHeader
-      {...props } store={store} />);
+      {...props} store={store} />);
     expect(wrapper.length).toBe(1);
   });
 });

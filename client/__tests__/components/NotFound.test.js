@@ -13,7 +13,7 @@ describe('Home page', () => {
   it('should render atleast once', () => {
     expect(component.length).toEqual(1);
   });
-  it('renders a div', () => {
+  it('should render a div', () => {
     expect(component.find('div').length).toBeGreaterThan(0);
   });
 });

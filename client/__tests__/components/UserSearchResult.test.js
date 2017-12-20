@@ -29,38 +29,4 @@ describe('UserSearchResult', () => {
   it('renders a div', () => {
     expect(component.find('div').length).toBeGreaterThan(0);
   });
-
-  // it('always renders a signup form with the inputs required', () => {
-  //   expect(component.find('input').length).toBe(1);
-  // });
-  // it('always renders a signup form with the inputs required', () => {
-  //   expect(component.find('textarea').length).toBe(1);
-  // });
-
-  // it('always renders a form submit button ', () => {
-  //   expect(component.find('button').length).toBe(2);
-
-  // });
-  // it('calls handleChange method', () => {
-  //   const event = mockData.modalHandleChangeEvent;
-  //   const handleChangeSpy = jest.spyOn(component.instance(), 'handleChange');
-  //   component.instance().handleChange(event);
-  //   expect(handleChangeSpy).toHaveBeenCalled();
-  // });
-  // it('calls reset method', () => {
-  //   const resetFormSpy = jest.spyOn(component.instance(), 'resetForm');
-  //   component.instance().resetForm();
-  //   expect(resetFormSpy).toHaveBeenCalled();
-  // });
-  // it('calls onSubmit method with valid data', () => {
-  //   component.setState(mockData.modalState);
-  //   const event = {
-  //     preventDefault: jest.fn()
-  //   };
-  //   const handleSubmitSpy = jest.spyOn(
-  //     component.instance(), 'handleSubmit'
-  //   );
-  //   component.instance().handleSubmit(event);
-  //   expect(handleSubmitSpy).toHaveBeenCalled();
-  // });
 });

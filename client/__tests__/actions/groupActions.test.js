@@ -23,33 +23,36 @@ describe('Add User Action', () => {
     expect(actions.addUsers()).toBeA('function');
   });
 
-  it('should dispatch ADD_USER_TO_GROUP action creator', (done) => {
-    const store = mockStore({});
-    const data = {
-      success: true,
-      message: "successfully added to group",
-      id: 53
-    };
-    moxios.stubRequest('/api/group/1/user', {
-      status: 201,
-      response: data
-    });
-    const userId = 1;
-    const groupId = 1;
-    const expectedActions = [
-      {
-        type: types.ADD_USER_TO_GROUP,
-        payload: data
-      }
-    ];
-    store.dispatch(actions.addUsers(groupId, userId)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
-    done();
-  });
+  it(
+    'should dispatch an ADD_USER_TO_GROUP action creator when called', 
+    (done) => {
+      const store = mockStore({});
+      const data = {
+        success: true,
+        message: "successfully added to group",
+        id: 53
+      };
+      moxios.stubRequest('/api/group/1/user', {
+        status: 201,
+        response: data
+      });
+      const userId = 1;
+      const groupId = 1;
+      const expectedActions = [
+        {
+          type: types.ADD_USER_TO_GROUP,
+          payload: data
+        }
+      ];
+      store.dispatch(actions.addUsers(groupId, userId)).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+      done();
+    }
+  );
 });
 
-describe('Get User in group Action', () => {
+describe('Get User Action', () => {
   beforeEach(() => moxios.install());
   afterEach(() => moxios.uninstall());
 
@@ -57,44 +60,45 @@ describe('Get User in group Action', () => {
     expect(actions.loadGroupUsers()).toBeA('function');
   });
 
-  it('should dispatch GET_USER_IN_A_GROUP action creator', (done) => {
-    const store = mockStore({});
-    const data = {
-      id: 1,
-      userId: 1,
-      groupId: 1,
-      User: {
+  it(
+    'should dispatch GET_USER_IN_A_GROUP action creator when called',
+    (done) => {
+      const store = mockStore({});
+      const data = {
         id: 1,
-        username: 'louisdante'
-      }
-    };
-    moxios.stubRequest('/api/v1/group/1/user/list', {
-      status: 201,
-      response: data
-    });
-    const groupId = 1;
-    const expectedActions = [
-      {
-        type: types.GET_USER_IN_A_GROUP,
-        payload: data
-      }
-    ];
-
-    store.dispatch(actions.loadGroupUsers(groupId)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
-    done();
-  });
+        userId: 1,
+        groupId: 1,
+        User: {
+          id: 1,
+          username: 'louisdante'
+        }
+      };
+      moxios.stubRequest('/api/v1/group/1/user/list', {
+        status: 201,
+        response: data
+      });
+      const groupId = 1;
+      const expectedActions = [
+        {
+          type: types.GET_USER_IN_A_GROUP,
+          payload: data
+        }
+      ];
+      store.dispatch(actions.loadGroupUsers(groupId)).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+      done();
+    }
+  );
 });
 
 describe('Get Group Action', () => {
   beforeEach(() => moxios.install());
   afterEach(() => moxios.uninstall());
-
   it('should contain getGroups function', () => {
     expect(actions.getGroups()).toBeA('function');
   });
-  it('should dispatch GET_USER_GROUP action creator', (done) => {
+  it('should dispatch GET_USER_GROUP action creator when called', (done) => {
     const store = mockStore({});
     const data = [{
       id: 1,
@@ -111,7 +115,6 @@ describe('Get Group Action', () => {
         payload: data
       }
     ];
-
     store.dispatch(actions.getGroups()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
@@ -126,7 +129,7 @@ describe('Create Group Action', () => {
   it('should contain loadGroupUsers function', () => {
     expect(actions.createGroup()).toBeA('function');
   });
-  it('should dispatch CREATE_USER_GROUP action creator', (done) => {
+  it('should dispatch CREATE_USER_GROUP action creator when called', (done) => {
     const store = mockStore({});
     const data = [{
       data: {

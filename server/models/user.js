@@ -1,47 +1,47 @@
-'use strict';
+
 
 import bcrypt from 'bcrypt-nodejs';
 
-module.exports = (sequelize, DataTypes) =>{
+module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     username: {
       type: DataTypes.STRING,
       required: true,
       allowNull: false,
       unique: true,
-       validate: {
+      validate: {
         notEmpty: {
           msg: 'Username can not be empty'
         }
       //   is: /^[a-z0-9\_\-]+$/i,
-       }
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      isEmail: {
-        msg: "Email address must be valid"
-           },
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isEmail: {
+          msg: "Email address must be valid"
+        },
       // len: {
       //   args: [6, 128],
       //   msg: "Email address must be between 6 and 128 characters in length"
       // },
-    }
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      len: {
-        args: [4, 100],
-        msg: 'Your password is too short'
       }
-    }
-  },
-  phone: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: {
+          args: [4, 100],
+          msg: 'Your password is too short'
+        }
+      }
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: true,
     // validate: {
       //   is: /^[0-9]+$/i,
       //   len: {
@@ -49,17 +49,17 @@ module.exports = (sequelize, DataTypes) =>{
     //     msg: 'Your phone number is too short'
     //   }
       // }
-  },
-  resetPasswordToken:{
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  expiryTime:{
-    type: DataTypes.STRING,
-    allowNull: true
-  },
+    },
+    resetPasswordToken: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    expiryTime: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
   }, {
-      classMethods: {
+    classMethods: {
       associate: (models) => {
         User.hasMany(models.Message, {
           foreignKey: 'userId',
@@ -73,7 +73,7 @@ module.exports = (sequelize, DataTypes) =>{
         });
       }
     },
-     instanceMethods: {
+    instanceMethods: {
 
       /**
        * compare the input password with the hashed password stored
@@ -90,8 +90,10 @@ module.exports = (sequelize, DataTypes) =>{
        * @returns {void} no return
        */
       hashPassword() {
-        this.password = bcrypt.hashSync(this.password.trim(), 
-        bcrypt.genSaltSync(10));
+        this.password = bcrypt.hashSync(
+          this.password.trim(), 
+          bcrypt.genSaltSync(10)
+        );
       }
     },
     hooks: {

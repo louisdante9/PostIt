@@ -1,6 +1,6 @@
+import expect from 'expect';
 import groups from '../../reducers/groupUser';
 import * as types from '../../actions/types';
-import expect from 'expect';
 
 describe('group reducer', () => {
   it('should return an initial state', () => {
@@ -15,24 +15,22 @@ describe('group reducer', () => {
           id: 1,
           userId: 1,
           groupId: 1,
-          User:{
-          id: 1,
-          username: "louisdante9"
+          User: {
+            id: 1,
+            username: "louisdante9"
           }
         }
       ]
     };
-    const expectedAction = [ {
+    const expectedAction = [{
       id: 1,
       userId: 1,
       groupId: 1,
-      User:{
-      id: 1,
-      username: "louisdante9"
+      User: {
+        id: 1,
+        username: "louisdante9"
       }
     }];
-    expect(
-      groups(initialState, action)
-    ).toEqual(expectedAction);
+    expect(groups(initialState, action)).toEqual(expectedAction);
   });
 });

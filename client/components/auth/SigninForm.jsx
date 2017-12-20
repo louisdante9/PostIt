@@ -4,13 +4,14 @@ import { compose } from 'redux';
 import { PropTypes } from 'prop-types';
 import requireauth from '../../utils/requireAuth';
 import { login } from '../../actions/authActions';
-import validateInput from '../../../server/shared/validations/signin';
+import { validateSigninFormInput } from '../../validations';
 import TextFieldGroup from '../common/TextFieldGroup';
-import Footer from '../common/footer.jsx';
+import Footer from '../common/Footer.jsx';
 /* global Materialize */
+
 /**
  * 
- * 
+ * This is class method that handles signin logic
  * @export
  * @class SigninForm
  * @extends {React.Component}
@@ -34,7 +35,8 @@ export class SigninForm extends React.Component {
   }
 
   /**
-   * 
+   * This method validates the input from the state object 
+   * and chcecks if its valid and makes an api call to the backend
    * 
    * @param {any} event 
    * @memberof SigninForm
@@ -42,26 +44,38 @@ export class SigninForm extends React.Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    const { errors, isValid } = validateInput(this.state);
+    const { errors, isValid } = validateSigninFormInput(this.state);
     if (isValid) {
       this.setState({ isLoading: true });
       this.props.login(this.state)
-      .then(() => {
-        Materialize.toast('Welcome!', 3000, 'green');
-        this.context.router.push('/dashboard');
-      })
-      .catch((err) => {
-        const error = err.response.data.errors;
-        this.handleErrors(error);
-        this.setState({ isLoading: false });
-      });
+        .then(() => {
+          Materialize.toast('Welcome!', 3000, 'green');
+          this.context.router.push('/dashboard');
+        })
+        .catch((err) => {
+          const error = err.response.data.errors;
+          this.handleErrors(error);
+          this.setState({ isLoading: false });
+        });
     } else {
       this.handleErrors(errors);
     }
   }
 
+
   /**
-   * 
+   *  this method is gets the values of the input
+   * and passes the values to the global state object
+   * @param {any} event 
+   * @memberof SigninForm
+   * @returns {void}
+   */
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  /**
+   * this method handle errors that return as an object
    * 
    * @param {any} errors 
    * @memberof SigninForm
@@ -72,17 +86,6 @@ export class SigninForm extends React.Component {
       Materialize.toast(errors[error], 3000, 'red');
     });
   }
-
-  /**
-   *  
-   * @param {any} event 
-   * @memberof SigninForm
-   * @returns {void}
-   */
-  onChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
   /**
    * 
    * @returns  {void}
@@ -91,7 +94,7 @@ export class SigninForm extends React.Component {
   render() {
     const { email, password, errors, isLoading } = this.state;
     return (
-      <div className="container auth-form align">        
+      <div className="container auth-form align">
         <h2>Sign In Here</h2>
         <form className="row" onSubmit={this.onSubmit}>
           <div className="col s12">
@@ -101,6 +104,7 @@ export class SigninForm extends React.Component {
               value={this.state.email}
               field="email"
               placeholder="Enter Email"
+              required
             />
             <TextFieldGroup
               error={this.state.errors.password}
@@ -109,23 +113,23 @@ export class SigninForm extends React.Component {
               type="password"
               field="password"
               placeholder="Enter Password"
+              required
             />
             <div className="form-cta">
-              <button className="btn waves-effect waves-light black shadow-effect" 
-              type="submit" name="action">Sign In</button>
+              <button className="btn waves-effect waves-light black shadow-effect"
+                type="submit" name="action">Sign In
+              </button>
             </div>
           </div>
         </form>
-
         <div className="row">
           <div className="col s12">
             <p className="authlinks">
-              Don't have an account &nbsp;<a href="/signup">Sign Up</a><br/>
+              Don't have an account &nbsp;<a href="/signup">Sign Up</a><br />
               <a href="/forgotpassword">Forgot password?</a>
             </p>
           </div>
         </div>
-
         <Footer />
       </div>
     );

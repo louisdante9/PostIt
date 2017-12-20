@@ -9,14 +9,14 @@ import  BrandLogo from '../../components/common/BrandLogo.jsx';
 configure({ adapter: new Adapter() });
 
 describe('BrandLogo', () => {
-  let props = {
+  const props = {
     textColor: 'white'
   }
   const component = mount(<BrandLogo {...props} />);
-  it('should render link atleast once', () => {
+  it('should render link once', () => {
     expect(component.length).toEqual(1);
   });
-  it('renders a div', () => {
+  it('should renders a div', () => {
     expect(component.find('Link').length).toBeGreaterThan(0);
   });
 });

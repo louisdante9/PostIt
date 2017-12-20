@@ -145,7 +145,13 @@ const mockData = {
         userId: 1
       }
     ],
-    groups: []
+    groups: [],
+      user: {
+        username: 'louisdante9',
+        userId: 1,
+        iat: 1512058620,
+        exp: 1512145020,
+    }
   },
   messageBoxProps: {
     onChange: jest.fn(() => Promise.resolve()),

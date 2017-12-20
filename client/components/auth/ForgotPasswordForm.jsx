@@ -2,11 +2,12 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import validateInput from '../../../server/shared/validations/forgotpass';
+import { validateForgotPasswordInput } from '../../validations';
 import TextFieldGroup from '../common/TextFieldGroup';
-import Footer from '../common/footer.jsx';
+import Footer from '../common/Footer.jsx';
 import { resetPassword } from '../../actions/authActions';
-/*global Materialize */
+
+/* global Materialize */
 /**
  * 
  * 
@@ -14,7 +15,6 @@ import { resetPassword } from '../../actions/authActions';
  * @extends {React.Component}
  */
 export class ForgotPasswordForm extends React.Component {
-
   /**
    * Creates an instance of ForgotPasswordForm.
    * @param {any} props 
@@ -51,15 +51,15 @@ export class ForgotPasswordForm extends React.Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    const { errors, isValid } = validateInput(this.state);
+    const { errors, isValid } = validateForgotPasswordInput(this.state);
     const { email } = this.state;
     if (isValid) {
-      this.props.resetPassword({email})
+      this.props.resetPassword({ email })
         .then(res => {
           if (res && res.status == '200') {
-            Materialize.toast('password updated, pls check your mail', 3000, 'blue');
-          }else{
-            Materialize.toast('error updating your password', 3000, 'red');
+            Materialize.toast('A password reset link has been sent to your mail, pls check your mail', 3000, 'blue');
+          }else {
+            Materialize.toast('ops! sorry an error occured while updating your password', 3000, 'red');
           }
         })
         .catch(error => {
@@ -82,7 +82,8 @@ export class ForgotPasswordForm extends React.Component {
       <div className="container auth-form align">
         <h2>Forgot Your Password?</h2>
         <p>enter your email address below and 
-        <br/> to get a new one</p>
+          <br /> to get a new one
+        </p>
         <form className="row" onSubmit={this.onSubmit}>
 
           <div className="col s12">
@@ -92,14 +93,15 @@ export class ForgotPasswordForm extends React.Component {
               value={this.state.email}
               field="email"
               placeholder="Enter Email"
+              required
             />
             <div className="form-cta">
               <button className="btn shadow-effect  black ">
                 Send
               </button>
-             </div>
-           </div>
-         </form>
+            </div>
+          </div>
+        </form>
         <Footer />
       </div>
     );

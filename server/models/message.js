@@ -1,4 +1,5 @@
-'use strict';
+' use strict ';
+
 module.exports = (sequelize, DataTypes)=> {
   const Message = sequelize.define('Message', {
     flag: {
@@ -13,13 +14,13 @@ module.exports = (sequelize, DataTypes)=> {
       }
 
     },
-    msgRead : {
+    msgRead: {
       type: DataTypes.ARRAY(DataTypes.INTEGER)
     },
-    message:{
+    message: {
       type: DataTypes.TEXT,
       allowNull: false,
-       validate: {
+      validate: {
         notEmpty: {
           args: true,
           msg: 'Message can not be empty'

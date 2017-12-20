@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
+import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { PropTypes } from 'prop-types';
@@ -6,15 +8,15 @@ import DashboardHeader from './DashboardHeader.jsx';
 import { logout } from '../../actions/authActions';
 import Messages from './Messages.jsx';
 import MessageBox from './MessageBox.jsx';
-import Modal from './modal.jsx';
-import UserModal from './userModal.jsx';
-import { Welcome } from './welcome.jsx';
-import { getGroups, createGroup, getMessages, createMessage, loadGroupUsers }
+import Modal from './Modal.jsx';
+import UserModal from './UserModal.jsx';
+import { Welcome } from './Welcome.jsx';
+import { getGroups, createGroup, getMessages, createMessage, loadGroupUsers, removeUsers }
   from '../../actions/groupAction';
 
 /**
  * 
- * 
+ * this is a component for the messages dashboard 
  * @class Dashboard
  * @extends {Component}
  */
@@ -35,7 +37,12 @@ export class Dashboard extends Component {
     this.onChange = this.onChange.bind(this);
     this.setGroupMessages = this.setGroupMessages.bind(this);
     this.logout = this.logout.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
+    this.getMessageBoardRef = this.getMessageBoardRef.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.removeUser = this.removeUser.bind(this);
   }
+
 
   /**
    * 
@@ -44,11 +51,68 @@ export class Dashboard extends Component {
    * @returns {void}
    */
   componentDidMount() {
-    this.props.getGroups();
-    $('.modal').modal({ dismissible: false });
-    $(document).ready(function () {
-      $(".button-collapse").sideNav();
+    this.props.getGroups().then(() => {
+      const currentGroup = localStorage.getItem('currentGroup');
+      if (currentGroup) {
+        this.setGroupMessages(null, Number(currentGroup));
+      }
     });
+    $('.modal').modal({ dismissible: false });
+    $(document).ready(() => {
+      $(".button-collapse").sideNav();
+      $('.tooltipped').tooltip({ delay: 50 });
+    });
+  }
+
+  /**
+   * @description react life scyle method use to move the message bar to the last message 
+   * @memberof Dashboard
+   * @returns { void }
+   */
+  componentDidUpdate() {
+    if (this.state.groupId) {
+      this.scrollToBottom();
+    }
+    $(document).ready(() => {
+      $('.tooltipped').tooltip({ delay: 50 });
+    });
+  }
+
+  /**
+   * 
+   * 
+   * @param {any} event 
+   * @param {any} cb 
+   * @memberof Dashboard
+   * @returns { void }
+   */
+  handleKeyDown(event, cb) {
+    if (event.key == 'Enter' && event.shiftKey == false) {
+      event.preventDefault();
+      cb(event);
+    }
+  }
+  
+  /**
+   * 
+   * function to get the node for the component div element
+   * @param {any} node 
+   * @memberof Dashboard
+   * @returns { void }
+   */
+  getMessageBoardRef(node) {
+    this.messageBoard = node;
+  }
+
+  /**
+   * 
+   * function to scroll messages component to the bottom
+   * @memberof Dashboard
+   * @returns { void }
+   */
+  scrollToBottom() {
+    const elem = this.messageBoard;
+    elem.scrollTop = 10000;
   }
 
   /**
@@ -61,21 +125,6 @@ export class Dashboard extends Component {
     event.preventDefault();
     this.props.logout();
   }
-
-  /**
-   * 
-   * @param {any} event 
-   * @param {any} id 
-   * @memberof Dashboard
-   * @returns {void}
-   */
-  setGroupMessages(event, id) {
-    event.preventDefault();
-    this.props.getMessages(id);
-    this.props.loadGroupUsers(id);
-    this.setState({ groupId: id });
-  }
-
   /**
    * 
    * 
@@ -85,12 +134,48 @@ export class Dashboard extends Component {
    */
   onSubmit(event) {
     event.preventDefault();
-    const { userId, username } = this.props.user;
-    const data = { ...this.state, userId, username };
-    this.props.createMessage(this.state.groupId, data);
-    this.setState({ message: '' });
+    if (this.state.message.length > 0) {
+      const { userId, username } = this.props.user;
+      const messageData = { ...this.state, userId, username };
+      this.props.createMessage(this.state.groupId, messageData);
+      this.setState({ message: '' });
+    } else {
+      Materialize.toast('Oops yo! try writing something', 3000, 'red');
+    }
   }
-  
+  /**
+   * 
+   * @param {any} event 
+   * @param {any} id 
+   * @memberof Dashboard
+   * @returns {void}
+   */
+  setGroupMessages(event, id) {
+    if (event) event.preventDefault();
+    localStorage.setItem('currentGroup', id);
+    this.props.getMessages(id);
+    this.props.loadGroupUsers(id);
+    this.setState(state => ({ groupId: id }));
+  }
+
+  /**
+   * 
+   * 
+   * @param {any} event
+   * @memberof Dashboard
+   * @returns { void }
+   */
+  removeUser(event) {
+    event.preventDefault();
+    const groupName = this.props.groups.find(group => group.id === this.state.groupId);    
+    this.props.removeUsers(this.state.groupId, this.props.user.userId, groupName).then(() => {
+      localStorage.removeItem('currentGroup', this.state.groupId);
+      this.setState(state => ({ groupId: '' }));
+      this.props.getGroups();
+      browserHistory.push('/dashboard');
+    });
+  }
+
   /**
    * 
    * 
@@ -107,29 +192,21 @@ export class Dashboard extends Component {
   /**
    * 
    * 
-   * @param {any} evn 
-   * @returns {void}
-   * @memberof Dashboard
-   */
-  // getGroupName(evn) {
-  //   return (evt) => {
-  //     return evn;
-  //   };
-  // }
-
-  /**
-   * 
-   * 
    * @memberof Dashboard
    * @returns {void}
    */
   render() {
-    const { groups, allMsgs } = this.props;
+    const {
+      groups, allMsgs, user, groupusers 
+    } = this.props;
     const messages = allMsgs[this.state.groupId] || [];
     const GroupName = groups.find(group => group.id === this.state.groupId);
+    const groupMember = groupusers.length;
+    const groupUsernames = groupusers.map((groupuser) => groupuser.User.username);
+    const members = groupUsernames.join(", ");
     return (
       <div className="dashboard">
-        {/** header **/}
+        {/** header * */}
         <DashboardHeader
           groups={groups}
           setGroupMessages={this.setGroupMessages}
@@ -146,20 +223,32 @@ export class Dashboard extends Component {
                       {GroupName && GroupName.name}
                     </h3>
                     <div className="options">
-                      <a href="#modal2" className=" modal-trigger">
-                        <span className="btn-cta" data-intro="Add users here">Add User</span>
-                      </a>
+                      <div className="user-actions">
+                        <a href="#" className="" onClick={this.removeUser}>
+                          <span className="btn-cta remove-user" data-intro="remove users here">Leave group</span>
+                        </a>
+                        <a href="#modal2" className=" modal-trigger">
+                          <span className="btn-cta" data-intro="Add users here">Add User</span>
+                        </a>
+                      </div>
+                      <div className="tooltip">{groupMember} members
+                        <span className="tooltiptext">{members}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="message-board">
-                      <Messages messages={messages}
-                        groups={groups} />
+                <div ref={this.getMessageBoardRef} className="message-board">
+                  <Messages
+                    messages={messages}
+                    groups={groups} user={user} />
                 </div>
                 {/**  message box */}
-                <MessageBox message={this.state.message}
+                <MessageBox 
+                  message={this.state.message}
                   flag={this.state.flag} onChange={this.onChange}
-                  onSubmit={this.onSubmit} groups={groups} />
+                  onSubmit={this.onSubmit} groups={groups}
+                  handleKeyDown={this.handleKeyDown}
+                />
               </div>
             )
             : <Welcome />}
@@ -181,19 +270,26 @@ Dashboard.propTypes = {
   user: PropTypes.object.isRequired,
   active: PropTypes.bool.isRequired,
   allMsgs: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  removeUsers: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => {
-  return {
-    groups: state.groups,
-    allMsgs: state.messages.msg,
-    user: state.auth.user,
-  };
-};
+const mapStateToProps = (state) => ({
+  groups: state.groups,
+  allMsgs: state.messages.msg,
+  user: state.auth.user,
+  groupusers: state.groupUser
+});
 
-export default connect(mapStateToProps,
+export default connect(
+  mapStateToProps,
   {
-    getGroups, createGroup, getMessages,
-    createMessage, loadGroupUsers, logout
-  })(Dashboard);
+    getGroups, 
+    createGroup, 
+    getMessages,
+    createMessage, 
+    loadGroupUsers, 
+    logout,
+    removeUsers
+  }
+)(Dashboard);

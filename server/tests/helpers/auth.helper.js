@@ -2,7 +2,7 @@
 /* eslint import/no-unresolved: 0 */
 import faker from 'faker';
 
-const fakerObj = {
+const fakerUser = {
   users: {
     username: faker.internet.userName(),
     email: faker.internet.email(),
@@ -41,4 +41,4 @@ const fakerObj = {
   },
 };
 
-export default fakerObj;
+export default fakerUser;

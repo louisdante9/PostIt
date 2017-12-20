@@ -14,10 +14,10 @@ import mockData from '../../../__mocks__/mockData';
 configure({ adapter: new Adapter() });
 
 describe('Signup', () => {
-  let props = {
+  const props = {
     userSignupRequest: jest.fn(() => Promise.resolve())
   };
-  const component = mount(<SignupForm {...props } />);
+  const component = mount(<SignupForm {...props} />);
   it('should render atleast once', () => {
     expect(component.length).toEqual(1);
   });
@@ -26,7 +26,6 @@ describe('Signup', () => {
   });
   it('always renders signup form', () => {
     expect(component.find('form').length).toBe(1);
-
   });
   it('always renders a signup form with the inputs required', () => {
     expect(component.find('TextFieldGroup').length).toBe(4);
@@ -34,7 +33,6 @@ describe('Signup', () => {
 
   it('always renders a form submit button ', () => {
     expect(component.find('button').length).toBe(1);
-
   });
   it('calls onChange method', () => {
     const event = mockData.onChangeEvent;
@@ -47,9 +45,7 @@ describe('Signup', () => {
     const event = {
       preventDefault: jest.fn()
     };
-    const handleSubmitSpy = jest.spyOn(
-      component.instance(), 'onSubmit'
-    );
+    const handleSubmitSpy = jest.spyOn(component.instance(), 'onSubmit');
     component.instance().onSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalled();
   });
@@ -59,14 +55,10 @@ describe('Signup', () => {
     const event = {
       preventDefault: jest.fn()
     };
-    const handleSubmitSpy = jest.spyOn(
-      component.instance(), 'onSubmit'
-    );
+    const handleSubmitSpy = jest.spyOn(component.instance(), 'onSubmit');
     component.instance().onSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalled();
   });
-
-
   it('calls onSubmit method', () => {
     const newProps = {
       userSignupRequest: jest.fn(() => Promise.reject({
@@ -79,22 +71,18 @@ describe('Signup', () => {
         }
       }))
     };
-    const wrapper = mount(<SignupForm {...newProps } />);
+    const wrapper = mount(<SignupForm {...newProps} />);
     wrapper.setState(mockData.onSubmitState);
     const event = {
       preventDefault: jest.fn()
     };
-    const handleSubmitSpy = jest.spyOn(
-      wrapper.instance(), 'onSubmit'
-    );
+    const handleSubmitSpy = jest.spyOn(wrapper.instance(), 'onSubmit');
     wrapper.instance().onSubmit(event);
     expect(handleSubmitSpy).toHaveBeenCalled();
   });
 
   it('calls handleErrors method', () => {
-    const handleErrorsSpy = jest.spyOn(
-      component.instance(), 'handleErrors'
-    );
+    const handleErrorsSpy = jest.spyOn(component.instance(), 'handleErrors');
     const errors = 'error';
     component.instance().handleErrors(errors);
     expect(handleErrorsSpy).toHaveBeenCalled();
