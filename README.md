@@ -1,6 +1,6 @@
 # PostIt
 
- [![Code Climate](https://codeclimate.com/github/louisdante9/PostIt/badges/gpa.svg)](https://codeclimate.com/github/louisdante9/PostIt) [![Coverage Status](https://coveralls.io/repos/github/louisdante9/PostIt/badge.svg?branch=ch%2Ftest-desc-refactor)](https://coveralls.io/github/louisdante9/PostIt?branch=ch%2Ftest-desc-refactor) [![Build Status](https://travis-ci.org/louisdante9/PostIt.svg?branch=master)](https://travis-ci.org/louisdante9/PostIt)
+ [![Code Climate](https://codeclimate.com/github/louisdante9/PostIt/badges/gpa.svg)](https://codeclimate.com/github/louisdante9/PostIt) [![Coverage Status](https://coveralls.io/repos/github/louisdante9/PostIt/badge.svg?branch=ch%2Ftest-desc-refactor)](https://coveralls.io/github/louisdante9/PostIt?branch=ch%2Ftest-desc-refactor) [![Build Status](https://travis-ci.org/louisdante9/PostIt.svg?branch=test-desc-refactor)](https://travis-ci.org/louisdante9/PostIt)
  [Heroku hosted](https://collab-postit.herokuapp.com/)
 ## Introduction
 **`PostIt`** is a simple application that allows friends and colleagues create groups for notifications. It allows a person post notifications to everyone in his group by sending a message once.
