@@ -20,7 +20,7 @@ const authenticate = {
 
     jwt.verify(token, secretKey, (err, result) => {
       if (err) {
-        return res.status(401).send({ message: 'Invalid Token' });
+        return res.status(403).send({ message: 'Invalid Token' });
       }
       req.decoded = result;
       next();
