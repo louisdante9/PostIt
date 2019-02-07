@@ -51,7 +51,7 @@ describe('messagesControllersTests', () => {
             done();
           });
       });
-      it('returns (401 status) Invalid Access', (done) => {
+      it('returns (403 status) Invalid Access', (done) => {
         request
           .post(`/api/v1/group/${group.id}/messages`)
           .set('authorization', "token")
@@ -60,7 +60,7 @@ describe('messagesControllersTests', () => {
             if (err) {
               return done(err);
             }
-            expect(res.status).to.equal(401);
+            expect(res.status).to.equal(403);
             done();
           });
       });
